@@ -48,9 +48,10 @@ export default {
           foreground: "hsl(var(--card-foreground))",
         },
         isutech: {
-          blue: "#0F172A",
-          purple: "#6366F1",
-          accent: "#60A5FA",
+          gold: "#FFB800",
+          gray: "#333333",
+          lightGray: "#8E9196",
+          accent: "#FFD700",
         },
       },
       borderRadius: {
