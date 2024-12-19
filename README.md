@@ -1,69 +1,119 @@
-# Welcome to your Lovable project
+# iSu Technologies Web Application
 
-## Project info
+## Overview
+This is a modern web application built with React, TypeScript, and Tailwind CSS, featuring a sleek design with deep blues, rich purples, and electric accents.
 
-**URL**: https://lovable.dev/projects/99040301-a5f3-4b46-a22c-109477863471
+## Prerequisites
+Before you begin, ensure you have the following installed:
+- Node.js (v18 or higher) - [Download](https://nodejs.org/)
+- npm (comes with Node.js) or yarn
+- Git - [Download](https://git-scm.com/)
 
-## How can I edit this code?
+## Getting Started
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/99040301-a5f3-4b46-a22c-109477863471) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+### 1. Clone the Repository
+```bash
+git clone <repository-url>
+cd <project-directory>
 ```
 
-**Edit a file directly in GitHub**
+### 2. Install Dependencies
+```bash
+npm install
+# or if using yarn
+yarn install
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 3. Start Development Server
+```bash
+npm run dev
+# or if using yarn
+yarn dev
+```
+The application will be available at `http://localhost:8080`
 
-**Use GitHub Codespaces**
+## Project Structure
+```
+src/
+├── components/     # React components
+├── hooks/         # Custom React hooks
+├── lib/           # Utility functions and constants
+├── pages/         # Page components
+└── styles/        # CSS and style-related files
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Technology Stack
+- **Framework**: React 18
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS
+- **UI Components**: shadcn/ui
+- **Type Checking**: TypeScript
+- **State Management**: React Query
+- **Icons**: Lucide React
+- **Charts**: Recharts
 
-## What technologies are used for this project?
+## Design System
+The application uses a consistent design system with:
+- **Colors**: 
+  - Deep blues (#0F172A)
+  - Rich purples (#6366F1)
+  - Electric accents (#60A5FA)
+- **Typography**: Inter font family
+- **UI Elements**: 
+  - Floating cards
+  - Glass-morphism effects
+  - Glowing borders
+  - Smooth animations
 
-This project is built with .
+## Available Scripts
+- `npm run dev`: Start development server
+- `npm run build`: Build for production
+- `npm run preview`: Preview production build
+- `npm run lint`: Run ESLint
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Development Guidelines
 
-## How can I deploy this project?
+### Code Style
+- Use TypeScript for type safety
+- Follow React best practices and hooks guidelines
+- Implement responsive designs
+- Use Tailwind CSS for styling
+- Utilize shadcn/ui components when possible
 
-Simply open [Lovable](https://lovable.dev/projects/99040301-a5f3-4b46-a22c-109477863471) and click on Share -> Publish.
+### Component Creation
+- Create new components in `src/components`
+- Keep components small and focused
+- Use TypeScript interfaces for props
+- Implement proper error handling
 
-## I want to use a custom domain - is that possible?
+### State Management
+- Use React Query for server state
+- Implement proper loading and error states
+- Follow the object syntax for query configuration
 
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+### Performance
+- Implement code splitting where necessary
+- Optimize images and assets
+- Use proper React memo and callback hooks
+- Monitor bundle size
+
+## Deployment
+The application can be deployed using:
+1. Lovable's built-in deployment feature
+2. Manual deployment to platforms like Netlify or Vercel
+
+## Contributing
+1. Create a new branch for your feature
+2. Make your changes
+3. Submit a pull request
+4. Ensure all tests pass
+5. Follow the code review process
+
+## Support
+For any questions or issues:
+1. Check the documentation
+2. Create an issue in the repository
+3. Contact the development team
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details
