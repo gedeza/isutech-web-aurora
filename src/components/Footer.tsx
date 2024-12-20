@@ -48,8 +48,8 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-foreground/70">
               <li>info@isutech.co.za</li>
-              <li>+27 (0) 12 345 6789</li>
-              <li>Pretoria, South Africa</li>
+              <li>+27 (0) 81 646 0137</li>
+              <li>Westville, Durban, KwaZulu-Natal, 3610, South Africa</li>
             </ul>
           </div>
         </div>
