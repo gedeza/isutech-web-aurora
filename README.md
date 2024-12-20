@@ -13,7 +13,7 @@ Before you begin, ensure you have the following installed:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/gedeza/isutech-web-aurora
+git clone https://github.com/gedeza/isutech-web-aurora.git
 cd isu-web-aurora
 ```
 
