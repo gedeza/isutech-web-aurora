@@ -6,33 +6,33 @@
 
 @layer base {
   :root {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 100%;
+    --foreground: 0 0% 0%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 0%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 0%;
 
-    --primary: 231 94% 67%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 85% 33%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 91% 60%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 45 85% 33%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 0 0% 45%;
 
-    --accent: 217 91% 60%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 45 85% 33%;
+    --accent-foreground: 0 0% 0%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 231 94% 67%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 45 85% 33%;
 
     --radius: 0.5rem;
   }
@@ -47,16 +47,16 @@
     --popover: 222 47% 11%;
     --popover-foreground: 210 40% 98%;
 
-    --primary: 231 94% 67%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 45 85% 33%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 217 91% 60%;
+    --secondary: 45 85% 33%;
     --secondary-foreground: 210 40% 98%;
 
     --muted: 217 33% 17%;
     --muted-foreground: 215 20.2% 65.1%;
 
-    --accent: 217 91% 60%;
+    --accent: 45 85% 33%;
     --accent-foreground: 210 40% 98%;
 
     --destructive: 0 84.2% 60.2%;
@@ -64,7 +64,7 @@
 
     --border: 217 33% 17%;
     --input: 217 33% 17%;
-    --ring: 231 94% 67%;
+    --ring: 45 85% 33%;
   }
 }
 
@@ -74,21 +74,102 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "ss01", "ss02", "cv01", "cv02";
+  }
+
+  /* Smooth scroll for Safari */
+  @supports (-webkit-overflow-scrolling: touch) {
+    body {
+      -webkit-overflow-scrolling: touch;
+    }
   }
 }
 
 @layer components {
+  .container {
+    @apply max-w-container mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .section {
+    @apply py-section;
+  }
+
   .glass-card {
-    @apply bg-background/80 backdrop-blur-lg border border-border/50 shadow-lg;
+    @apply bg-background/80 backdrop-blur-lg border border-border/50 shadow-card 
+           hover:shadow-card-hover transition-all duration-300 hover:-translate-y-1;
   }
 
   .floating-card {
-    @apply transform transition-all duration-300 hover:-translate-y-2 hover:shadow-xl;
+    @apply transform transition-all duration-300 hover:-translate-y-2 hover:shadow-card-hover
+           hover:rotate-1 hover:scale-[1.02];
   }
 
   .glow-border {
-    @apply border border-primary/50 shadow-[0_0_15px_rgba(99,102,241,0.3)];
+    @apply border border-primary/50 shadow-[0_0_15px_rgba(156,124,11,0.5)]
+           hover:shadow-[0_0_25px_rgba(156,124,11,0.7)] transition-shadow duration-300;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#9c7c0b] to-[#9c7c0b]/80;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-8 py-3
+           text-sm font-semibold text-white
+           bg-primary rounded-full shadow-sm
+           transition-all duration-300 ease-out
+           hover:px-10 hover:py-2.5
+           focus-visible:outline focus-visible:outline-2 
+           focus-visible:outline-offset-2 focus-visible:outline-primary
+           active:scale-95;
+    transform-origin: center;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center px-8 py-3
+           text-sm font-semibold text-black
+           bg-white rounded-full shadow-sm
+           ring-1 ring-inset ring-[#9c7c0b]
+           transition-all duration-300 ease-out
+           hover:px-10 hover:py-2.5 hover:bg-[#9c7c0b]/5
+           active:scale-95;
+    transform-origin: center;
+  }
+
+  .nav-link {
+    @apply text-sm font-medium text-black hover:text-[#9c7c0b] transition-all duration-200
+           relative after:absolute after:bottom-0 after:left-0 after:h-0.5 
+           after:w-0 after:bg-[#9c7c0b] after:transition-all after:duration-300
+           hover:after:w-full;
+  }
+
+  .scroll-animation {
+    @apply opacity-0 translate-y-8 transition-all duration-700;
+  }
+
+  .scroll-animation.animate {
+    @apply opacity-100 translate-y-0;
+  }
+
+  .logo-scroll {
+    @apply flex animate-scroll-x;
+  }
+
+  .logo-scroll > * {
+    @apply flex-shrink-0;
+  }
+
+  .logo-scroll-container {
+    @apply overflow-hidden whitespace-nowrap;
+  }
+
+  .logo-scroll-container .logo-scroll {
+    @apply inline-flex;
+  }
+
+  .logo-scroll-container .logo-scroll-double {
+    @apply inline-flex ml-8;
   }
 }
 

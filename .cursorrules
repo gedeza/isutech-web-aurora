@@ -1,5 +1,7 @@
 # iSuTech Coding Rules and Best Practices
 
+
+
 ## Table of Contents
 1. [General Guidelines](#general-guidelines)
 2. [Code Style](#code-style)
@@ -9,6 +11,10 @@
 6. [Testing](#testing)
 7. [Performance](#performance)
 8. [Security](#security)
+
+
+<!-- > For a quick reference guide to these standards, see [@/Docs/QUICKREFERENCE.md](@/Docs/QUICKREFERENCE.md) -->
+
 
 ## General Guidelines
 
