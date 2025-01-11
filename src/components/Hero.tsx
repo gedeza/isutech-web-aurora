@@ -25,11 +25,11 @@ const Hero = () => {
 
   const companyLogos = [
     { src: '/images/IBMLOGO.jpg', alt: 'IBM' },
-    { src: '/logos/logo2.png', alt: 'Logo 2' },
-    { src: '/logos/logo3.png', alt: 'Logo 3' },
-    { src: '/logos/logo4.png', alt: 'Logo 4' },
-    { src: '/logos/logo5.png', alt: 'Logo 5' },
-    { src: '/logos/logo6.png', alt: 'Logo 6' },
+    { src: '/images/Ethekwini Municipality Logo.jpeg', alt: 'Ethekwini Municipality' },
+    { src: '/images/KZN Legislature Logo.png', alt: 'KZN Legislature' },
+    { src: '/images/Microsoft Logo.png', alt: 'Microsoft' },
+    { src: '/images/Moses Kotane Institute Logo.jpeg', alt: 'Moses Kotane Institute' },
+    { src: '/images/MTN Logo.png', alt: 'MTN' }
   ];
 
   return (
@@ -134,11 +134,11 @@ const Hero = () => {
                   key={index}
                   className="mx-8 h-16 w-48 flex items-center justify-center"
                 >
-                  {logo.src.includes('IBMLOGO') ? (
-                    <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-                  ) : (
-                    <div className="text-xs text-muted-foreground">Logo {index % companyLogos.length + 1}</div>
-                  )}
+                  <img 
+                    src={logo.src} 
+                    alt={logo.alt} 
+                    className="h-full w-full object-contain" 
+                  />
                 </div>
               ))}
             </div>
@@ -148,11 +148,11 @@ const Hero = () => {
                   key={index}
                   className="mx-8 h-16 w-48 flex items-center justify-center"
                 >
-                  {logo.src.includes('IBMLOGO') ? (
-                    <img src={logo.src} alt={logo.alt} className="h-full w-full object-contain" />
-                  ) : (
-                    <div className="text-xs text-muted-foreground">Logo {index % companyLogos.length + 1}</div>
-                  )}
+                  <img 
+                    src={logo.src} 
+                    alt={logo.alt} 
+                    className="h-full w-full object-contain" 
+                  />
                 </div>
               ))}
             </div>
