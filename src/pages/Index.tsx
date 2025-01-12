@@ -8,12 +8,12 @@ import Footer from "@/components/Footer";
 const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <Navbar />
+      
       <Hero />
       <Services />
       <About />
       <Contact />
-      <Footer />
+      
     </div>
   );
 };

@@ -83,11 +83,8 @@ const Hero = () => {
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 scroll-animation" style={{ transitionDelay: '400ms' }}>
-            <Link to="/try-free" className="btn-primary">
-              Find More Solutions
-            </Link>
-            <Link to="/demo" className="btn-secondary">
-              Schedule Consultation
+            <Link to="/products" className="btn-primary">
+              Explore More Solutions
             </Link>
           </div>
         </div>
