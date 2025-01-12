@@ -21,9 +21,9 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/about" className="nav-link">About</Link>
             <Link to="/services" className="nav-link">Services</Link>
+            <Link to="/careers" className="nav-link">Careers</Link>
             <Link to="/contact" className="nav-link">Contact</Link>
-            <Link to="/try-free" className="btn-primary">Products</Link>
-            <Link to="/demo" className="btn-secondary">Services</Link>
+            <Link to="/products" className="btn-primary">Products</Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -62,9 +62,9 @@ const Navbar = () => {
             <div className="container flex flex-col space-y-4">
               <Link to="/about" className="nav-link">About</Link>
               <Link to="/services" className="nav-link">Services</Link>
+              <Link to="/careers" className="nav-link">Careers</Link>
               <Link to="/contact" className="nav-link">Contact</Link>
-              <Link to="/try-free" className="btn-primary w-full text-center">Try Free</Link>
-              <Link to="/demo" className="btn-secondary w-full text-center">Request Demo</Link>
+              <Link to="/products" className="btn-primary w-full text-center">Products</Link>
             </div>
           </div>
         )}

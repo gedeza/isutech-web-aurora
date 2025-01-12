@@ -13,15 +13,14 @@ const Footer = () => {
     Company: [
       { name: 'About', href: '/about' },
       { name: 'Careers', href: '/careers' },
-      { name: 'Blog', href: '/blog' },
-      { name: 'Press', href: '/press' },
+      { name: 'Products', href: '/products' },
+      { name: 'Contact', href: '/contact' },
     ],
     Resources: [
-      { name: 'Documentation', href: '/docs' },
-      { name: 'Help Center', href: '/help' },
+      { name: 'Documentation', href: '/documentation' },
+      { name: 'Support', href: '/support' },
       { name: 'Security', href: '/security' },
       { name: 'Terms', href: '/terms' },
-      { name: 'Support', href: '/support' },
     ],
   };
 

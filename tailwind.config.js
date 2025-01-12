@@ -56,8 +56,8 @@ export default {
         'card-hover': '0 8px 24px 0 rgb(0 0 0 / 0.12)',
       },
       animation: {
-        'fade-in': 'fadeIn 1s ease-out forwards',
-        'slide-up': 'slideUp 0.5s ease-out',
+        'fade-in': 'fadeIn 0.3s ease-out forwards',
+        'slide-up': 'slideUp 0.4s ease-out forwards',
         'slide-in-right': 'slideInRight 0.5s ease-out',
         'slide-in-left': 'slideInLeft 0.5s ease-out',
         'scroll-x': 'scroll-x 40s linear infinite',
@@ -69,8 +69,8 @@ export default {
       },
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0', transform: 'translateY(10px)' },
-          '100%': { opacity: '1', transform: 'translateY(0)' },
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
         },
         slideUp: {
           '0%': { transform: 'translateY(20px)', opacity: '0' },
