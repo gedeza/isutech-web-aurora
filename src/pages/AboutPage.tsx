@@ -99,82 +99,85 @@ const AboutPage = () => {
               <div className="flex flex-col md:flex-row gap-8 items-start relative animate-slide-in-right" style={{ transitionDelay: '200ms' }}>
                 <div className="w-full md:w-1/3">
                   <h3 className="text-2xl font-bold mb-4 text-primary">Founded in 2012</h3>
-                  <p className="text-muted-foreground">Starting our journey with a vision to transform the technological landscape in Africa.</p>
+                  <p className="text-muted-foreground">Founded by Nhlanhla Mnyandu with a vision to transform technological landscape in Africa.</p>
                 </div>
                 <div className="w-full md:w-2/3 bg-background/50 p-6 rounded-lg border border-border hover:shadow-card transition-all duration-300">
                   <h4 className="font-bold mb-3 text-xl">Government Partnerships</h4>
-                  <p className="text-muted-foreground mb-4">Establishing strong relationships with government entities, securing contracts, and delivering high-impact solutions.</p>
+                  <p className="text-muted-foreground mb-4">Established as a trusted partner in government proposals, projects, tenders, and service delivery.</p>
                   <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                    <li>Infrastructure development</li>
-                    <li>Systems integration</li>
-                    <li>Digital transformation initiatives</li>
+                    <li>IT hub development for schools</li>
+                    <li>Equipment supply and licensing services</li>
+                    <li>Road safety app development with Datamaps</li>
+                    <li>Municipal website development</li>
                   </ul>
                 </div>
               </div>
 
-              {/* Core Services */}
+              {/* Recent Projects */}
               <div className="flex flex-col md:flex-row gap-8 items-start relative animate-slide-in-left" style={{ transitionDelay: '400ms' }}>
                 <div className="w-full md:w-1/3">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">Comprehensive Solutions</h3>
-                  <p className="text-muted-foreground">Delivering end-to-end technology solutions across multiple domains.</p>
+                  <h3 className="text-2xl font-bold mb-4 text-primary">Recent Projects</h3>
+                  <p className="text-muted-foreground">Delivering impactful solutions for municipalities and rural communities.</p>
+                </div>
+                <div className="w-full md:w-2/3 bg-background/50 p-6 rounded-lg border border-border hover:shadow-card transition-all duration-300">
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-bold mb-3 text-xl">Mdoni Municipality Website (2023)</h4>
+                      <p className="text-muted-foreground">Comprehensive website development for managing blogs, articles, tenders, and official documentation.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold mb-3 text-xl">Rural Development Project (2024)</h4>
+                      <p className="text-muted-foreground">Partnership with DottoWorld for data collection in rural areas, focusing on utility compliance and community education.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Core Services */}
+              <div className="flex flex-col md:flex-row gap-8 items-start relative animate-slide-in-right" style={{ transitionDelay: '600ms' }}>
+                <div className="w-full md:w-1/3">
+                  <h3 className="text-2xl font-bold mb-4 text-primary">Core Services</h3>
+                  <p className="text-muted-foreground">Comprehensive technology solutions for modern businesses.</p>
                 </div>
                 <div className="w-full md:w-2/3 bg-background/50 p-6 rounded-lg border border-border hover:shadow-card transition-all duration-300">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="hover:scale-105 transition-transform duration-300">
-                      <h4 className="font-bold mb-3 text-xl">Digital Services</h4>
+                      <h4 className="font-bold mb-3 text-xl">AI & Automation</h4>
                       <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                        <li>Website Development</li>
-                        <li>Cloud Computing Solutions</li>
-                        <li>Systems Integration</li>
-                        <li>Software Development</li>
+                        <li>Process Automation</li>
+                        <li>AI Integration</li>
+                        <li>Workflow Optimization</li>
                       </ul>
                     </div>
                     <div className="hover:scale-105 transition-transform duration-300">
-                      <h4 className="font-bold mb-3 text-xl">Infrastructure</h4>
+                      <h4 className="font-bold mb-3 text-xl">Software Development</h4>
                       <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                        <li>Computer Hub Setup</li>
-                        <li>Facility Management</li>
-                        <li>Licensing Services</li>
-                        <li>Technical Support</li>
+                        <li>Custom Software Solutions</li>
+                        <li>Shopify Development</li>
+                        <li>Web Applications</li>
                       </ul>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Partnerships */}
-              <div className="flex flex-col md:flex-row gap-8 items-start relative animate-slide-in-right" style={{ transitionDelay: '600ms' }}>
-                <div className="w-full md:w-1/3">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">Strategic Partnerships</h3>
-                  <p className="text-muted-foreground">Collaborating with industry leaders to deliver comprehensive solutions.</p>
-                </div>
-                <div className="w-full md:w-2/3 bg-background/50 p-6 rounded-lg border border-border hover:shadow-card transition-all duration-300">
-                  <h4 className="font-bold mb-3 text-xl">Collaborative Approach</h4>
-                  <p className="text-muted-foreground mb-4">We partner with leading technology companies and local businesses to:</p>
-                  <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4">
-                    <li>Execute large-scale government tenders</li>
-                    <li>Deliver integrated solutions</li>
-                    <li>Provide comprehensive project management</li>
-                    <li>Ensure quality and compliance</li>
-                  </ul>
-                </div>
-              </div>
-
-              {/* 2024 Rebrand */}
+              {/* Leadership */}
               <div className="flex flex-col md:flex-row gap-8 items-start relative animate-slide-in-left" style={{ transitionDelay: '800ms' }}>
                 <div className="w-full md:w-1/3">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">2024 Rebrand</h3>
-                  <p className="text-muted-foreground">Evolving into an innovative technology powerhouse.</p>
+                  <h3 className="text-2xl font-bold mb-4 text-primary">Leadership</h3>
+                  <p className="text-muted-foreground">Guided by experienced professionals with a vision for innovation.</p>
                 </div>
                 <div className="w-full md:w-2/3 bg-background/50 p-6 rounded-lg border border-border hover:shadow-card transition-all duration-300">
-                  <h4 className="font-bold mb-3 text-xl">Innovation Focus</h4>
-                  <p className="text-muted-foreground mb-4">Our transformation includes:</p>
-                  <ul className="list-disc list-inside text-muted-foreground space-y-2 ml-4 hover:scale-105 transition-transform duration-300">
-                    <li>Custom software solutions development</li>
-                    <li>Enhanced digital service offerings</li>
-                    <li>Modern technology stack adoption</li>
-                    <li>Improved client experience focus</li>
-                  </ul>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-bold mb-3 text-xl">Sibongamandla Mnyandu</h4>
+                      <p className="text-muted-foreground">CEO and Executive Director since 2024, leading iSu Technologies' transformation into a tech powerhouse.</p>
+                    </div>
+                    <div>
+                      <h4 className="font-bold mb-3 text-xl">Executive Leadership</h4>
+                      <p className="text-muted-foreground">Supported by experienced financial leadership ensuring sustainable growth and strategic development.</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

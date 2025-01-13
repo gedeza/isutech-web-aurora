@@ -54,9 +54,24 @@ const TermsPage = () => {
       content: `We shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of our services.`
     },
     {
+      title: 'Government Contracts',
+      id: 'government-contracts',
+      content: `For government contracts and tenders, additional terms and conditions may apply as per South African government procurement regulations and requirements.`
+    },
+    {
+      title: 'Service Delivery',
+      id: 'service-delivery',
+      content: `We are committed to delivering high-quality services in accordance with agreed-upon specifications and timelines. For government projects, we adhere to all relevant public sector procurement and delivery guidelines.`
+    },
+    {
+      title: 'Data Protection',
+      id: 'data-protection',
+      content: `We comply with the Protection of Personal Information Act (POPIA) and implement appropriate measures to protect your personal information. Our data protection practices align with South African legal requirements.`
+    },
+    {
       title: 'Governing Law',
       id: 'governing-law',
-      content: `These terms shall be governed by and construed in accordance with the laws of South Africa.`
+      content: `These terms shall be governed by and construed in accordance with the laws of South Africa. Any disputes shall be subject to the exclusive jurisdiction of the South African courts.`
     }
   ];
 
