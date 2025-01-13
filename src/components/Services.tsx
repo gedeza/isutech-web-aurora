@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { Building2, Bot, Code2, Laptop2 } from 'lucide-react';
 
 const Services = () => {
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -24,22 +25,48 @@ const Services = () => {
 
   const services = [
     {
-      title: "Custom Software Development",
-      description: "Tailored solutions built to address your unique business challenges and opportunities.",
-      features: ["Web Applications", "Mobile Apps", "Enterprise Software", "API Integration"],
-      delay: "200ms"
+      title: "Government Solutions",
+      description: "Specialized solutions for government departments and municipalities. From tender management to service delivery tracking, we help streamline public sector operations.",
+      icon: Building2,
+      features: [
+        "Tender Management Systems",
+        "Service Delivery Tracking",
+        "Public Sector Compliance",
+        "Municipal Solutions"
+      ]
     },
     {
-      title: "Cloud Solutions",
-      description: "Scalable and secure cloud infrastructure designed for modern business needs.",
-      features: ["Cloud Migration", "DevOps", "Serverless Architecture", "Cloud Security"],
-      delay: "400ms"
+      title: "AI & Automation",
+      description: "Leverage cutting-edge AI and automation technologies to transform your business processes and boost efficiency.",
+      icon: Bot,
+      features: [
+        "Process Automation",
+        "AI Integration",
+        "Workflow Optimization",
+        "Smart Analytics"
+      ]
     },
     {
-      title: "AI & Machine Learning",
-      description: "Leverage the power of AI to automate processes and gain valuable insights.",
-      features: ["Predictive Analytics", "Natural Language Processing", "Computer Vision", "Data Mining"],
-      delay: "600ms"
+      title: "Custom Development",
+      description: "Tailored software solutions designed to meet your specific business requirements and challenges.",
+      icon: Code2,
+      features: [
+        "Web Applications",
+        "Mobile Solutions",
+        "System Integration",
+        "Legacy Modernization"
+      ]
+    },
+    {
+      title: "Digital Transformation",
+      description: "End-to-end digital transformation services to help organizations adapt and thrive in the digital age.",
+      icon: Laptop2,
+      features: [
+        "Digital Strategy",
+        "Process Digitization",
+        "Change Management",
+        "Technology Adoption"
+      ]
     }
   ];
 
@@ -71,30 +98,16 @@ const Services = () => {
           {services.map((service, index) => (
             <div
               key={service.title}
-              className="floating-card rounded-lg p-6 scroll-animation hover:bg-accent/5"
-              style={{ transitionDelay: service.delay }}
+              className="bg-card p-6 rounded-lg shadow-sm scroll-animation"
             >
+              <service.icon className="w-12 h-12 text-primary mb-4" />
               <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
               <p className="text-muted-foreground mb-6">{service.description}</p>
               <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li key={feature} className="flex items-center text-sm group">
-                    <svg
-                      className="h-5 w-5 text-primary mr-2 transform transition-transform group-hover:scale-110 group-hover:rotate-3"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    <span className="group-hover:text-primary transition-colors">
-                      {feature}
-                    </span>
+                {service.features.map(feature => (
+                  <li key={feature} className="flex items-center gap-2">
+                    <span>•</span>
+                    {feature}
                   </li>
                 ))}
               </ul>

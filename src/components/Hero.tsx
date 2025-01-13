@@ -73,9 +73,9 @@ const Hero = () => {
       <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 scroll-animation">
-            <span className="gradient-text">Innovative Solutions</span>
+            <span className="gradient-text">Transform Your Business</span>
             <br />
-            for Modern Businesses
+            with iSu Technologies
           </h1>
           
           <p className="text-lg md:text-xl text-muted-foreground mb-8 scroll-animation" style={{ transitionDelay: '200ms' }}>
@@ -84,7 +84,10 @@ const Hero = () => {
           
           <div className="flex flex-col sm:flex-row justify-center gap-4 scroll-animation" style={{ transitionDelay: '400ms' }}>
             <Link to="/products" className="btn-primary">
-              Explore More Solutions
+              Explore Our Solutions
+            </Link>
+            <Link to="/contact" className="btn-secondary">
+              Get in Touch
             </Link>
           </div>
         </div>
@@ -93,18 +96,18 @@ const Hero = () => {
         <div className="grid md:grid-cols-3 gap-8 mt-16">
           {[
             {
-              title: "Enterprise Security",
-              description: "Advanced protection for your business assets and data.",
+              title: "Government Solutions",
+              description: "Trusted partner for government projects, tenders, and service delivery.",
               delay: "600ms"
             },
             {
-              title: "Cloud Integration",
-              description: "Seamless integration with leading cloud platforms.",
+              title: "AI & Automation",
+              description: "Cutting-edge solutions for business process automation.",
               delay: "600ms"
             },
             {
-              title: "Custom Solutions",
-              description: "We build solutions catered for your needs.",
+              title: "Custom Development",
+              description: "Tailored software solutions for your specific needs.",
               delay: "600ms"
             }
           ].map((feature, index) => (

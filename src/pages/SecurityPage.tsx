@@ -49,13 +49,13 @@ const SecurityPage = () => {
 
   const complianceStandards = [
     {
-      name: "ISO 27001",
-      description: "Information security management system certification",
-      status: "Certified"
+      name: "POPIA",
+      description: "South African Protection of Personal Information Act",
+      status: "Compliant"
     },
     {
-      name: "GDPR",
-      description: "European data protection regulation compliance",
+      name: "Government Standards",
+      description: "Compliance with South African government security requirements",
       status: "Compliant"
     },
     {

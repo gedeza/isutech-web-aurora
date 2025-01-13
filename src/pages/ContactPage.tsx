@@ -81,8 +81,8 @@ const ContactPage = () => {
                   <div className="space-y-8">
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Head Office</h3>
-                      <p className="text-muted-foreground">123 Business Avenue</p>
-                      <p className="text-muted-foreground">Nairobi, Kenya</p>
+                      <p className="text-muted-foreground">155 Pienaar Street</p>
+                      <p className="text-muted-foreground">South Africa</p>
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Email Us</h3>
@@ -90,7 +90,7 @@ const ContactPage = () => {
                     </div>
                     <div>
                       <h3 className="text-xl font-semibold mb-2">Call Us</h3>
-                      <a href="tel:+254123456789" className="text-primary hover:underline">+254 123 456 789</a>
+                      <a href="tel:+27820600404" className="text-primary hover:underline">+27 82 060 0404</a>
                     </div>
                   </div>
                 </div>
