@@ -1,7 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useEffect, useRef } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const Hero = () => {
+  const { theme } = useTheme();
   const observerRef = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
@@ -35,15 +37,15 @@ const Hero = () => {
   return (
     <section className="relative pt-32 pb-24 overflow-hidden">
       {/* Background patterns */}
-      <div className="absolute inset-0 bg-white" />
+      <div className="absolute inset-0 bg-background" />
       
       {/* Grid pattern */}
       <div 
         className="absolute inset-0" 
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px)
+            linear-gradient(to right, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.06)'} 1px, transparent 1px),
+            linear-gradient(to bottom, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.06)'} 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }}
@@ -52,28 +54,28 @@ const Hero = () => {
         className="absolute inset-0" 
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(0, 0, 0, 0.08) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(0, 0, 0, 0.08) 1px, transparent 1px)
+            linear-gradient(to right, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.08)'} 1px, transparent 1px),
+            linear-gradient(to bottom, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.08)'} 1px, transparent 1px)
           `,
           backgroundSize: '160px 160px'
         }}
       />
       
       {/* Grain effect */}
-      <div className="absolute inset-0 bg-[url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')] bg-repeat opacity-[0.04]" />
+      <div className="absolute inset-0 bg-[url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')] bg-repeat opacity-[0.03] dark:opacity-[0.15]" />
       
       {/* Gradient overlays */}
-      <div className="absolute inset-0 bg-gradient-to-b from-white/0 via-white/0 to-white" />
-      <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-transparent to-accent/5" />
+      <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/0 to-background" />
+      <div className="absolute inset-0 bg-gradient-to-br from-background/40 via-transparent to-accent/5" />
       
       {/* Bottom fade for smooth transition */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-background to-transparent" />
       
       {/* Content */}
       <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl font-bold mb-6 scroll-animation">
-            <span className="gradient-text">Transform Your Business</span>
+            <span className="gradient-text dark:text-primary">Transform Your Business</span>
             <br />
             with iSu Technologies
           </h1>
@@ -113,7 +115,7 @@ const Hero = () => {
           ].map((feature, index) => (
             <div
               key={feature.title}
-              className="glass-card p-6 rounded-lg scroll-animation"
+              className="glass-card p-6 rounded-lg scroll-animation dark:bg-white/[0.02] dark:backdrop-blur-xl dark:border-white/[0.05]"
               style={{ transitionDelay: feature.delay }}
             >
               <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
@@ -137,7 +139,7 @@ const Hero = () => {
                   <img 
                     src={logo.src} 
                     alt={logo.alt} 
-                    className="h-full w-full object-contain" 
+                    className="h-full w-full object-contain dark:brightness-100 dark:contrast-100 dark:invert" 
                   />
                 </div>
               ))}
@@ -151,7 +153,7 @@ const Hero = () => {
                   <img 
                     src={logo.src} 
                     alt={logo.alt} 
-                    className="h-full w-full object-contain" 
+                    className="h-full w-full object-contain dark:brightness-100 dark:contrast-100 dark:invert" 
                   />
                 </div>
               ))}
