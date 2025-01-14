@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import { useTheme } from '@/contexts/ThemeContext';
 
 const AboutPage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const { theme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,25 +23,39 @@ const AboutPage = () => {
       {/* Hero Section with Progress */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background patterns */}
-        <div className="absolute inset-0 bg-white z-0" />
+        <div className="absolute inset-0 bg-background" />
         
         {/* Grid pattern */}
         <div 
           className="absolute inset-0" 
           style={{
             backgroundImage: `
-              linear-gradient(to right, rgba(0, 0, 0, 0.06) 1px, transparent 1px),
-              linear-gradient(to bottom, rgba(0, 0, 0, 0.06) 1px, transparent 1px)
+              linear-gradient(to right, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.06)'} 1px, transparent 1px),
+              linear-gradient(to bottom, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.02)' : 'rgba(0, 0, 0, 0.06)'} 1px, transparent 1px)
             `,
             backgroundSize: '40px 40px'
           }}
         />
+        <div 
+          className="absolute inset-0" 
+          style={{
+            backgroundImage: `
+              linear-gradient(to right, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.08)'} 1px, transparent 1px),
+              linear-gradient(to bottom, ${theme === 'dark' ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.08)'} 1px, transparent 1px)
+            `,
+            backgroundSize: '160px 160px'
+          }}
+        />
         
         {/* Grain effect */}
-        <div className="absolute inset-0 bg-[url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')] bg-repeat opacity-[0.04]" />
+        <div className="absolute inset-0 bg-[url('https://framerusercontent.com/images/rR6HYXBrMmX4cRpXfXUOvpvpB0.png')] bg-repeat opacity-[0.03] dark:opacity-[0.15]" />
+        
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-background/0 via-background/0 to-background" />
+        <div className="absolute inset-0 bg-gradient-to-br from-background/40 via-transparent to-accent/5" />
         
         {/* Progress Bar */}
-        <div className="fixed top-0 left-0 w-full h-1 bg-gray-200 z-50">
+        <div className="fixed top-0 left-0 w-full h-1 bg-border z-50">
           <div 
             className="h-full bg-primary transition-all duration-300 ease-out"
             style={{ width: `${scrollProgress}%` }}
@@ -51,24 +67,24 @@ const AboutPage = () => {
           <div className="text-center">
             <h1 className="text-6xl md:text-8xl font-bold mb-6">
               <div className="overflow-hidden">
-                <span className="block transform transition-transform duration-1000 translate-y-0">
+                <span className="block transform transition-transform duration-1000 translate-y-0 gradient-text dark:text-primary">
                   PASSION
                 </span>
               </div>
               <div className="overflow-hidden">
-                <span className="block transform transition-transform duration-1000 delay-300 translate-y-0">
+                <span className="block transform transition-transform duration-1000 delay-300 translate-y-0 text-foreground">
                   THINK
                 </span>
               </div>
               <div className="overflow-hidden">
-                <span className="block transform transition-transform duration-1000 delay-600 translate-y-0">
+                <span className="block transform transition-transform duration-1000 delay-600 translate-y-0 text-foreground">
                   BUILD
                 </span>
               </div>
             </h1>
             
             <p className="text-xl md:text-2xl text-muted-foreground mt-8 max-w-2xl mx-auto">
-              {scrollProgress.toFixed(0)}%
+              Transforming ideas into reality since 2012
             </p>
           </div>
         </div>

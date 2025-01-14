@@ -38,32 +38,32 @@
   }
 
   .dark {
-    --background: 222 47% 11%;
-    --foreground: 210 40% 98%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 98%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 210 40% 98%;
+    --card: 0 0% 0%;
+    --card-foreground: 0 0% 98%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 0 0% 0%;
+    --popover-foreground: 0 0% 98%;
 
     --primary: 45 85% 33%;
     --primary-foreground: 0 0% 100%;
 
     --secondary: 45 85% 33%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary-foreground: 0 0% 98%;
 
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 65%;
 
     --accent: 45 85% 33%;
-    --accent-foreground: 210 40% 98%;
+    --accent-foreground: 0 0% 98%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
     --ring: 45 85% 33%;
   }
 }
@@ -128,8 +128,8 @@
 
   .btn-secondary {
     @apply inline-flex items-center justify-center px-8 py-3
-           text-sm font-semibold text-black
-           bg-white rounded-full shadow-sm
+           text-sm font-semibold text-foreground
+           bg-background rounded-full shadow-sm
            ring-1 ring-inset ring-[#9c7c0b]
            transition-all duration-300 ease-out
            hover:px-10 hover:py-2.5 hover:bg-[#9c7c0b]/5
@@ -138,7 +138,7 @@
   }
 
   .nav-link {
-    @apply text-sm font-medium text-black hover:text-[#9c7c0b] transition-all duration-200
+    @apply text-sm font-medium text-foreground hover:text-[#9c7c0b] transition-all duration-200
            relative after:absolute after:bottom-0 after:left-0 after:h-0.5 
            after:w-0 after:bg-[#9c7c0b] after:transition-all after:duration-300
            hover:after:w-full;

@@ -111,18 +111,18 @@ const Contact = () => {
             <div className="floating-card p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Visit Our Office</h3>
               <p className="text-muted-foreground">
-                123 Business Avenue<br />
-                Tech District<br />
-                San Francisco, CA 94105
+                18 The Boulevard <br />
+                Westway Office Park<br />
+                Westville, 3630
               </p>
             </div>
 
             <div className="floating-card p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
               <div className="space-y-3 text-muted-foreground">
-                <p>Email: contact@isutech.com</p>
-                <p>Phone: +1 (555) 123-4567</p>
-                <p>Hours: Mon-Fri 9:00 AM - 6:00 PM PST</p>
+                <p>Email: info@isutech.co.za</p>
+                <p>Phone: +27 68 127 6710</p>
+                <p>Hours: Mon-Fri 9:00 AM - 6:00 PM </p>
               </div>
             </div>
 
