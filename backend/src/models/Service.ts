@@ -110,4 +110,4 @@ serviceSchema.pre('save', function(next) {
   next();
 });
 
-export default mongoose.model<IService>('Service', serviceSchema); 
+export const Service = mongoose.model<IService>('Service', serviceSchema); 

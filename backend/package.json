@@ -7,10 +7,12 @@
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
     "build": "tsc",
-    "test": "jest"
+    "test": "jest",
+    "seed:admin": "ts-node src/scripts/seedAdmin.ts"
   },
   "dependencies": {
     "@types/morgan": "^1.9.9",
+    "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",

@@ -1,50 +1,46 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/user.model';
+import User, { IUser } from '../models/user.model';
+import mongoose from 'mongoose';
 
 interface JwtPayload {
-  userId: string;
+  id: mongoose.Types.ObjectId;
   role: string;
 }
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: any;
-    }
-  }
+export interface AuthRequest extends Request {
+  user?: IUser;
 }
 
-export const authenticate = async (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
+export const protect = async (req: AuthRequest, res: Response, next: NextFunction) => {
+  let token;
 
-    if (!token) {
-      return res.status(401).json({ message: 'No token, authorization denied' });
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    try {
+      token = req.headers.authorization.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as JwtPayload;
+      req.user = await User.findById(decoded.id).select('-password');
+      next();
+    } catch (error) {
+      res.status(401).json({ message: 'Not authorized, token failed' });
     }
+  }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key') as JwtPayload;
-    const user = await User.findById(decoded.userId);
-
-    if (!user) {
-      return res.status(401).json({ message: 'User not found' });
-    }
-
-    req.user = { ...user.toObject(), role: decoded.role };
-    next();
-  } catch (error) {
-    res.status(401).json({ message: 'Token is not valid' });
+  if (!token) {
+    res.status(401).json({ message: 'Not authorized, no token' });
   }
 };
 
-export const authorize = (...roles: string[]) => {
-  return (req: Request, res: Response, next: NextFunction) => {
-    if (!req.user || !roles.includes(req.user.role)) {
-      return res.status(403).json({
-        success: false,
-        message: `User role ${req.user?.role} is not authorized to access this route`,
-      });
-    }
+export const adminOnly = (req: AuthRequest, res: Response, next: NextFunction) => {
+  if (req.user && req.user.role === 'admin') {
     next();
-  };
+  } else {
+    res.status(403).json({ message: 'Not authorized as admin' });
+  }
+};
+
+export const generateToken = (id: mongoose.Types.ObjectId): string => {
+  return jwt.sign({ id }, process.env.JWT_SECRET || 'your-secret-key', {
+    expiresIn: '30d',
+  });
 }; 

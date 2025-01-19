@@ -1,14 +1,14 @@
 import express from 'express';
 import { body } from 'express-validator';
 import { updateUserRole } from '../controllers/user.controller';
-import { authenticate } from '../middleware/auth';
+import { protect } from '../middleware/auth';
 import { isAdmin } from '../middleware/admin';
 
 const router = express.Router();
 
 // Update user role (admin only)
 router.patch('/role',
-  authenticate,
+  protect,
   isAdmin,
   [
     body('email').isEmail().withMessage('Valid email is required'),

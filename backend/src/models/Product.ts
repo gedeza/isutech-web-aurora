@@ -1,73 +1,125 @@
 import mongoose, { Document, Schema } from 'mongoose';
 
-export interface IProduct extends Document {
+interface ProductVariant {
+  _id?: mongoose.Types.ObjectId;
   name: string;
-  description: string;
-  type: 'product' | 'service';
-  category: string;
-  features: string[];
-  benefits: string[];
-  imageUrl?: string;
-  price?: {
-    amount: number;
-    currency: string;
-    billingCycle?: 'one-time' | 'monthly' | 'yearly';
-  };
-  isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  sku: string;
+  price: number;
+  stock: number;
+  attributes: Record<string, string>;
+  createdBy: mongoose.Types.ObjectId;
 }
 
-const productSchema = new Schema<IProduct>({
-  name: {
-    type: String,
-    required: [true, 'Product name is required'],
-    trim: true,
-  },
-  description: {
-    type: String,
-    required: [true, 'Product description is required'],
-  },
-  type: {
-    type: String,
-    enum: ['product', 'service'],
-    required: [true, 'Product type is required'],
-  },
-  category: {
-    type: String,
-    required: [true, 'Product category is required'],
-    trim: true,
-  },
-  features: [{
-    type: String,
-    required: [true, 'At least one feature is required'],
-  }],
-  benefits: [{
-    type: String,
-    required: [true, 'At least one benefit is required'],
-  }],
-  imageUrl: {
-    type: String,
-  },
-  price: {
-    amount: {
+export interface IProduct extends Document {
+  name: string;
+  slug: string;
+  description: string;
+  category: string;
+  price: number;
+  status: 'Active' | 'Draft' | 'Archived';
+  stock?: number;
+  images: string[];
+  variants: ProductVariant[];
+  lastUpdated: Date;
+  createdBy: mongoose.Types.ObjectId;
+}
+
+const productSchema = new Schema<IProduct>(
+  {
+    name: {
+      type: String,
+      required: [true, 'Please add a name'],
+      trim: true,
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
+    },
+    description: {
+      type: String,
+      required: [true, 'Please add a description'],
+    },
+    category: {
+      type: String,
+      required: [true, 'Please add a category'],
+      trim: true,
+    },
+    price: {
       type: Number,
+      required: [true, 'Please add a price'],
+      min: [0, 'Price cannot be negative'],
     },
-    currency: {
+    status: {
       type: String,
-      default: 'ZAR',
+      enum: ['Active', 'Draft', 'Archived'],
+      default: 'Draft',
     },
-    billingCycle: {
+    stock: {
+      type: Number,
+      min: [0, 'Stock cannot be negative'],
+    },
+    images: [{
       type: String,
-      enum: ['one-time', 'monthly', 'yearly'],
+    }],
+    variants: [
+      {
+        name: {
+          type: String,
+          required: true,
+        },
+        sku: {
+          type: String,
+          required: true,
+        },
+        price: {
+          type: Number,
+          required: true,
+          min: [0, 'Price cannot be negative'],
+        },
+        stock: {
+          type: Number,
+          required: true,
+          min: [0, 'Stock cannot be negative'],
+        },
+        attributes: {
+          type: Map,
+          of: String,
+        },
+        createdBy: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: 'User',
+          required: true,
+        },
+      },
+    ],
+    lastUpdated: {
+      type: Date,
+      default: Date.now,
+    },
+    createdBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-}, {
-  timestamps: true,
+  {
+    timestamps: true,
+  }
+);
+
+// Create slug from name before saving
+productSchema.pre('save', function (next) {
+  if (this.isModified('name')) {
+    this.slug = this.name
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]/g, '-')
+      .replace(/-+/g, '-');
+  }
+  this.lastUpdated = new Date();
+  next();
 });
 
-export default mongoose.model<IProduct>('Product', productSchema); 
+export const Product = mongoose.model<IProduct>('Product', productSchema); 
