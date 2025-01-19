@@ -12,6 +12,8 @@ import ScrollToTop from './components/ScrollToTop';
 import SupportPage from './pages/SupportPage';
 import TermsPage from './pages/TermsPage';
 import DocumentationPage from './pages/DocumentationPage';
+import DashboardPage from './pages/admin/DashboardPage';
+import LoginPage from './pages/admin/LoginPage';
 
 function App() {
   return (
@@ -31,7 +33,8 @@ function App() {
             <Route path="/support" element={<SupportPage/>}/>
             <Route path="/terms" element={<TermsPage/>}/>
             <Route path="/documentation" element={<DocumentationPage/>}/>
-
+            <Route path="/dashboard" element={<DashboardPage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
           </Routes>
         </main>
         <Footer />

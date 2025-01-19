@@ -1,0 +1,41 @@
+﻿{
+    "pricingTiers":  [
+                         {
+                             "price":  1000,
+                             "currency":  "ZAR",
+                             "name":  "Basic",
+                             "features":  [
+                                              "Basic AI Models",
+                                              "Standard Support"
+                                          ]
+                         }
+                     ],
+    "shortDescription":  "Transform your business with AI",
+    "description":  "Comprehensive AI and automation solutions for businesses",
+    "process":  [
+                    {
+                        "description":  "Understanding your business needs and AI opportunities",
+                        "title":  "Initial Consultation"
+                    },
+                    {
+                        "description":  "Developing a tailored AI implementation roadmap",
+                        "title":  "Strategic Planning"
+                    }
+                ],
+    "category":  "Technology",
+    "benefits":  [
+                     "Increased Efficiency",
+                     "Cost Reduction",
+                     "Better Decision Making"
+                 ],
+    "name":  "AI \u0026 Automation",
+    "technologies":  [
+                         "TensorFlow",
+                         "PyTorch"
+                     ],
+    "features":  [
+                     "Custom AI Models",
+                     "Process Automation",
+                     "Data Analytics"
+                 ]
+}
