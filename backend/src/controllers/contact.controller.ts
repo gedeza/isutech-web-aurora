@@ -1,15 +1,18 @@
 import { Request, Response } from 'express';
 import Contact from '../models/contact.model';
 import { sendEmail } from '../utils/email';
+import { AuthRequest } from '../middleware/auth';
 
+// Submit contact form
 export const submitContact = async (req: Request, res: Response) => {
   try {
-    const { name, email, message } = req.body;
+    const { name, email, company, message } = req.body;
 
     // Create new contact
     const contact = new Contact({
       name,
       email,
+      company,
       message,
     });
 
@@ -22,6 +25,7 @@ export const submitContact = async (req: Request, res: Response) => {
       text: `
         New contact form submission from ${name}
         Email: ${email}
+        ${company ? `Company: ${company}\n` : ''}
         Message: ${message}
       `,
     });
@@ -46,44 +50,49 @@ export const submitContact = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Submit contact error:', error);
-    res.status(500).json({ message: 'Error submitting contact form' });
+    res.status(500).json({ 
+      message: error instanceof Error ? error.message : 'Error submitting contact form' 
+    });
   }
 };
 
-export const getAllContacts = async (req: Request, res: Response) => {
+// Get all contact submissions (admin only)
+export const getAllContacts = async (req: AuthRequest, res: Response) => {
   try {
     const contacts = await Contact.find().sort({ createdAt: -1 });
     res.json(contacts);
   } catch (error) {
     console.error('Get contacts error:', error);
-    res.status(500).json({ message: 'Error getting contacts' });
+    res.status(500).json({ message: 'Error fetching contact submissions' });
   }
 };
 
-export const getContactById = async (req: Request, res: Response) => {
+// Get contact by ID (admin only)
+export const getContactById = async (req: AuthRequest, res: Response) => {
   try {
     const contact = await Contact.findById(req.params.id);
     if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: 'Contact submission not found' });
     }
     res.json(contact);
   } catch (error) {
     console.error('Get contact error:', error);
-    res.status(500).json({ message: 'Error getting contact' });
+    res.status(500).json({ message: 'Error fetching contact submission' });
   }
 };
 
-export const updateContactStatus = async (req: Request, res: Response) => {
+// Update contact status (admin only)
+export const updateContactStatus = async (req: AuthRequest, res: Response) => {
   try {
     const { status } = req.body;
     const contact = await Contact.findByIdAndUpdate(
       req.params.id,
       { status },
-      { new: true }
+      { new: true, runValidators: true }
     );
 
     if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: 'Contact submission not found' });
     }
 
     res.json(contact);
@@ -93,15 +102,16 @@ export const updateContactStatus = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteContact = async (req: Request, res: Response) => {
+// Delete contact (admin only)
+export const deleteContact = async (req: AuthRequest, res: Response) => {
   try {
     const contact = await Contact.findByIdAndDelete(req.params.id);
     if (!contact) {
-      return res.status(404).json({ message: 'Contact not found' });
+      return res.status(404).json({ message: 'Contact submission not found' });
     }
-    res.json({ message: 'Contact deleted successfully' });
+    res.json({ message: 'Contact submission deleted successfully' });
   } catch (error) {
     console.error('Delete contact error:', error);
-    res.status(500).json({ message: 'Error deleting contact' });
+    res.status(500).json({ message: 'Error deleting contact submission' });
   }
 }; 

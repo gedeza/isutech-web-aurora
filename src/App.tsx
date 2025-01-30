@@ -22,6 +22,7 @@ import ProductManagement from './pages/admin/products/ProductManagement';
 import ProductForm from './pages/admin/products/ProductForm';
 import ServicesDashboard from './pages/admin/services/ServicesDashboard';
 import ServiceForm from './pages/admin/services/ServiceForm';
+import ContactsDashboard from './pages/admin/contacts/ContactsDashboard';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
 
         {/* Admin Routes */}
         <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<DashboardPage />} />
           <Route path="dashboard" element={<DashboardPage/>}/>
           
           {/* CRM Routes */}
@@ -65,6 +67,9 @@ function App() {
           <Route path="services" element={<ServicesDashboard />} />
           <Route path="services/new" element={<ServiceForm />} />
           <Route path="services/:id/edit" element={<ServiceForm />} />
+
+          {/* Contacts Management Routes */}
+          <Route path="contacts" element={<ContactsDashboard />} />
         </Route>
       </Routes>
     </Router>

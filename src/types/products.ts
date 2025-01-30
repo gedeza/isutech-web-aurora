@@ -1,15 +1,20 @@
 export interface Product {
-  id: number;
+  _id: string;
   name: string;
-  shortDesc: string;
+  slug: string;
   description: string;
+  shortDescription: string;
   category: string;
-  year: string;
-  image: string;
-  client: string;
-  technologies?: string[];
-  features?: string[];
-  status?: 'completed' | 'ongoing';
+  price: number;
+  status: 'Active' | 'Draft' | 'Archived';
+  images: string[];
+  technologies: string[];
+  client?: string;
+  year?: string;
+  createdBy: string;
+  lastUpdated: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CategoryItem {

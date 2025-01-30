@@ -1,8 +1,27 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Building2, Bot, Code2, Laptop2 } from 'lucide-react';
+import { servicesApi, Service } from '../utils/api';
 
 const Services = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const observerRef = useRef<IntersectionObserver | null>(null);
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await servicesApi.getAll();
+        setServices(data.filter(service => service.status === 'Published'));
+      } catch (err: any) {
+        setError(err.message || 'Failed to fetch services');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
 
   useEffect(() => {
     observerRef.current = new IntersectionObserver((entries) => {
@@ -23,59 +42,20 @@ const Services = () => {
     return () => observerRef.current?.disconnect();
   }, []);
 
-  const services = [
-    {
-      title: "Government Solutions",
-      description: "Specialized solutions for government departments and municipalities. From tender management to service delivery tracking, we help streamline public sector operations.",
-      icon: Building2,
-      features: [
-        "Tender Management Systems",
-        "Service Delivery Tracking",
-        "Public Sector Compliance",
-        "Municipal Solutions"
-      ]
-    },
-    {
-      title: "AI & Automation",
-      description: "Leverage cutting-edge AI and automation technologies to transform your business processes and boost efficiency.",
-      icon: Bot,
-      features: [
-        "Process Automation",
-        "AI Integration",
-        "Workflow Optimization",
-        "Smart Analytics"
-      ]
-    },
-    {
-      title: "Custom Development",
-      description: "Tailored software solutions designed to meet your specific business requirements and challenges.",
-      icon: Code2,
-      features: [
-        "Web Applications",
-        "Mobile Solutions",
-        "System Integration",
-        "Legacy Modernization"
-      ]
-    },
-    {
-      title: "Digital Transformation",
-      description: "End-to-end digital transformation services to help organizations adapt and thrive in the digital age.",
-      icon: Laptop2,
-      features: [
-        "Digital Strategy",
-        "Process Digitization",
-        "Change Management",
-        "Technology Adoption"
-      ]
-    }
-  ];
-
   const stats = [
     { title: "24/7 Support", value: "Always available", delay: "200ms" },
     { title: "Clients Worldwide", value: "100+", delay: "400ms" },
     { title: "Team Members", value: "50+", delay: "600ms" },
     { title: "Success Rate", value: "99.9%", delay: "800ms" }
   ];
+
+  if (loading) {
+    return <div className="text-center py-12">Loading services...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-12 text-red-500">{error}</div>;
+  }
 
   return (
     <section className="section relative overflow-hidden" id="services">
@@ -95,16 +75,21 @@ const Services = () => {
 
         {/* Services grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
-              key={service.title}
+              key={service._id}
               className="bg-card p-6 rounded-lg shadow-sm scroll-animation"
             >
-              <service.icon className="w-12 h-12 text-primary mb-4" />
-              <h3 className="text-xl font-semibold mb-3">{service.title}</h3>
-              <p className="text-muted-foreground mb-6">{service.description}</p>
+              <div className="w-12 h-12 text-primary mb-4">
+                {service.category === 'Government Solutions' && <Building2 className="w-full h-full" />}
+                {service.category === 'AI & Automation' && <Bot className="w-full h-full" />}
+                {service.category === 'Custom Development' && <Code2 className="w-full h-full" />}
+                {service.category === 'Digital Transformation' && <Laptop2 className="w-full h-full" />}
+              </div>
+              <h3 className="text-xl font-semibold mb-3">{service.name}</h3>
+              <p className="text-muted-foreground mb-6">{service.shortDescription}</p>
               <ul className="space-y-2">
-                {service.features.map(feature => (
+                {service.features.slice(0, 4).map(feature => (
                   <li key={feature} className="flex items-center gap-2">
                     <span>•</span>
                     {feature}

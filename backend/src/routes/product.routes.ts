@@ -1,100 +1,89 @@
-import express from 'express';
-import { body } from 'express-validator';
-import multer from 'multer';
-import * as productController from '../controllers/product.controller';
-import { validateRequest } from '../middleware/validate-request';
-import { auth, adminAuth } from '../middleware/auth.middleware';
+import express from "express"
+import { body } from "express-validator"
+import * as productController from "../controllers/product.controller"
+import { validateRequest } from "../middleware/validate-request"
+import { protect, adminOnly } from "../middleware/auth"
 
-const router = express.Router();
+const router = express.Router()
 
-// Configure multer for image uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/products');
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, uniqueSuffix + '-' + file.originalname);
-  },
-});
+// Public routes
+router.get("/", productController.getAllProducts)
+router.get("/categories", productController.getProductCategories)
+router.get("/slug/:slug", productController.getProductBySlug)
 
-const upload = multer({
-  storage,
-  fileFilter: (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(null, false);
-      return cb(new Error('Only image files are allowed!'));
-    }
-  },
-  limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB max file size
-  },
-});
+// Protected routes
+router.use(protect)
+router.get("/:id", productController.getProductById)
 
-// Create product
+// Admin routes
+router.use(adminOnly)
+
 router.post(
-  '/',
-  auth,
-  adminAuth,
-  upload.array('images', 5), // Allow up to 5 images
+  "/",
   [
-    body('name').notEmpty().withMessage('Product name is required'),
-    body('description').notEmpty().withMessage('Description is required'),
-    body('shortDescription').notEmpty().withMessage('Short description is required'),
-    body('features').isArray().withMessage('Features must be an array'),
-    body('benefits').isArray().withMessage('Benefits must be an array'),
-    body('pricing.type').isIn(['one-time', 'subscription']).withMessage('Invalid pricing type'),
-    body('pricing.amount').isNumeric().withMessage('Price amount must be a number'),
-    body('pricing.currency').optional().isString().withMessage('Currency must be a string'),
-    body('pricing.interval')
-      .optional()
-      .isIn(['monthly', 'yearly'])
-      .withMessage('Invalid pricing interval'),
-    body('category').notEmpty().withMessage('Category is required'),
-    body('status').optional().isIn(['draft', 'published']).withMessage('Invalid status'),
+    body("name").notEmpty().withMessage("Name is required"),
+    body("description").notEmpty().withMessage("Description is required"),
+    body("shortDescription").notEmpty().withMessage("Short description is required"),
+    body("category").notEmpty().withMessage("Category is required"),
+    body("price").isNumeric().withMessage("Price must be a number"),
+    body("technologies").isArray().withMessage("Technologies must be an array"),
+    body("images").isArray().withMessage("Images must be an array"),
+    body("status").isIn(["Active", "Draft", "Archived"]).withMessage("Invalid status"),
   ],
   validateRequest,
-  productController.createProduct
-);
+  productController.createProduct,
+)
 
-// Get all products
-router.get('/', productController.getAllProducts);
+router.get("/admin", productController.getAllProducts)
 
-// Get product categories
-router.get('/categories', productController.getProductCategories);
+router.put(
+  "/:id",
+  [
+    body("name").optional().notEmpty().withMessage("Name cannot be empty"),
+    body("description").optional().notEmpty().withMessage("Description cannot be empty"),
+    body("shortDescription").optional().notEmpty().withMessage("Short description cannot be empty"),
+    body("category").optional().notEmpty().withMessage("Category cannot be empty"),
+    body("price").optional().isNumeric().withMessage("Price must be a number"),
+    body("technologies").optional().isArray().withMessage("Technologies must be an array"),
+    body("images").optional().isArray().withMessage("Images must be an array"),
+    body("status").optional().isIn(["Active", "Draft", "Archived"]).withMessage("Invalid status"),
+  ],
+  validateRequest,
+  productController.updateProduct,
+)
 
-// Get product by slug
-router.get('/:slug', productController.getProductBySlug);
-
-// Update product
 router.patch(
-  '/:id',
-  auth,
-  adminAuth,
-  upload.array('images', 5),
+  "/:id/status",
+  [body("status").isIn(["Active", "Draft", "Archived"]).withMessage("Invalid status")],
+  validateRequest,
+  productController.updateProductStatus,
+)
+
+router.delete("/:id", productController.deleteProduct)
+
+// Variant routes
+router.post(
+  "/:id/variants",
   [
-    body('name').optional().notEmpty().withMessage('Product name cannot be empty'),
-    body('description').optional().notEmpty().withMessage('Description cannot be empty'),
-    body('shortDescription').optional().notEmpty().withMessage('Short description cannot be empty'),
-    body('features').optional().isArray().withMessage('Features must be an array'),
-    body('benefits').optional().isArray().withMessage('Benefits must be an array'),
-    body('pricing.type').optional().isIn(['one-time', 'subscription']).withMessage('Invalid pricing type'),
-    body('pricing.amount').optional().isNumeric().withMessage('Price amount must be a number'),
-    body('pricing.currency').optional().isString().withMessage('Currency must be a string'),
-    body('pricing.interval')
-      .optional()
-      .isIn(['monthly', 'yearly'])
-      .withMessage('Invalid pricing interval'),
-    body('category').optional().notEmpty().withMessage('Category cannot be empty'),
-    body('status').optional().isIn(['draft', 'published']).withMessage('Invalid status'),
+    body("sku").notEmpty().withMessage("SKU is required"),
+    body("price").isNumeric().withMessage("Price must be a number"),
+    body("inventory").isNumeric().withMessage("Inventory must be a number"),
   ],
   validateRequest,
-  productController.updateProduct
-);
+  productController.addProductVariant,
+)
 
-// Delete product
-router.delete('/:id', auth, adminAuth, productController.deleteProduct);
+router.put(
+  "/:id/variants/:variantId",
+  [
+    body("sku").optional().notEmpty().withMessage("SKU cannot be empty"),
+    body("price").optional().isNumeric().withMessage("Price must be a number"),
+    body("inventory").optional().isNumeric().withMessage("Inventory must be a number"),
+  ],
+  validateRequest,
+  productController.updateProductVariant,
+)
 
-export default router; 
+router.delete("/:id/variants/:variantId", productController.deleteProductVariant)
+
+export default router

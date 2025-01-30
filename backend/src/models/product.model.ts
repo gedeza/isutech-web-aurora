@@ -1,101 +1,118 @@
-import mongoose from 'mongoose';
+import mongoose, { type Document, Schema } from "mongoose"
 
-export interface IProduct extends mongoose.Document {
-  name: string;
-  slug: string;
-  description: string;
-  shortDescription: string;
-  features: string[];
-  benefits: string[];
-  images: string[];
-  pricing: {
-    type: 'one-time' | 'subscription';
-    amount: number;
-    currency: string;
-    interval?: 'monthly' | 'yearly';
-  };
-  category: string;
-  status: 'draft' | 'published';
-  createdAt: Date;
-  updatedAt: Date;
+export interface IProduct extends Document {
+  name: string
+  slug: string
+  description: string
+  shortDescription: string
+  category: string
+  price: number
+  status: "Active" | "Draft" | "Archived"
+  images: string[]
+  technologies: string[]
+  client?: string
+  year?: string
+  createdBy: mongoose.Types.ObjectId
+  lastUpdated: Date
+  createdAt: Date
+  updatedAt: Date
+  variants: Array<{
+    _id?: mongoose.Types.ObjectId
+    sku: string
+    price: number
+    inventory: number
+  }>
 }
 
-const productSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-  },
-  slug: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    lowercase: true,
-  },
-  description: {
-    type: String,
-    required: true,
-  },
-  shortDescription: {
-    type: String,
-    required: true,
-    maxlength: 200,
-  },
-  features: [{
-    type: String,
-    required: true,
-  }],
-  benefits: [{
-    type: String,
-    required: true,
-  }],
-  images: [{
-    type: String,
-    required: true,
-  }],
-  pricing: {
-    type: {
+const productSchema = new Schema<IProduct>(
+  {
+    name: {
       type: String,
-      enum: ['one-time', 'subscription'],
+      required: [true, "Product name is required"],
+      trim: true,
+    },
+    slug: {
+      type: String,
       required: true,
+      unique: true,
+      trim: true,
+      lowercase: true,
     },
-    amount: {
-      type: Number,
-      required: true,
-    },
-    currency: {
+    description: {
       type: String,
-      default: 'ZAR',
+      required: [true, "Description is required"],
     },
-    interval: {
+    shortDescription: {
       type: String,
-      enum: ['monthly', 'yearly'],
-      required: function(this: any) {
-        return this.pricing.type === 'subscription';
+      required: [true, "Short description is required"],
+      maxlength: 200,
+    },
+    category: {
+      type: String,
+      required: [true, "Category is required"],
+      trim: true,
+    },
+    technologies: [
+      {
+        type: String,
       },
+    ],
+    images: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    price: {
+      type: Number,
+      required: [true, "Price is required"],
+      min: [0, "Price cannot be negative"],
     },
+    status: {
+      type: String,
+      enum: ["Active", "Draft", "Archived"],
+      default: "Draft",
+    },
+    client: {
+      type: String,
+    },
+    year: {
+      type: String,
+    },
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    lastUpdated: {
+      type: Date,
+      default: Date.now,
+    },
+    variants: [
+      {
+        sku: { type: String, required: true },
+        price: { type: Number, required: true },
+        inventory: { type: Number, required: true },
+      },
+    ],
   },
-  category: {
-    type: String,
-    required: true,
-    trim: true,
+  {
+    timestamps: true,
   },
-  status: {
-    type: String,
-    enum: ['draft', 'published'],
-    default: 'draft',
-  },
-}, {
-  timestamps: true,
-});
+)
 
-// Create slug from name before saving
-productSchema.pre('save', function(next) {
-  if (this.isModified('name')) {
-    this.slug = this.name.toLowerCase().replace(/[^a-zA-Z0-9]/g, '-');
+productSchema.pre<IProduct>("save", function (next) {
+  if (this.isModified("name")) {
+    this.slug = this.name
+      .toLowerCase()
+      .replace(/[^a-zA-Z0-9]/g, "-")
+      .replace(/-+/g, "-")
   }
-  next();
-});
+  this.lastUpdated = new Date()
+  next()
+})
 
-export default mongoose.model<IProduct>('Product', productSchema); 
+const Product = mongoose.model<IProduct>("Product", productSchema)
+
+export default Product
+

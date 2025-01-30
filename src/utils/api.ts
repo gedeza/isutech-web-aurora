@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Product } from '@/types/products';
 
 const API_URL = 'http://localhost:5000/api';
 
@@ -29,16 +30,6 @@ export interface Service {
   updatedAt: Date;
 }
 
-export interface Product {
-  id: string;
-  name: string;
-  category: string;
-  price: number;
-  stock: number;
-  status: 'Active' | 'Draft' | 'Archived';
-  lastUpdated: string;
-}
-
 export interface User {
   id: string;
   name: string;
@@ -46,6 +37,17 @@ export interface User {
   role: 'admin' | 'user';
   status: 'Active' | 'Inactive';
   lastLogin?: string;
+}
+
+export interface Contact {
+  _id: string;
+  name: string;
+  email: string;
+  company?: string;
+  message: string;
+  status: 'new' | 'read' | 'replied';
+  createdAt: string;
+  updatedAt: string;
 }
 
 // Create axios instance with default config
@@ -102,13 +104,14 @@ export const servicesApi = {
 
 // API methods for products
 export const productsApi = {
-  getAll: () => api.get<any, Product[]>('/products'),
-  getById: (id: string) => api.get<any, Product>(`/products/${id}`),
-  create: (data: Partial<Product>) => api.post<any, Product>('/products', data),
-  update: (id: string, data: Partial<Product>) => api.put<any, Product>(`/products/${id}`, data),
-  delete: (id: string) => api.delete<any, void>(`/products/${id}`),
-  updateStatus: (id: string, status: Product['status']) => 
-    api.patch<any, Product>(`/products/${id}/status`, { status }),
+  getAll: () => api.get<Product[]>('/products'),
+  getById: (id: string) => api.get<Product>(`/products/${id}`),
+  getBySlug: (slug: string) => api.get<Product>(`/products/slug/${slug}`),
+  create: (data: Omit<Product, '_id' | 'createdAt' | 'updatedAt'>) => api.post<Product>('/products', data),
+  update: (id: string, data: Partial<Product>) => api.put<Product>(`/products/${id}`, data),
+  updateStatus: (id: string, status: Product['status']) => api.patch<Product>(`/products/${id}/status`, { status }),
+  delete: (id: string) => api.delete(`/products/${id}`),
+  getCategories: () => api.get<{ categories: string[] }>('/products/categories'),
 };
 
 // API methods for users
@@ -120,6 +123,23 @@ export const usersApi = {
   delete: (id: string) => api.delete<any, void>(`/users/${id}`),
   updateStatus: (id: string, status: User['status']) => 
     api.patch<any, User>(`/users/${id}/status`, { status }),
+};
+
+// API methods for contact form
+export interface ContactFormData {
+  name: string;
+  email: string;
+  company?: string;
+  message: string;
+}
+
+export const contactApi = {
+  submit: (data: ContactFormData) => api.post<any, { message: string }>('/contact', data),
+  getAll: () => api.get<any, Contact[]>('/contact'),
+  getById: (id: string) => api.get<any, Contact>(`/contact/${id}`),
+  updateStatus: (id: string, status: Contact['status']) => 
+    api.patch<any, Contact>(`/contact/${id}/status`, { status }),
+  delete: (id: string) => api.delete<any, void>(`/contact/${id}`),
 };
 
 export default api; 

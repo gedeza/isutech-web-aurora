@@ -32,11 +32,11 @@ router.patch('/customers/:id/status', protect, adminOnly, customerController.upd
 
 // Product routes
 router.route('/products')
-  .get(protect, adminOnly, productController.getProducts)
+  .get(protect, adminOnly, productController.getAllProducts)
   .post(protect, adminOnly, productController.createProduct);
 
 router.route('/products/:id')
-  .get(protect, adminOnly, productController.getProduct)
+  .get(protect, adminOnly, productController.getProductById)
   .put(protect, adminOnly, productController.updateProduct)
   .delete(protect, adminOnly, productController.deleteProduct);
 

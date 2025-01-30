@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { servicesApi } from '@/utils/api';
 
 interface User {
   name: string;
@@ -10,6 +13,8 @@ interface User {
 const DashboardPage = () => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const [servicesCount, setServicesCount] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     console.log('DashboardPage mounted, checking authentication...');
@@ -43,6 +48,21 @@ const DashboardPage = () => {
     }
   }, [navigate]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const services = await servicesApi.getAll();
+        setServicesCount(services.length);
+      } catch (error) {
+        console.error('Failed to fetch services:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -52,6 +72,22 @@ const DashboardPage = () => {
   if (!user) {
     return null;
   }
+
+  const stats = [
+    {
+      title: "Total Services",
+      value: loading ? "..." : servicesCount,
+      description: "Active services in the system",
+      action: () => navigate('/admin/services')
+    },
+    {
+      title: "Contact Submissions",
+      value: "View All",
+      description: "Manage contact form submissions",
+      action: () => navigate('/admin/contacts')
+    },
+    // ... existing code ...
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -87,77 +123,25 @@ const DashboardPage = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-card p-6 rounded-lg shadow-sm border border-border/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Services</p>
-                <h3 className="text-2xl font-bold mt-2">0</h3>
+          {stats.map((stat) => (
+            <Card key={stat.title} className="bg-card p-6 rounded-lg shadow-sm border border-border/50">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm font-medium text-muted-foreground">{stat.title}</p>
+                  <h3 className="text-2xl font-bold mt-2">{stat.value}</h3>
+                </div>
+                <div className="p-3 bg-primary/10 text-primary rounded-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    {/* Add appropriate SVG for each stat */}
+                  </svg>
+                </div>
               </div>
-              <div className="p-3 bg-primary/10 text-primary rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
+              <div className="mt-4">
+                <span className="text-sm text-green-600 font-medium">↑ 12%</span>
+                <span className="text-sm text-muted-foreground ml-2">from last month</span>
               </div>
-            </div>
-            <div className="mt-4">
-              <span className="text-sm text-green-600 font-medium">↑ 12%</span>
-              <span className="text-sm text-muted-foreground ml-2">from last month</span>
-            </div>
-          </div>
-
-          <div className="bg-card p-6 rounded-lg shadow-sm border border-border/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Total Products</p>
-                <h3 className="text-2xl font-bold mt-2">0</h3>
-              </div>
-              <div className="p-3 bg-blue-500/10 text-blue-500 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="text-sm text-green-600 font-medium">↑ 8%</span>
-              <span className="text-sm text-muted-foreground ml-2">from last month</span>
-            </div>
-          </div>
-
-          <div className="bg-card p-6 rounded-lg shadow-sm border border-border/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Active Users</p>
-                <h3 className="text-2xl font-bold mt-2">0</h3>
-              </div>
-              <div className="p-3 bg-green-500/10 text-green-500 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="text-sm text-green-600 font-medium">↑ 24%</span>
-              <span className="text-sm text-muted-foreground ml-2">from last month</span>
-            </div>
-          </div>
-
-          <div className="bg-card p-6 rounded-lg shadow-sm border border-border/50">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">Revenue</p>
-                <h3 className="text-2xl font-bold mt-2">$0</h3>
-              </div>
-              <div className="p-3 bg-yellow-500/10 text-yellow-500 rounded-full">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-              </div>
-            </div>
-            <div className="mt-4">
-              <span className="text-sm text-green-600 font-medium">↑ 16%</span>
-              <span className="text-sm text-muted-foreground ml-2">from last month</span>
-            </div>
-          </div>
+            </Card>
+          ))}
         </div>
 
         {/* Quick Actions & Recent Activity */}

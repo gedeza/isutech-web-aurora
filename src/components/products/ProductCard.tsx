@@ -1,29 +1,34 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/types/products';
+import { formatDate } from '@/utils/format';
 
 interface ProductCardProps {
   product: Product;
   isHovered: boolean;
-  onHover: (id: number | null) => void;
+  onHover: (id: string | null) => void;
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, isHovered, onHover }) => {
   return (
     <Link
-      to="#"
+      to={`/products/${product.slug}`}
       className="group relative aspect-[5/6] overflow-hidden rounded-lg bg-gray-100 animate-fade-in"
-      onMouseEnter={() => onHover(product.id)}
+      onMouseEnter={() => onHover(product._id)}
       onMouseLeave={() => onHover(null)}
     >
       <div className="absolute inset-0">
-        <div className="text-sm text-muted-foreground p-4 flex justify-between items-center">
+        {product.images[0] && (
+          <img
+            src={product.images[0]}
+            alt={product.name}
+            className="h-full w-full object-cover"
+          />
+        )}
+        <div className="text-sm text-muted-foreground p-4 flex justify-between items-center relative z-10">
           <span>{product.category}</span>
           <span className="flex items-center gap-2">
-            {product.status === 'ongoing' && (
-              <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
-            )}
-            <span>{product.year}</span>
+            {product.year}
           </span>
         </div>
         <div 
@@ -35,9 +40,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isHovered, onHover }
               isHovered ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
             }`}>
               <h3 className="text-xl font-bold text-white mb-2">{product.name}</h3>
-              <p className="text-gray-300 mb-3">{product.shortDesc}</p>
-              <p className="text-sm text-gray-400 mb-4">{product.client}</p>
-              {product.technologies && (
+              <p className="text-gray-300 mb-3">{product.shortDescription}</p>
+              {product.client && (
+                <p className="text-sm text-gray-400 mb-4">{product.client}</p>
+              )}
+              {product.technologies && product.technologies.length > 0 && (
                 <div className="flex flex-wrap gap-2 mb-4">
                   {product.technologies.map((tech, i) => (
                     <span 

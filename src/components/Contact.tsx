@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { contactApi } from '../utils/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,11 +8,30 @@ const Contact = () => {
     company: '',
     message: '',
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    setLoading(true);
+    setError('');
+    setSuccess(false);
+
+    try {
+      await contactApi.submit(formData);
+      setSuccess(true);
+      setFormData({
+        name: '',
+        email: '',
+        company: '',
+        message: '',
+      });
+    } catch (err: any) {
+      setError(err.response?.data?.message || 'Failed to submit form. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -40,70 +60,93 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
           <div className="glass-card p-8 rounded-lg animate-fade-in">
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium mb-2">
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
+            {success ? (
+              <div className="text-center py-8">
+                <h3 className="text-xl font-semibold text-green-600 mb-2">Message Sent Successfully!</h3>
+                <p className="text-muted-foreground mb-4">Thank you for contacting us. We'll get back to you soon.</p>
+                <button 
+                  onClick={() => setSuccess(false)} 
+                  className="btn-secondary"
+                >
+                  Send Another Message
+                </button>
               </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6">
+                    {error}
+                  </div>
+                )}
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium mb-2">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
+                <div>
+                  <label htmlFor="name" className="block text-sm font-medium mb-2">
+                    Name
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="company" className="block text-sm font-medium mb-2">
-                  Company
-                </label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  value={formData.company}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                />
-              </div>
+                <div>
+                  <label htmlFor="email" className="block text-sm font-medium mb-2">
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                  required
-                />
-              </div>
+                <div>
+                  <label htmlFor="company" className="block text-sm font-medium mb-2">
+                    Company (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    id="company"
+                    name="company"
+                    value={formData.company}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  />
+                </div>
 
-              <button type="submit" className="btn-primary w-full">
-                Send Message
-              </button>
-            </form>
+                <div>
+                  <label htmlFor="message" className="block text-sm font-medium mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
+                  />
+                </div>
+
+                <button 
+                  type="submit" 
+                  className="btn-primary w-full"
+                  disabled={loading}
+                >
+                  {loading ? 'Sending...' : 'Send Message'}
+                </button>
+              </form>
+            )}
           </div>
 
           {/* Contact Information */}
@@ -129,14 +172,28 @@ const Contact = () => {
             <div className="floating-card p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
-                {/* Add social media icons/links here */}
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href="https://www.linkedin.com/company/isutech" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   LinkedIn
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href="https://twitter.com/isutech" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   Twitter
                 </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+                <a 
+                  href="https://github.com/isutech" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-muted-foreground hover:text-primary transition-colors"
+                >
                   GitHub
                 </a>
               </div>

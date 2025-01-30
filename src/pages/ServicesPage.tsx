@@ -1,39 +1,37 @@
+import React, { useEffect, useState } from 'react';
+import { Building2, Bot, Code2, Laptop2 } from 'lucide-react';
+import { servicesApi, Service } from '../utils/api';
+import { Button } from '../components/ui/button';
 import { Link } from 'react-router-dom';
 import ProgressSection from '../components/ProgressSection';
 
 const ServicesPage = () => {
-  const services = [
-    {
-      title: "Enterprise Software Development",
-      description: "Custom-built solutions that drive business growth and efficiency",
-      features: [
-        "Web Applications",
-        "Mobile Development",
-        "Cloud Solutions",
-        "API Integration"
-      ]
-    },
-    {
-      title: "Digital Transformation",
-      description: "Modernize your business with cutting-edge digital solutions",
-      features: [
-        "Process Automation",
-        "Legacy System Migration",
-        "Digital Strategy",
-        "Technology Consulting"
-      ]
-    },
-    {
-      title: "Cybersecurity Solutions",
-      description: "Protect your business with advanced security measures",
-      features: [
-        "Network Security",
-        "Data Protection",
-        "Security Audits",
-        "Compliance Management"
-      ]
-    }
-  ];
+  const [services, setServices] = useState<Service[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchServices = async () => {
+      try {
+        const data = await servicesApi.getAll();
+        setServices(data.filter(service => service.status === 'Published'));
+      } catch (err: any) {
+        setError(err.message || 'Failed to fetch services');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchServices();
+  }, []);
+
+  if (loading) {
+    return <div className="text-center py-12">Loading services...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center py-12 text-red-500">{error}</div>;
+  }
 
   const stats = [
     { value: "100+", label: "Successful Projects" },
@@ -87,31 +85,45 @@ const ServicesPage = () => {
       {/* Main Services Section */}
       <section className="py-24">
         <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <div key={service.title} className="glass-card p-8 rounded-lg">
-                <h3 className="text-2xl font-semibold mb-4">{service.title}</h3>
+          <div className="max-w-2xl mx-auto text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">
+              <span className="gradient-text">Our Services</span>
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              Comprehensive technology solutions tailored to your needs
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {services.map((service) => (
+              <div
+                key={service._id}
+                className="bg-card p-8 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="w-12 h-12 text-primary mb-6">
+                  {service.category === 'Government Solutions' && <Building2 className="w-full h-full" />}
+                  {service.category === 'AI & Automation' && <Bot className="w-full h-full" />}
+                  {service.category === 'Custom Development' && <Code2 className="w-full h-full" />}
+                  {service.category === 'Digital Transformation' && <Laptop2 className="w-full h-full" />}
+                </div>
+                <h2 className="text-2xl font-semibold mb-4">{service.name}</h2>
                 <p className="text-muted-foreground mb-6">{service.description}</p>
-                <ul className="space-y-3">
-                  {service.features.map((feature) => (
-                    <li key={feature} className="flex items-center">
-                      <svg
-                        className="h-5 w-5 text-primary mr-2"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
+                <div className="mb-8">
+                  <h3 className="font-semibold mb-3">Key Features:</h3>
+                  <ul className="space-y-2">
+                    {service.features.map(feature => (
+                      <li key={feature} className="flex items-center gap-2">
+                        <span>•</span>
+                        {feature}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="mt-auto">
+                  <Link to="/contact">
+                    <Button className="w-full">Get Started</Button>
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
