@@ -73,7 +73,7 @@ async function sendContactNotification(contactData) {
   const emailContent = {
     to: ADMIN_EMAIL,
     from: {
-      email: 'nhlanhla@isutech.co.za',
+      email: 'info@isutech.co.za',
       name: 'ISU Website Contact Form'
     },
     subject: `📬 New Contact Form Submission - ${contactData.name}`,
