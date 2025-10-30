@@ -81,7 +81,7 @@ async function sendAdminNotification(leadData) {
   const emailContent = {
     to: ADMIN_EMAIL,
     from: {
-      email: 'noreply@isutech.co.za',
+      email: 'nhlanhla@isutech.co.za',
       name: 'AutoSlip System'
     },
     subject: `🎯 New AutoSlip Trial Request - ${leadData.businessName}`,
