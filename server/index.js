@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import onboardingRoutes from './routes/onboarding.js';
+import contactRoutes from './routes/contact.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -36,6 +37,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/autoslip', onboardingRoutes);
+app.use('/api/contact', contactRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
@@ -52,9 +54,10 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 AutoSlip API Server running on http://localhost:${PORT}`);
+  console.log(`🚀 ISU Technologies API Server running on http://localhost:${PORT}`);
   console.log(`📧 SendGrid email integration enabled`);
   console.log(`💾 Lead storage: ${join(__dirname, 'data', 'leads.json')}`);
+  console.log(`📬 Contact storage: ${join(__dirname, 'data', 'contacts.json')}`);
 });
 
 export default app;

@@ -7,11 +7,51 @@ const Contact = () => {
     company: '',
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log(formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'http://46.224.40.5:3001' : 'http://localhost:3001');
+
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'homepage_contact_form'
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', company: '', message: '' });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again or contact us directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -100,9 +140,27 @@ const Contact = () => {
                 />
               </div>
 
-              <button type="submit" className="btn-primary w-full">
-                Send Message
+              <button type="submit" className="btn-primary w-full" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
+
+              {/* Success Message */}
+              {submitStatus === 'success' && (
+                <div className="mt-4 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 rounded-md">
+                  <p className="text-green-800 dark:text-green-200 text-center">
+                    ✅ Message sent successfully! We'll get back to you soon.
+                  </p>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="mt-4 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-center">
+                    ❌ {errorMessage}
+                  </p>
+                </div>
+              )}
             </form>
           </div>
 
