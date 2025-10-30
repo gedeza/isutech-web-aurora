@@ -1,0 +1,18 @@
+# Lead data and exports (sensitive information)
+data/
+exports/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Environment variables (if any)
+.env
+.env.local
+.env.production
+
+# Node modules (already in root .gitignore, but adding for safety)
+node_modules/
+
+# OS files
+.DS_Store

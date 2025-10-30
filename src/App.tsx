@@ -12,6 +12,8 @@ import ScrollToTop from './components/ScrollToTop';
 import SupportPage from './pages/SupportPage';
 import TermsPage from './pages/TermsPage';
 import DocumentationPage from './pages/DocumentationPage';
+import AutoSlipPage from './pages/AutoSlipPage';
+import PropertyIntelligencePage from './pages/PropertyIntelligencePage';
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
             <Route path="/support" element={<SupportPage/>}/>
             <Route path="/terms" element={<TermsPage/>}/>
             <Route path="/documentation" element={<DocumentationPage/>}/>
+            <Route path="/autoslip" element={<AutoSlipPage/>}/>
+            <Route path="/property-intelligence" element={<PropertyIntelligencePage/>}/>
 
           </Routes>
         </main>
