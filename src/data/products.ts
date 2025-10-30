@@ -1,12 +1,20 @@
 import { Categories, Product } from '@/types/products';
 
 export const categories: Categories = {
+  automation: {
+    name: "Automation & AI",
+    description: "Intelligent automation solutions powered by AI",
+    items: [
+      { id: 'receipt-automation', name: 'Receipt Automation', count: 1 },
+      { id: 'workflow-automation', name: 'Workflow Automation', count: 0 }
+    ]
+  },
   dx: {
     name: "Digital Transformation (DX)",
     description: "Modernizing businesses through digital solutions",
     items: [
       { id: 'apps-modernization', name: 'Apps Modernization', count: 2 },
-      { id: 'bss', name: 'Business Support System', count: 2 },
+      { id: 'bss', name: 'Business Support System', count: 3 },
       { id: 'cloud', name: 'Cloud Infrastructure', count: 2 },
       { id: 'product-dev', name: 'Product Development', count: 2 }
     ]
@@ -24,12 +32,77 @@ export const categories: Categories = {
     description: "Innovating through research and development",
     items: [
       { id: 'iot', name: 'IoT & Embedded System', count: 2 },
-      { id: 'ai', name: 'AI & Deep Learning', count: 2 }
+      { id: 'ai', name: 'AI & Deep Learning', count: 6 }
     ]
   }
 };
 
 export const products: Product[] = [
+  {
+    id: 0,
+    name: "AutoSlip",
+    shortDesc: "AI-powered WhatsApp receipt processing",
+    description: "AI-powered WhatsApp receipt processing for SA businesses. Automate your receipt management with 98% OCR accuracy and instant processing via WhatsApp.",
+    category: "receipt-automation",
+    year: "2025",
+    image: "/products/autoslip.jpg",
+    client: "ISU Technologies",
+    technologies: ['AI/ML', 'WhatsApp API', 'Python', 'Google Vision API'],
+    features: ['WhatsApp instant processing', '98% OCR accuracy', 'Automated Excel reports', 'SA vendor optimization', 'VAT extraction', 'Duplicate detection'],
+    status: 'completed'
+  },
+  {
+    id: 18,
+    name: "Property Intelligence Platform",
+    shortDesc: "AI-Powered Property Management & Valuation",
+    description: "Hybrid web and mobile platform for property valuations with AI-powered market intelligence, mobile inspections, and ROI analytics. MPRA compliant for South African property standards.",
+    category: "ai",
+    year: "2025",
+    image: "/products/property-intelligence.jpg",
+    client: "Property Management Firms",
+    technologies: ['Next.js 15', 'React Native', 'Express.js', 'PostgreSQL', 'AI/ML'],
+    features: ['Hybrid web + native mobile apps', 'AI market intelligence dashboard', 'Mobile property inspections', 'ROI analytics with heat maps', 'MPRA compliance', 'Offline-first architecture'],
+    status: 'completed'
+  },
+  {
+    id: 19,
+    name: "B2B2G Marketing Platform",
+    shortDesc: "Government-Grade Marketing Solution",
+    description: "Enterprise marketing platform for agencies managing both business and government clients. Features POPIA compliance, security clearance system, and sector-specific workflows for South African market.",
+    category: "bss",
+    year: "2025",
+    image: "/products/b2b2g-platform.jpg",
+    client: "Marketing Agencies & Government Contractors",
+    technologies: ['Next.js 15', 'Prisma', 'PostgreSQL', 'Clerk Auth', 'TypeScript'],
+    features: ['POPIA compliant multi-tenancy', 'Security clearance system (3 levels)', 'Government & business workflows', 'Sub-200ms API performance', '385 tests (96% coverage)', 'Real-time compliance audit'],
+    status: 'completed'
+  },
+  {
+    id: 16,
+    name: "Education Analytics Platform",
+    shortDesc: "ML-Powered Educational Insights",
+    description: "Advanced analytics platform for educational institutions featuring predictive modeling, career progression analysis, and real-time dashboards for data-driven decision making.",
+    category: "ai",
+    year: "2024",
+    image: "/products/education-analytics.jpg",
+    client: "Educational Institution",
+    technologies: ['Next.js 14', 'FastAPI', 'PostgreSQL', 'ML/AI', 'Railway'],
+    features: ['Predictive enrollment forecasting', 'Career progression tracking', 'Real-time KPI dashboards', 'Geographic performance analysis', 'Automated report generation', 'Risk assessment models'],
+    status: 'ongoing'
+  },
+  {
+    id: 17,
+    name: "EdTech Compliance Platform",
+    shortDesc: "Multi-Portal Professional Development System",
+    description: "Enterprise-scale platform with multi-tenant architecture, ML-powered quality scoring, and compliance tracking across multiple stakeholders.",
+    category: "ai",
+    year: "2024",
+    image: "/products/edtech-platform.jpg",
+    client: "Government Agency",
+    technologies: ['Next.js 14', 'FastAPI', 'PostgreSQL', 'ML Analytics', 'Railway'],
+    features: ['Multi-portal architecture', 'ML quality scoring (78% accuracy)', 'Compliance tracking system', 'Provider performance analytics', 'POPIA compliant multi-tenancy', 'Real-time reporting'],
+    status: 'ongoing'
+  },
   {
     id: 1,
     name: "Payslip Management",
@@ -58,7 +131,7 @@ export const products: Product[] = [
   },
   {
     id: 3,
-    name: "Timestamp Management",
+    name: "Timesheet Management",
     shortDesc: "Time Tracking Solution",
     description: "Monitor and manage employee work hours with precision.",
     category: "bss",

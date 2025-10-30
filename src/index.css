@@ -176,3 +176,57 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* AutoSlip Page Animations */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(234, 179, 8, 0.8);
+  }
+}
+
+@keyframes bounce-gentle {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+@keyframes scale-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-bounce-gentle {
+  animation: bounce-gentle 2s ease-in-out infinite;
+}
+
+.animate-scale-pulse {
+  animation: scale-pulse 2s ease-in-out infinite;
+}
