@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { contactApi } from '../utils/api';
+import { useState } from 'react';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -8,29 +7,50 @@ const Contact = () => {
     company: '',
     message: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-    setSuccess(false);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
 
     try {
-      await contactApi.submit(formData);
-      setSuccess(true);
-      setFormData({
-        name: '',
-        email: '',
-        company: '',
-        message: '',
+      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'http://46.224.40.5:3001' : 'http://localhost:3001');
+
+      const response = await fetch(`${API_URL}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          source: 'homepage_contact_form'
+        }),
       });
-    } catch (err: any) {
-      setError(err.response?.data?.message || 'Failed to submit form. Please try again.');
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Failed to send message');
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', company: '', message: '' });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message. Please try again or contact us directly.');
     } finally {
-      setLoading(false);
+      setIsSubmitting(false);
     }
   };
 
@@ -60,93 +80,88 @@ const Contact = () => {
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
           <div className="glass-card p-8 rounded-lg animate-fade-in">
-            {success ? (
-              <div className="text-center py-8">
-                <h3 className="text-xl font-semibold text-green-600 mb-2">Message Sent Successfully!</h3>
-                <p className="text-muted-foreground mb-4">Thank you for contacting us. We'll get back to you soon.</p>
-                <button 
-                  onClick={() => setSuccess(false)} 
-                  className="btn-secondary"
-                >
-                  Send Another Message
-                </button>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div>
+                <label htmlFor="name" className="block text-sm font-medium mb-2">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <div className="bg-red-50 text-red-500 p-4 rounded-lg mb-6">
-                    {error}
-                  </div>
-                )}
 
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium mb-2">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="company" className="block text-sm font-medium mb-2">
+                  Company
+                </label>
+                <input
+                  type="text"
+                  id="company"
+                  name="company"
+                  value={formData.company}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-sm font-medium mb-2">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <button type="submit" className="btn-primary w-full" disabled={isSubmitting}>
+                {isSubmitting ? 'Sending...' : 'Send Message'}
+              </button>
+
+              {/* Success Message */}
+              {submitStatus === 'success' && (
+                <div className="mt-4 p-4 bg-green-100 dark:bg-green-900/30 border border-green-400 dark:border-green-600 rounded-md">
+                  <p className="text-green-800 dark:text-green-200 text-center">
+                    ✅ Message sent successfully! We'll get back to you soon.
+                  </p>
                 </div>
+              )}
 
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <div className="mt-4 p-4 bg-red-100 dark:bg-red-900/30 border border-red-400 dark:border-red-600 rounded-md">
+                  <p className="text-red-800 dark:text-red-200 text-center">
+                    ❌ {errorMessage}
+                  </p>
                 </div>
-
-                <div>
-                  <label htmlFor="company" className="block text-sm font-medium mb-2">
-                    Company (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    id="company"
-                    name="company"
-                    value={formData.company}
-                    onChange={handleChange}
-                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={4}
-                    className="w-full px-4 py-2 rounded-md border border-border bg-background/50 focus:outline-none focus:ring-2 focus:ring-primary"
-                    required
-                  />
-                </div>
-
-                <button 
-                  type="submit" 
-                  className="btn-primary w-full"
-                  disabled={loading}
-                >
-                  {loading ? 'Sending...' : 'Send Message'}
-                </button>
-              </form>
-            )}
+              )}
+            </form>
           </div>
 
           {/* Contact Information */}
@@ -172,28 +187,14 @@ const Contact = () => {
             <div className="floating-card p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
-                <a 
-                  href="https://www.linkedin.com/company/isutech" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
+                {/* Add social media icons/links here */}
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   LinkedIn
                 </a>
-                <a 
-                  href="https://twitter.com/isutech" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   Twitter
                 </a>
-                <a 
-                  href="https://github.com/isutech" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
-                  className="text-muted-foreground hover:text-primary transition-colors"
-                >
+                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
                   GitHub
                 </a>
               </div>
