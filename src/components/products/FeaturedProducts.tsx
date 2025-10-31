@@ -1,51 +1,73 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Product } from '@/types/products';
+import { formatPrice } from '@/utils/format';
 
 interface FeaturedProductsProps {
   products: Product[];
 }
 
 const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ products }) => {
+  // Get the latest 3 products
+  const featuredProducts = products
+    .filter(product => product.status === 'Active')
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3);
+
   return (
-    <section className="py-24 bg-primary/5">
+    <section className="py-16 bg-muted/30">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold mb-12 text-center animate-fade-in">
-          Featured Solutions
-        </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-          {products.slice(0, 2).map((product, index) => (
-            <div 
-              key={product.id}
-              className="group relative overflow-hidden rounded-lg bg-white p-8 shadow-lg transition-all duration-500 hover:shadow-xl animate-fade-in hover:-translate-y-1"
-              style={{ animationDelay: `${index * 200}ms` }}
+        <div className="mb-16">
+          <h3 className="text-lg text-primary mb-4 animate-fade-in">FEATURED PRODUCTS</h3>
+          <h2 className="text-4xl md:text-5xl font-bold animate-fade-in delay-200">
+            Our Latest<br />Innovations
+          </h2>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredProducts.map((product) => (
+            <Link
+              key={product._id}
+              to={`/products/${product.slug}`}
+              className="group block"
             >
-              <div className="mb-6">
-                <div className="flex items-center gap-2 mb-2">
-                  <p className="text-sm text-primary">{product.category.toUpperCase()}</p>
-                  {product.status === 'ongoing' && (
-                    <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
-                  )}
-                </div>
-                <h3 className="text-2xl font-bold mb-3">{product.name}</h3>
-                <p className="text-muted-foreground mb-4">{product.description}</p>
-                {product.technologies && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {product.technologies.map((tech, i) => (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">
+                {product.images[0] && (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                {product.name}
+              </h3>
+              <p className="text-muted-foreground mb-3">{product.shortDescription}</p>
+              <div className="flex items-center justify-between">
+                <span className="text-lg font-semibold text-primary">
+                  {formatPrice(product.price)}
+                </span>
+                {product.technologies && product.technologies.length > 0 && (
+                  <div className="flex gap-2">
+                    {product.technologies.slice(0, 2).map((tech, i) => (
                       <span 
                         key={i}
-                        className="text-xs px-2 py-1 bg-primary/10 rounded-full text-primary"
+                        className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full"
                       >
                         {tech}
                       </span>
                     ))}
+                    {product.technologies.length > 2 && (
+                      <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
+                        +{product.technologies.length - 2}
+                      </span>
+                    )}
                   </div>
                 )}
               </div>
-              <button className="text-primary font-medium group-hover:underline inline-flex items-center gap-2">
-                Learn more
-                <span className="transform transition-transform group-hover:translate-x-1">→</span>
-              </button>
-            </div>
+            </Link>
           ))}
         </div>
       </div>

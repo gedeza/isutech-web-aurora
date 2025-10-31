@@ -2,12 +2,38 @@ import React, { useEffect, useState } from 'react';
 import CategorySidebar from '@/components/products/CategorySidebar';
 import ProductsGrid from '@/components/products/ProductsGrid';
 import FeaturedProducts from '@/components/products/FeaturedProducts';
-import { categories, products } from '@/data/products';
+import { Product } from '@/types/products';
+import { productsApi } from '@/utils/api';
+import { Loader2 } from 'lucide-react';
 
 const ProductsPage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const [productsData, categoriesData] = await Promise.all([
+          productsApi.getAll(),
+          productsApi.getCategories()
+        ]);
+        setProducts(productsData);
+        setCategories(categoriesData.categories);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Failed to fetch products');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -30,6 +56,25 @@ const ProductsPage = () => {
     setActiveCategory(category);
     setShowFilters(false);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-red-500 mb-2">Error</h2>
+          <p className="text-muted-foreground">{error}</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="products-page">
