@@ -12,7 +12,12 @@
     "server": "node server/index.js",
     "server:dev": "node --watch server/index.js",
     "export-leads": "node server/scripts/export-leads.js",
-    "export-leads:pending": "node server/scripts/export-leads.js --status pending"
+    "export-leads:pending": "node server/scripts/export-leads.js --status pending",
+    "backend:install": "cd backend && npm install",
+    "backend:dev": "cd backend && npm run dev",
+    "backend:build": "cd backend && npm run build",
+    "backend:start": "cd backend && npm start",
+    "backend:seed": "cd backend && npm run seed:admin"
   },
   "dependencies": {
     "@googlemaps/markerwithlabel": "^2.0.28",
