@@ -2,8 +2,8 @@
 
 **Project:** ISU Technologies Portfolio Website Enhancement
 **Started:** October 30, 2025
-**Last Updated:** October 30, 2025
-**Status:** Phase 1 Complete ✅
+**Last Updated:** October 30, 2025 (Evening - Post Contact Form Deployment)
+**Status:** Phase 1 Complete ✅ | Contact Form System Deployed ✅ | 7 Issues Tracked
 
 ---
 
@@ -197,6 +197,81 @@
 
 ---
 
+#### 8. Contact Form System Implementation ✅
+**Date Completed:** October 30, 2025 (Evening)
+**Task:** Implement functional contact form system with backend API, email notifications, and data storage
+
+**Background:**
+- Contact forms on both homepage and contact page were non-functional
+- Homepage form only logged to console (no API call)
+- Contact page form had no submit handler at all
+
+**Changes Made:**
+
+**Backend Implementation:**
+- Created `/server/routes/contact.js` (353 lines):
+  - POST `/api/contact` endpoint for form submissions
+  - SendGrid email integration with lazy initialization
+  - JSON file storage at `server/data/contacts.json`
+  - Admin endpoints: GET (list contacts), PUT (update status)
+  - Validation for required fields and email format
+  - Unique contact ID generation: `CONTACT-{timestamp}-{random}`
+  - HTML email templates with ISU branding
+- Updated `/server/index.js`:
+  - Added contact routes import and mounting
+  - Updated server startup messages
+- Created `/server/.gitignore`:
+  - Protected sensitive data files (data/, exports/, .env)
+
+**Frontend Implementation:**
+- Updated `/src/components/Contact.tsx`:
+  - Added state management (isSubmitting, submitStatus, errorMessage)
+  - Implemented async handleSubmit with API call to `/api/contact`
+  - Added form field change handlers
+  - Added success/error message UI with auto-dismiss
+  - Form reset after successful submission
+  - Loading state on submit button
+- Updated `/src/pages/ContactPage.tsx`:
+  - Added same state management pattern
+  - Implemented handleSubmit and handleChange
+  - Added form field bindings (name, value, onChange)
+  - Added success/error message UI
+  - Integrated with backend API
+
+**Features:**
+- Form validation (client-side and server-side)
+- Email notifications to admin (info@isutech.co.za)
+- Contact data saved to JSON file with timestamp
+- Source tracking (homepage_contact_form vs contact_page_form)
+- Professional HTML email templates
+- Error handling with user feedback
+- Success messages with auto-dismiss (5 seconds)
+- Loading indicators during submission
+
+**Deployment:**
+- Backend deployed to VPS (46.224.40.5:3001)
+- PM2 process restarted successfully
+- API endpoint tested and working
+- Frontend changes committed and pushed to main and Sibonga branches
+- Awaiting Vercel deployment for production testing
+
+**Known Issue:**
+- SendGrid sender verification required (Issue #1 - CRITICAL)
+- Email notifications currently failing but data is being saved
+
+**Files Created:**
+- `/server/routes/contact.js` (353 lines)
+- `/server/.gitignore`
+
+**Files Modified:**
+- `/server/index.js` (added contact routes)
+- `/src/components/Contact.tsx` (full form implementation)
+- `/src/pages/ContactPage.tsx` (full form implementation)
+
+**Outcome:** Professional contact form system matching AutoSlip architecture, ready for production use after SendGrid verification
+
+---
+
 ## 🚧 Current Sprint
 
 ### Sprint 1: Foundation Complete ✅
@@ -349,19 +424,237 @@
 
 ## ⚠️ Known Issues
 
-### Issue #1: Em Dash Character in JSX ✅ RESOLVED
+### Issue #1: SendGrid Sender Verification Error 🚨 CRITICAL
+**Discovered:** October 30, 2025 (Evening)
+**Status:** OPEN - REQUIRES IMMEDIATE ACTION
+**Priority:** CRITICAL (P0)
+**Description:** Email notifications are failing for both contact forms AND AutoSlip onboarding because sender address `noreply@isutech.co.za` is not verified in SendGrid dashboard.
+
+**Error Message:**
+```
+The from address does not match a verified Sender Identity. Mail cannot be sent until this error is resolved.
+field: 'from'
+```
+
+**Impact:**
+- ❌ Contact form submissions save data but NO email notifications sent to admin
+- ❌ AutoSlip onboarding submissions save data but NO email notifications sent to admin
+- ✅ Form data IS being saved to JSON files correctly
+- ✅ API endpoints ARE functioning correctly
+- ⚠️ You are currently NOT receiving ANY email notifications from website
+
+**Affected Systems:**
+- Contact form (homepage Contact.tsx)
+- Contact page (ContactPage.tsx)
+- AutoSlip onboarding form (AutoSlipOnboardingForm.tsx)
+
+**Files Affected:**
+- `/server/routes/contact.js:76` - noreply@isutech.co.za
+- `/server/routes/onboarding.js:95` - noreply@isutech.co.za (assumed same issue)
+
+**Resolution Steps:**
+1. **Option A - Verify Current Email (RECOMMENDED)**:
+   - Log into SendGrid dashboard at https://app.sendgrid.com/
+   - Navigate to Settings > Sender Authentication > Single Sender Verification
+   - Add and verify `noreply@isutech.co.za`
+   - SendGrid will send verification email to this address
+   - Click verification link in email
+   - Wait 5-10 minutes for propagation
+   - Test contact form again
+
+2. **Option B - Use Already Verified Email**:
+   - Check SendGrid dashboard for already verified sender addresses
+   - Update both contact.js and onboarding.js to use verified email:
+     ```javascript
+     from: {
+       email: 'verified-email@isutech.co.za',  // Use your verified email
+       name: 'ISU Website Contact Form'
+     }
+     ```
+   - Restart server: `pm2 restart isu-api`
+   - Test contact form
+
+**Verification Test:**
+```bash
+# After fixing, test with:
+curl -X POST http://46.224.40.5:3001/api/contact \
+  -H "Content-Type: application/json" \
+  -d '{"name":"Test User","email":"test@example.com","message":"Test message","source":"test"}'
+
+# Check PM2 logs for success:
+ssh root@46.224.40.5 "pm2 logs isu-api --lines 20"
+# Should see: "✅ Contact email sent to admin: info@isutech.co.za"
+```
+
+**Related Documentation:** https://sendgrid.com/docs/for-developers/sending-email/sender-identity/
+
+---
+
+### Issue #2: Multiple Background Server Processes
+**Discovered:** October 30, 2025
+**Status:** OPEN
+**Priority:** MEDIUM (P2)
+**Description:** Multiple background npm server processes are running (11+ processes detected), potentially causing port conflicts and resource usage.
+
+**Impact:**
+- May cause port 3001 conflicts
+- Unnecessary resource consumption
+- Confusion about which process is active
+
+**Commands Used:**
+```bash
+ps aux | grep "npm run server"  # Found 11+ processes
+pkill -f "npm run server"       # Attempted cleanup (partial success)
+```
+
+**Resolution Steps:**
+1. Identify all background processes:
+   ```bash
+   ps aux | grep -E "npm run (server|dev)"
+   lsof -i :3001  # Check what's using port 3001
+   lsof -i :8081  # Check frontend port
+   ```
+
+2. Kill all background processes:
+   ```bash
+   pkill -9 -f "npm run server"
+   pkill -9 -f "npm run dev"
+   ```
+
+3. Restart only needed processes:
+   ```bash
+   cd /Users/nhla/Desktop/PROJECTS/2025/isutech-web-aurora
+   npm run server &  # Backend API
+   npm run dev &     # Frontend dev server
+   ```
+
+**Prevention:** Consider using PM2 locally for process management instead of background npm commands.
+
+---
+
+### Issue #3: API Server Branding Inconsistency
+**Discovered:** October 30, 2025
+**Status:** OPEN
+**Priority:** LOW (P3)
+**Description:** Some server log messages and comments still reference "AutoSlip API Server" instead of "ISU Technologies API Server".
+
+**Impact:** Cosmetic only, causes confusion in logs
+
+**Files Affected:**
+- `/server/index.js:44` - Health check message says "AutoSlip API Server Running"
+
+**Current Message:**
+```javascript
+res.json({ status: 'ok', message: 'AutoSlip API Server Running' });
+```
+
+**Resolution:**
+```javascript
+res.json({ status: 'ok', message: 'ISU Technologies API Server Running' });
+```
+
+**Files To Review:**
+- Search all server files for "AutoSlip" references that should be "ISU Technologies"
+
+---
+
+### Issue #4: Contact Forms Not Tested on Production
+**Discovered:** October 30, 2025
+**Status:** OPEN - REQUIRES TESTING
+**Priority:** HIGH (P1)
+**Description:** Contact forms have been deployed to backend (VPS) but frontend changes need Vercel deployment and end-to-end testing.
+
+**What's Deployed:**
+- ✅ Backend API at http://46.224.40.5:3001/api/contact (WORKING)
+- ✅ Backend changes pushed to main branch
+- ⏳ Frontend changes need Vercel deployment
+
+**Testing Needed:**
+1. **After Vercel Deploys Frontend:**
+   - Visit https://www.isutech.co.za
+   - Test homepage contact form (bottom of page)
+   - Test contact page form at /contact
+   - Verify form submission success messages
+   - Check server/data/contacts.json on VPS for saved data
+   - Verify email arrives at info@isutech.co.za (after Issue #1 is fixed)
+
+2. **Test Scenarios:**
+   - Valid submission with all fields
+   - Valid submission without optional company field
+   - Invalid email format (should show error)
+   - Missing required fields (should show error)
+   - Network error handling
+
+**Files To Test:**
+- `/src/components/Contact.tsx:14-55` - Homepage contact form
+- `/src/pages/ContactPage.tsx` - Dedicated contact page
+
+---
+
+### Issue #5: CSV Export for Contacts Not Tested
+**Discovered:** October 30, 2025
+**Status:** OPEN
+**Priority:** LOW (P3)
+**Description:** CSV export script exists at `/server/scripts/export-leads.js` but has only been tested for leads, not contacts.
+
+**Current State:**
+- Script exports leads from `server/data/leads.json`
+- Contacts are stored in `server/data/contacts.json`
+- No script to export contacts to CSV
+
+**Impact:** No easy way to export contact form submissions for CRM import or backup
+
+**Resolution Options:**
+1. **Create separate contacts export script:**
+   - Copy export-leads.js to export-contacts.js
+   - Update to read from contacts.json
+   - Update field mapping for contact fields
+
+2. **Extend existing script to handle both:**
+   - Add command line argument: `--type contacts` or `--type leads`
+   - Example: `npm run export -- --type contacts`
+
+**Files Affected:**
+- `/server/scripts/export-leads.js` - Current export script
+
+---
+
+### Issue #6: Em Dash Character in JSX ✅ RESOLVED
 **Discovered:** October 30, 2025
 **Status:** RESOLVED
 **Description:** Em dash characters (—) in JSX strings caused React SWC parser errors
 **Resolution:** Replaced all em dashes with hyphens (-)
 **Files Affected:** AutoSlipPage.tsx (lines 421, 431, 510, 568)
 
-### Issue #2: Favicon Missing
+---
+
+### Issue #7: Favicon Missing
 **Discovered:** October 30, 2025
 **Status:** OPEN (Low Priority)
+**Priority:** LOW (P4)
 **Description:** Browser requesting `/favicon.ico` returns 404
 **Impact:** Cosmetic only, no functionality affected
 **Planned Resolution:** Add favicon in Sprint 5 (Performance phase)
+
+---
+
+## 🔧 Priority Levels
+
+**P0 - CRITICAL:** Must fix immediately (blocks core functionality)
+- Issue #1: SendGrid Sender Verification Error
+
+**P1 - HIGH:** Should fix within 24-48 hours (affects user experience)
+- Issue #4: Contact Forms Production Testing
+
+**P2 - MEDIUM:** Should fix within 1 week (minor impact)
+- Issue #2: Multiple Background Server Processes
+
+**P3 - LOW:** Can fix when convenient (nice to have)
+- Issue #3: API Server Branding
+- Issue #5: CSV Export for Contacts
+
+**P4 - COSMETIC:** Fix during maintenance phase
+- Issue #7: Favicon Missing
 
 ---
 
@@ -487,6 +780,7 @@ Use this checklist when completing each sprint:
 |---------|------|---------|--------|
 | 1.0 | Oct 30, 2025 | Initial progress tracker created | Claude Code |
 | 1.1 | Oct 30, 2025 | Added Sprint 1 completion details | Claude Code |
+| 1.2 | Oct 30, 2025 | Added comprehensive issue tracking (7 issues documented) | Claude Code |
 
 ---
 
