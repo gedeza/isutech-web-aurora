@@ -1,0 +1,281 @@
+// Prisma Schema for ISU Technologies Backend
+// PostgreSQL Database
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User Model (Authentication & Authorization)
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  status    UserStatus @default(ACTIVE)
+  lastLogin DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  products        Product[]
+  services        Service[]
+  customers       Customer[]
+  customerNotes   CustomerNote[]
+
+  @@map("users")
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+// Product Model
+model Product {
+  id               Int      @id @default(autoincrement())
+  name             String
+  slug             String   @unique
+  description      String   @db.Text
+  shortDescription String
+  category         String
+  price            Float
+  status           ProductStatus @default(DRAFT)
+  images           String[]
+  technologies     String[]
+  client           String?
+  year             String?
+  createdBy        Int
+  lastUpdated      DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user             User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  variants         ProductVariant[]
+
+  @@map("products")
+}
+
+enum ProductStatus {
+  ACTIVE
+  DRAFT
+  ARCHIVED
+}
+
+// Product Variant Model
+model ProductVariant {
+  id        Int      @id @default(autoincrement())
+  productId Int
+  sku       String
+  price     Float
+  inventory Int
+  createdAt DateTime @default(now())
+
+  // Relations
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@map("product_variants")
+}
+
+// Service Model
+model Service {
+  id               Int      @id @default(autoincrement())
+  name             String
+  slug             String   @unique
+  category         String
+  description      String   @db.Text
+  shortDescription String
+  features         String[]
+  benefits         String[]
+  technologies     String[]
+  priceStarter     Float
+  priceProfessional Float
+  priceEnterprise  Float
+  status           ServiceStatus @default(DRAFT)
+  createdBy        Int
+  lastUpdated      DateTime @default(now())
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  // Relations
+  user             User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  processSteps     ServiceProcess[]
+
+  @@map("services")
+}
+
+enum ServiceStatus {
+  PUBLISHED
+  DRAFT
+  ARCHIVED
+}
+
+// Service Process Step Model
+model ServiceProcess {
+  id          Int      @id @default(autoincrement())
+  serviceId   Int
+  title       String
+  description String   @db.Text
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+
+  // Relations
+  service     Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
+
+  @@map("service_processes")
+}
+
+// Contact Model (Form submissions)
+model Contact {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  company   String?
+  message   String   @db.Text
+  status    ContactStatus @default(NEW)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("contacts")
+}
+
+enum ContactStatus {
+  NEW
+  READ
+  REPLIED
+}
+
+// Customer Model (CRM)
+model Customer {
+  id          Int      @id @default(autoincrement())
+  name        String
+  email       String
+  phone       String?
+  company     String?
+  status      CustomerStatus @default(LEAD)
+  lastContact DateTime?
+  lastUpdated DateTime @default(now())
+  createdBy   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+  notes       CustomerNote[]
+
+  @@map("customers")
+}
+
+enum CustomerStatus {
+  ACTIVE
+  LEAD
+  INACTIVE
+}
+
+// Customer Note Model
+model CustomerNote {
+  id         Int      @id @default(autoincrement())
+  customerId Int
+  text       String   @db.Text
+  createdBy  Int
+  createdAt  DateTime @default(now())
+
+  // Relations
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  user       User     @relation(fields: [createdBy], references: [id], onDelete: Cascade)
+
+  @@map("customer_notes")
+}
+
+// Job Model (Career Listings)
+model Job {
+  id           Int      @id @default(autoincrement())
+  title        String
+  description  String   @db.Text
+  requirements String[]
+  location     String
+  type         JobType
+  status       JobStatus @default(OPEN)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  applications Application[]
+
+  @@map("jobs")
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+}
+
+enum JobStatus {
+  OPEN
+  CLOSED
+}
+
+// Job Application Model
+model Application {
+  id          Int      @id @default(autoincrement())
+  jobId       Int
+  name        String
+  email       String
+  phone       String
+  coverLetter String   @db.Text
+  resumeUrl   String
+  status      ApplicationStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  job         Job      @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@map("applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWED
+  SHORTLISTED
+  REJECTED
+}
+
+// Documentation Model
+model Documentation {
+  id              Int      @id @default(autoincrement())
+  title           String
+  slug            String   @unique
+  content         String   @db.Text
+  summary         String
+  category        String
+  subcategory     String?
+  version         String   @default("1.0.0")
+  order           Int      @default(0)
+  status          DocumentationStatus @default(DRAFT)
+  metadataAuthor  String
+  metadataLastUpdated DateTime @default(now())
+  metadataTags    String[]
+  relatedDocIds   Int[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("documentation")
+}
+
+enum DocumentationStatus {
+  DRAFT
+  PUBLISHED
+}

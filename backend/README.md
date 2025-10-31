@@ -1,15 +1,21 @@
 # ISU Technologies Backend
 
-TypeScript backend with MongoDB for the ISU Technologies website, providing admin dashboard, CRM, and content management capabilities.
+TypeScript backend with PostgreSQL for the ISU Technologies website, providing admin dashboard, CRM, and content management capabilities.
 
 ## 🏗️ Architecture
 
 - **Runtime:** Node.js + Express
 - **Language:** TypeScript
-- **Database:** MongoDB (Mongoose ORM)
+- **Database:** PostgreSQL (Prisma ORM)
 - **Authentication:** JWT + bcrypt
 - **File Upload:** Multer
 - **Email:** Nodemailer
+
+## ⚠️ IMPORTANT: PostgreSQL Conversion
+
+**Status:** Converted from MongoDB to PostgreSQL on October 31, 2025
+
+This backend now uses **PostgreSQL with Prisma ORM** instead of MongoDB. See `PRISMA_CONVERSION_GUIDE.md` for complete conversion details and patterns.
 
 ## 📁 Project Structure
 
@@ -37,7 +43,7 @@ backend/
 ### Prerequisites
 
 - Node.js 18+ and npm
-- MongoDB installed and running locally OR MongoDB Atlas account
+- PostgreSQL 14+ installed and running
 - Git
 
 ### Installation
@@ -55,27 +61,48 @@ backend/
    ```
 
    Edit `.env` and configure:
-   - `MONGODB_URI` - Your MongoDB connection string
+   - `DATABASE_URL` - Your PostgreSQL connection string
+     ```
+     DATABASE_URL="postgresql://username:password@localhost:5432/isutech_db?schema=public"
+     ```
    - `JWT_SECRET` - A strong random secret
    - `PORT` - Backend port (default: 4000)
    - `ADMIN_EMAIL` and `ADMIN_PASSWORD` - For seeding admin user
 
-3. **Ensure MongoDB is running:**
+3. **Ensure PostgreSQL is running:**
    ```bash
-   # If using local MongoDB:
-   mongod
+   # Check if PostgreSQL is running
+   pg_isready
 
-   # Or use MongoDB Atlas cloud database
+   # Or start PostgreSQL (macOS with Homebrew)
+   brew services start postgresql@14
+
+   # Create database (if needed)
+   createdb isutech_db
    ```
 
-4. **Seed admin user (first time only):**
+4. **Generate Prisma Client:**
+   ```bash
+   npm run prisma:generate
+   ```
+
+5. **Create database tables:**
+   ```bash
+   # For development (quick push)
+   npm run prisma:push
+
+   # For production (with migrations)
+   npm run prisma:migrate
+   ```
+
+6. **Seed admin user (first time only):**
    ```bash
    npm run seed:admin
    # or from project root:
    npm run backend:seed
    ```
 
-5. **Start development server:**
+7. **Start development server:**
    ```bash
    npm run dev
    # or from project root:
@@ -83,6 +110,15 @@ backend/
    ```
 
    Server will start at `http://localhost:4000`
+
+### Prisma Studio (Database GUI)
+
+View and edit your database using Prisma Studio:
+```bash
+npm run prisma:studio
+```
+
+Opens at `http://localhost:5555`
 
 ## 🔌 API Endpoints
 
@@ -209,11 +245,21 @@ npm test
 
 ## 🐛 Troubleshooting
 
-### MongoDB Connection Issues
+### PostgreSQL Connection Issues
 ```
-Error: MongoServerError: Authentication failed
+Error: Can't reach database server at `localhost:5432`
 ```
-**Solution:** Check your `MONGODB_URI` in `.env`. Ensure MongoDB is running.
+**Solution:**
+1. Check if PostgreSQL is running: `pg_isready`
+2. Verify `DATABASE_URL` in `.env`
+3. Ensure database exists: `createdb isutech_db`
+4. Check PostgreSQL service: `brew services list` (macOS)
+
+### Prisma Client Not Generated
+```
+Error: @prisma/client did not initialize yet
+```
+**Solution:** Run `npm run prisma:generate`
 
 ### Port Already in Use
 ```
@@ -228,6 +274,15 @@ lsof -ti:4000 | xargs kill -9
 ```bash
 # Re-run the seed script:
 npm run seed:admin
+```
+
+### Database Schema Out of Sync
+```bash
+# Reset database (CAUTION: Deletes all data)
+npm run prisma:push --force-reset
+
+# Or create migration
+npm run prisma:migrate
 ```
 
 ## 📚 Related Documentation

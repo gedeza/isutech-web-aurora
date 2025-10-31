@@ -14,12 +14,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Connect to MongoDB
+// Connect to PostgreSQL
 (async () => {
   try {
     await connectDB();
   } catch (error) {
-    console.error('Failed to connect to MongoDB:', error);
+    console.error('Failed to connect to PostgreSQL:', error);
     // Don't exit the process, let the connection retry logic handle it
   }
 })();
