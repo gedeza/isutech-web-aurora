@@ -65,19 +65,6 @@ export const products: Product[] = [
     status: 'completed'
   },
   {
-    id: 19,
-    name: "B2B2G Marketing Platform",
-    shortDesc: "Government-Grade Marketing Solution",
-    description: "Enterprise marketing platform for agencies managing both business and government clients. Features POPIA compliance, security clearance system, and sector-specific workflows for South African market.",
-    category: "bss",
-    year: "2025",
-    image: "/products/b2b2g-platform.jpg",
-    client: "Marketing Agencies & Government Contractors",
-    technologies: ['Next.js 15', 'Prisma', 'PostgreSQL', 'Clerk Auth', 'TypeScript'],
-    features: ['POPIA compliant multi-tenancy', 'Security clearance system (3 levels)', 'Government & business workflows', 'Sub-200ms API performance', '385 tests (96% coverage)', 'Real-time compliance audit'],
-    status: 'completed'
-  },
-  {
     id: 16,
     name: "Education Analytics Platform",
     shortDesc: "ML-Powered Educational Insights",
@@ -89,6 +76,19 @@ export const products: Product[] = [
     technologies: ['Next.js 14', 'FastAPI', 'PostgreSQL', 'ML/AI', 'Railway'],
     features: ['Predictive enrollment forecasting', 'Career progression tracking', 'Real-time KPI dashboards', 'Geographic performance analysis', 'Automated report generation', 'Risk assessment models'],
     status: 'ongoing'
+  },
+  {
+    id: 19,
+    name: "B2B2G Marketing Platform",
+    shortDesc: "Government-Grade Marketing Solution",
+    description: "Enterprise marketing platform for agencies managing both business and government clients. Features POPIA compliance, security clearance system, and sector-specific workflows for South African market.",
+    category: "bss",
+    year: "2025",
+    image: "/products/b2b2g-platform.jpg",
+    client: "Marketing Agencies & Government Contractors",
+    technologies: ['Next.js 15', 'Prisma', 'PostgreSQL', 'Clerk Auth', 'TypeScript'],
+    features: ['POPIA compliant multi-tenancy', 'Security clearance system (3 levels)', 'Government & business workflows', 'Sub-200ms API performance', '385 tests (96% coverage)', 'Real-time compliance audit'],
+    status: 'completed'
   },
   {
     id: 17,
