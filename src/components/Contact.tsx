@@ -78,7 +78,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
-          <div className="glass-card p-8 rounded-lg animate-fade-in">
+          <div className="glass-card p-4 sm:p-6 md:p-8 rounded-lg animate-fade-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -164,26 +164,26 @@ const Contact = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="floating-card p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Visit Our Office</h3>
-              <p className="text-muted-foreground">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">Visit Our Office</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 18 The Boulevard <br />
                 Westway Office Park<br />
                 Westville, 3630
               </p>
             </div>
 
-            <div className="floating-card p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
-              <div className="space-y-3 text-muted-foreground">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">Contact Information</h3>
+              <div className="space-y-3 text-sm sm:text-base text-muted-foreground">
                 <p>Email: info@isutech.co.za</p>
                 <p>Phone: +27 68 127 6710</p>
                 <p>Hours: Mon-Fri 9:00 AM - 6:00 PM </p>
               </div>
             </div>
 
-            <div className="floating-card p-6 rounded-lg">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
                 {/* Add social media icons/links here */}

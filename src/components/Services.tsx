@@ -134,16 +134,16 @@ const Services = () => {
           {services.map((service) => (
             <div
               key={service._id}
-              className="bg-card p-6 rounded-lg shadow-sm scroll-animation"
+              className="bg-card p-4 sm:p-5 md:p-6 rounded-lg shadow-sm scroll-animation"
             >
-              <div className="w-12 h-12 text-primary mb-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 text-primary mb-4">
                 {service.category === 'Government Solutions' && <Building2 className="w-full h-full" />}
                 {service.category === 'AI & Automation' && <Bot className="w-full h-full" />}
                 {service.category === 'Custom Development' && <Code2 className="w-full h-full" />}
                 {service.category === 'Digital Transformation' && <Laptop2 className="w-full h-full" />}
               </div>
-              <h3 className="text-xl font-semibold mb-3">{service.name}</h3>
-              <p className="text-muted-foreground mb-6">{service.shortDescription}</p>
+              <h3 className="text-lg sm:text-xl font-semibold mb-3">{service.name}</h3>
+              <p className="text-sm sm:text-base text-muted-foreground mb-6">{service.shortDescription}</p>
               <ul className="space-y-2">
                 {service.features.slice(0, 4).map(feature => (
                   <li key={feature} className="flex items-center gap-2">
@@ -161,13 +161,13 @@ const Services = () => {
           {stats.map((stat) => (
             <div
               key={stat.title}
-              className="glass-card p-6 text-center rounded-lg scroll-animation hover:bg-accent/5"
+              className="glass-card p-4 sm:p-5 md:p-6 text-center rounded-lg scroll-animation hover:bg-accent/5"
               style={{ transitionDelay: stat.delay }}
             >
-              <div className="text-3xl font-bold mb-2 gradient-text">
+              <div className="text-2xl sm:text-3xl font-bold mb-2 gradient-text">
                 {stat.value}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-xs sm:text-sm text-muted-foreground">
                 {stat.title}
               </div>
             </div>
