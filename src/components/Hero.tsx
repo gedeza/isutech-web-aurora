@@ -148,8 +148,7 @@ const Hero = () => {
           ].map((feature, index) => (
             <div
               key={feature.title}
-              className="glass-card p-6 rounded-lg scroll-animation dark:bg-white/[0.02] dark:backdrop-blur-xl dark:border-white/[0.05]"
-              style={{ transitionDelay: feature.delay }}
+              className="glass-card p-6 rounded-lg dark:bg-white/[0.02] dark:backdrop-blur-xl dark:border-white/[0.05]"
             >
               <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
               <p className="text-muted-foreground">{feature.description}</p>
