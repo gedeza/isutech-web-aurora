@@ -16,11 +16,19 @@ const Hero = () => {
       });
     }, {
       threshold: 0.1,
+      rootMargin: '50px' // Trigger animation 50px before entering viewport
     });
 
-    document.querySelectorAll('.scroll-animation').forEach((element) => {
-      observerRef.current?.observe(element);
-    });
+    // Delay to ensure elements are in DOM
+    setTimeout(() => {
+      document.querySelectorAll('.scroll-animation').forEach((element) => {
+        observerRef.current?.observe(element);
+        // Immediately trigger if already visible (fixes above-fold content)
+        if (element.getBoundingClientRect().top < window.innerHeight) {
+          element.classList.add('animate');
+        }
+      });
+    }, 50);
 
     return () => observerRef.current?.disconnect();
   }, []);
