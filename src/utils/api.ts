@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Product } from '@/types/products';
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://46.224.40.5:4000/api';
 
 // Interfaces
 export interface Service {
