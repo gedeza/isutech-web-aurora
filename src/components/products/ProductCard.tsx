@@ -12,6 +12,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, isHovered, onHover }
   // Determine link based on product ID
   const getLinkTo = () => {
     if (product.id === 0) return '/autoslip';
+    if (product.id === 16) return '/education-analytics';
     if (product.id === 18) return '/property-intelligence';
     // Add more routes as pages are created
     // if (product.id === 19) return '/b2b2g-platform';

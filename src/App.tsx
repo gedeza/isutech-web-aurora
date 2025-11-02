@@ -14,6 +14,7 @@ import TermsPage from './pages/TermsPage';
 import DocumentationPage from './pages/DocumentationPage';
 import AutoSlipPage from './pages/AutoSlipPage';
 import PropertyIntelligencePage from './pages/PropertyIntelligencePage';
+import EducationAnalyticsPage from './pages/EducationAnalyticsPage';
 
 // Admin pages
 import AdminLayout from './layouts/AdminLayout';
@@ -50,6 +51,7 @@ function App() {
           <Route path="/documentation" element={<DocumentationPage/>}/>
           <Route path="/autoslip" element={<AutoSlipPage/>}/>
           <Route path="/property-intelligence" element={<PropertyIntelligencePage/>}/>
+          <Route path="/education-analytics" element={<EducationAnalyticsPage/>}/>
         </Route>
 
         {/* Admin login (no navbar/footer) */}
