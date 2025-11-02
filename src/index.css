@@ -230,3 +230,104 @@ html {
 .animate-scale-pulse {
   animation: scale-pulse 2s ease-in-out infinite;
 }
+
+/* Mobile-First Responsive Utilities */
+@layer utilities {
+  /* Touch-friendly tap targets (minimum 44x44px) */
+  .tap-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Responsive padding utilities */
+  .responsive-padding {
+    @apply p-4 sm:p-6 md:p-8;
+  }
+
+  .responsive-padding-sm {
+    @apply p-3 sm:p-4 md:p-5;
+  }
+
+  .responsive-padding-lg {
+    @apply p-6 sm:p-8 md:p-10;
+  }
+
+  /* Responsive text scaling */
+  .responsive-heading-xl {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl;
+  }
+
+  .responsive-heading-lg {
+    @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  .responsive-heading-md {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+  }
+
+  .responsive-heading-sm {
+    @apply text-xl sm:text-2xl md:text-3xl;
+  }
+
+  .responsive-body {
+    @apply text-base md:text-lg;
+  }
+
+  .responsive-body-sm {
+    @apply text-sm md:text-base;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .scroll-animation,
+  .animate-fade-in,
+  .animate-float,
+  .animate-shimmer,
+  .animate-pulse-glow,
+  .animate-bounce-gentle,
+  .animate-scale-pulse {
+    animation: none !important;
+  }
+}
+
+/* Mobile-specific fixes */
+@media (max-width: 640px) {
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+
+  /* Better touch scrolling */
+  .overflow-y-auto {
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Prevent zoom on input focus (iOS) */
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="number"],
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
+/* Disable hover effects on touch devices */
+@media (hover: none) {
+  .hover-scale-105:hover {
+    transform: none !important;
+  }
+
+  .md\:hover\:scale-105:hover {
+    transform: none !important;
+  }
+}

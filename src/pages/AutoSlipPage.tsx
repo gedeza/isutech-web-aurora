@@ -191,25 +191,25 @@ const AutoSlipPage = () => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-300/20 to-transparent animate-shimmer" />
 
             <div className="relative z-10">
-              <span className="text-lg font-bold animate-bounce-gentle inline-block">🎉 LIMITED TIME: </span>
-              <span className="text-3xl font-bold text-yellow-600 dark:text-yellow-400 animate-scale-pulse inline-block mx-2">
+              <span className="text-sm sm:text-base md:text-lg font-bold animate-bounce-gentle inline-block">🎉 LIMITED TIME: </span>
+              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-yellow-600 dark:text-yellow-400 animate-scale-pulse inline-block mx-2">
                 50% OFF
               </span>
-              <span className="text-lg"> for the first 50 customers! Lock in your discount for 3 months.</span>
+              <span className="text-sm sm:text-base md:text-lg"> for the first 50 customers! Lock in your discount for 3 months.</span>
             </div>
           </div>
         </div>
 
         <div className="container mx-auto relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-6xl md:text-8xl font-bold mb-6 animate-fade-in">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-6 animate-fade-in">
               AutoSlip
             </h1>
-            <h2 className="text-3xl md:text-5xl mb-8 text-foreground animate-fade-in delay-200">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl mb-8 text-foreground animate-fade-in delay-200">
               WhatsApp Receipt Processing
             </h2>
             <div className="space-y-4 mb-12 animate-fade-in delay-300">
-              <h3 className="text-2xl md:text-3xl text-muted-foreground">
+              <h3 className="text-xl sm:text-2xl md:text-3xl text-muted-foreground">
                 No app downloads. No training. No hassle.
               </h3>
               <p className="text-xl text-muted-foreground">
@@ -319,10 +319,10 @@ const AutoSlipPage = () => {
 
             <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
               {pricing.business.map((plan, index) => (
-                <div key={index} className={`glass-card p-8 relative ${plan.popular ? 'ring-4 ring-primary scale-105' : ''}`}>
+                <div key={index} className={`glass-card p-4 sm:p-6 md:p-8 relative ${plan.popular ? 'ring-2 sm:ring-4 ring-primary sm:scale-105' : ''}`}>
                   {plan.popular && (
-                    <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
-                      <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 text-primary-black px-8 py-3 rounded-full font-bold text-sm shadow-lg animate-pulse-glow animate-shimmer relative overflow-hidden">
+                    <div className="absolute -top-5 sm:-top-6 left-1/2 transform -translate-x-1/2">
+                      <div className="bg-gradient-to-r from-yellow-400 via-amber-500 to-yellow-400 text-primary-black px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full font-bold text-xs sm:text-sm shadow-lg animate-pulse-glow animate-shimmer relative overflow-hidden">
                         <span className="relative z-10">⭐ MOST POPULAR ⭐</span>
                         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent animate-shimmer" />
                       </div>
@@ -330,12 +330,12 @@ const AutoSlipPage = () => {
                   )}
 
                   <div className="text-center mb-6">
-                    <div className="text-5xl mb-4">{plan.icon}</div>
-                    <h3 className="text-2xl font-bold mb-4">{plan.name}</h3>
+                    <div className="text-3xl sm:text-4xl md:text-5xl mb-4">{plan.icon}</div>
+                    <h3 className="text-xl sm:text-2xl font-bold mb-4">{plan.name}</h3>
                     <div className="mb-2">
-                      <span className="text-muted-foreground line-through text-lg">R{plan.originalPrice}</span>
+                      <span className="text-muted-foreground line-through text-base sm:text-lg">R{plan.originalPrice}</span>
                     </div>
-                    <div className="text-5xl font-bold text-primary mb-2">
+                    <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-primary mb-2">
                       R{plan.price}
                     </div>
                     <div className="text-muted-foreground">/month</div>
@@ -472,17 +472,17 @@ const AutoSlipPage = () => {
             ].map((benefit, index) => (
               <div
                 key={index}
-                className="glass-card p-8 hover:scale-105 transition-all duration-300 group"
+                className="glass-card p-4 sm:p-6 md:p-8 md:hover:scale-105 transition-all duration-300 group"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="text-primary mb-4 group-hover:scale-110 transition-transform duration-300">
+                <div className="text-primary mb-4 md:group-hover:scale-110 transition-transform duration-300">
                   {benefit.icon}
                 </div>
                 <div className="inline-block bg-primary/20 text-primary text-xs font-bold px-3 py-1 rounded-full mb-3">
                   {benefit.highlight}
                 </div>
-                <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{benefit.description}</p>
+                <h3 className="text-lg sm:text-xl font-bold mb-3">{benefit.title}</h3>
+                <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">{benefit.description}</p>
               </div>
             ))}
           </div>

@@ -107,13 +107,13 @@ const Hero = () => {
       {/* Content */}
       <div className="container relative">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 scroll-animation">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 scroll-animation">
             <span className="gradient-text dark:text-primary">Transform Your Business</span>
             <br />
             with iSu Technologies
           </h1>
-          
-          <p className="text-lg md:text-xl text-muted-foreground mb-8 scroll-animation" style={{ transitionDelay: '200ms' }}>
+
+          <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-8 scroll-animation" style={{ transitionDelay: '200ms' }}>
             Transform your business with cutting-edge technology solutions designed for the future of work.
           </p>
           
@@ -148,10 +148,10 @@ const Hero = () => {
           ].map((feature, index) => (
             <div
               key={feature.title}
-              className="glass-card p-6 rounded-lg dark:bg-white/[0.02] dark:backdrop-blur-xl dark:border-white/[0.05]"
+              className="glass-card p-4 sm:p-5 md:p-6 rounded-lg dark:bg-white/[0.02] dark:backdrop-blur-xl dark:border-white/[0.05]"
             >
-              <h3 className="text-lg font-semibold mb-2">{feature.title}</h3>
-              <p className="text-muted-foreground">{feature.description}</p>
+              <h3 className="text-base sm:text-lg font-semibold mb-2">{feature.title}</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">{feature.description}</p>
             </div>
           ))}
         </div>
@@ -166,7 +166,7 @@ const Hero = () => {
               {[...companyLogos, ...companyLogos].map((logo, index) => (
                 <div
                   key={index}
-                  className="mx-8 h-16 w-48 flex items-center justify-center"
+                  className="mx-4 sm:mx-6 md:mx-8 h-12 sm:h-14 md:h-16 w-32 sm:w-40 md:w-48 flex items-center justify-center"
                 >
                   <img 
                     src={logo.src} 
@@ -180,7 +180,7 @@ const Hero = () => {
               {[...companyLogos, ...companyLogos].map((logo, index) => (
                 <div
                   key={index}
-                  className="mx-8 h-16 w-48 flex items-center justify-center"
+                  className="mx-4 sm:mx-6 md:mx-8 h-12 sm:h-14 md:h-16 w-32 sm:w-40 md:w-48 flex items-center justify-center"
                 >
                   <img 
                     src={logo.src} 
