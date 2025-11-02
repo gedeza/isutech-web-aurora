@@ -7,6 +7,7 @@ import contactRoutes from './routes/contact.routes';
 import productRoutes from './routes/product.routes';
 import serviceRoutes from './routes/service.routes';
 import documentationRoutes from './routes/documentation.routes';
+import onboardingRoutes from './routes/onboarding.routes';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use('/api/contact', contactRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/services', serviceRoutes);
 app.use('/api/docs', documentationRoutes);
+app.use('/api/autoslip', onboardingRoutes);
 
 // Error handling middleware
 app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {

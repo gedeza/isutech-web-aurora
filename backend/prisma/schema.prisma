@@ -279,3 +279,41 @@ enum DocumentationStatus {
   DRAFT
   PUBLISHED
 }
+
+// AutoSlip Lead Model (Onboarding Inquiries)
+model Lead {
+  id                 Int      @id @default(autoincrement())
+  leadId             String   @unique // LEAD-timestamp-random format
+  businessName       String
+  contactPerson      String
+  whatsapp           String
+  email              String
+  businessType       String
+  plan               LeadPlan
+  preferredStartDate String
+  billingDay         String
+  paymentMethod      String
+  specialRequests    String?  @db.Text
+  status             LeadStatus @default(PENDING)
+  source             String   @default("landing_page")
+  notes              String?  @db.Text
+  submittedAt        DateTime
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("autoslip_leads")
+}
+
+enum LeadPlan {
+  STARTER
+  BUSINESS
+  PROFESSIONAL
+}
+
+enum LeadStatus {
+  PENDING
+  CONTACTED
+  QUALIFIED
+  CONVERTED
+  REJECTED
+}

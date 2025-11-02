@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
+    "@sendgrid/mail": "^8.1.6",
     "@types/morgan": "^1.9.9",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",

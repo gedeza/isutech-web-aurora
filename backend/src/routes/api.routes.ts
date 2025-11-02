@@ -7,6 +7,7 @@ import authRoutes from './auth.routes';
 import userRoutes from './user.routes';
 import productRoutes from './product.routes';
 import serviceRoutes from './service.routes';
+import onboardingRoutes from './onboarding.routes';
 
 const router = express.Router();
 
@@ -55,5 +56,6 @@ router.use('/auth', authRoutes);
 router.use('/users', userRoutes);
 router.use('/products', productRoutes);
 router.use('/services', serviceRoutes);
+router.use('/autoslip', onboardingRoutes);
 
 export default router; 
