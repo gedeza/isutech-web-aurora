@@ -19,7 +19,7 @@ const Hero = () => {
       rootMargin: '50px' // Trigger animation 50px before entering viewport
     });
 
-    // Delay to ensure elements are in DOM
+    // Delay to ensure elements are in DOM (increased for React render timing)
     setTimeout(() => {
       document.querySelectorAll('.scroll-animation').forEach((element) => {
         observerRef.current?.observe(element);
@@ -28,7 +28,7 @@ const Hero = () => {
           element.classList.add('animate');
         }
       });
-    }, 50);
+    }, 500);
 
     return () => observerRef.current?.disconnect();
   }, []);
