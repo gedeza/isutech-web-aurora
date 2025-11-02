@@ -33,6 +33,31 @@ const Hero = () => {
     return () => observerRef.current?.disconnect();
   }, []);
 
+  // Nuclear option: Force feature cards visible with multiple timeout attempts
+  useEffect(() => {
+    const forceVisible = () => {
+      const featureCards = document.querySelectorAll('.glass-card.scroll-animation');
+      featureCards.forEach((card) => {
+        if (!card.classList.contains('animate')) {
+          card.classList.add('animate');
+        }
+      });
+    };
+
+    // Try multiple times to catch React render at different timings
+    const timeout1 = setTimeout(forceVisible, 100);
+    const timeout2 = setTimeout(forceVisible, 300);
+    const timeout3 = setTimeout(forceVisible, 500);
+    const timeout4 = setTimeout(forceVisible, 1000); // Extra fallback
+
+    return () => {
+      clearTimeout(timeout1);
+      clearTimeout(timeout2);
+      clearTimeout(timeout3);
+      clearTimeout(timeout4);
+    };
+  }, []);
+
   const companyLogos = [
     { src: '/images/IBMLOGO.jpg', alt: 'IBM' },
     { src: '/images/Ethekwini Municipality Logo.jpeg', alt: 'Ethekwini Municipality' },
