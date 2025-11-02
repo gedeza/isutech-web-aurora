@@ -9,9 +9,6 @@ const ProductsPage = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
 
-  // Convert categories object to array of category IDs for sidebar
-  const categoryList = Object.keys(categories);
-
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
@@ -69,7 +66,7 @@ const ProductsPage = () => {
 
           <div className="flex flex-col lg:flex-row gap-8">
             <CategorySidebar
-              categories={categoryList}
+              categories={categories}
               activeCategory={activeCategory}
               totalProducts={products.length}
               onCategoryChange={handleCategoryChange}
