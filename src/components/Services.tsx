@@ -2,8 +2,66 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Building2, Bot, Code2, Laptop2 } from 'lucide-react';
 import { servicesApi, Service } from '../utils/api';
 
+// Fallback static services data
+const FALLBACK_SERVICES: Service[] = [
+  {
+    _id: '1',
+    name: 'Government Solutions',
+    slug: 'government-solutions',
+    category: 'Government Solutions',
+    description: 'Comprehensive digital solutions for government institutions',
+    shortDescription: 'Streamline government operations with our tailored digital solutions',
+    features: ['E-Government Platforms', 'Citizen Services', 'Data Management', 'Security & Compliance'],
+    benefits: [],
+    process: [],
+    technologies: [],
+    price: { starter: 0, professional: 0, enterprise: 0 },
+    status: 'Published',
+    createdBy: '',
+    lastUpdated: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    _id: '2',
+    name: 'AI & Automation',
+    slug: 'ai-automation',
+    category: 'AI & Automation',
+    description: 'Intelligent automation solutions powered by AI',
+    shortDescription: 'Transform your business processes with intelligent automation',
+    features: ['Machine Learning', 'Process Automation', 'Predictive Analytics', 'Natural Language Processing'],
+    benefits: [],
+    process: [],
+    technologies: [],
+    price: { starter: 0, professional: 0, enterprise: 0 },
+    status: 'Published',
+    createdBy: '',
+    lastUpdated: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  },
+  {
+    _id: '3',
+    name: 'Custom Development',
+    slug: 'custom-development',
+    category: 'Custom Development',
+    description: 'Bespoke software solutions tailored to your needs',
+    shortDescription: 'Build custom applications that perfectly fit your business requirements',
+    features: ['Web Applications', 'Mobile Apps', 'API Development', 'Database Design'],
+    benefits: [],
+    process: [],
+    technologies: [],
+    price: { starter: 0, professional: 0, enterprise: 0 },
+    status: 'Published',
+    createdBy: '',
+    lastUpdated: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date()
+  }
+];
+
 const Services = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const [services, setServices] = useState<Service[]>(FALLBACK_SERVICES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -14,7 +72,9 @@ const Services = () => {
         const data = await servicesApi.getAll();
         setServices(data.filter(service => service.status === 'Published'));
       } catch (err: any) {
-        setError(err.message || 'Failed to fetch services');
+        // Use fallback data instead of showing error
+        console.log('Using fallback services data:', err.message);
+        setServices(FALLBACK_SERVICES);
       } finally {
         setLoading(false);
       }
@@ -51,10 +111,6 @@ const Services = () => {
 
   if (loading) {
     return <div className="text-center py-12">Loading services...</div>;
-  }
-
-  if (error) {
-    return <div className="text-center py-12 text-red-500">{error}</div>;
   }
 
   return (

@@ -6,12 +6,36 @@ import { Product } from '@/types/products';
 import { productsApi } from '@/utils/api';
 import { Loader2 } from 'lucide-react';
 
+// Fallback products data
+const FALLBACK_PRODUCTS: Product[] = [
+  {
+    _id: '1',
+    name: 'AutoSlip Digital Onboarding',
+    slug: 'autoslip-digital-onboarding',
+    description: 'Streamline your customer onboarding with our digital solution',
+    shortDescription: 'Digital onboarding platform for modern businesses',
+    category: 'Software Solutions',
+    price: 'Custom Pricing',
+    status: 'Active',
+    images: ['/images/products/autoslip.jpg'],
+    technologies: ['React', 'Node.js', 'MongoDB'],
+    client: 'Various',
+    year: '2024',
+    createdBy: 'ISU Technologies',
+    lastUpdated: new Date().toISOString(),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  }
+];
+
+const FALLBACK_CATEGORIES = ['Software Solutions', 'AI Solutions', 'Government Solutions'];
+
 const ProductsPage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeCategory, setActiveCategory] = useState('all');
   const [showFilters, setShowFilters] = useState(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [products, setProducts] = useState<Product[]>(FALLBACK_PRODUCTS);
+  const [categories, setCategories] = useState<string[]>(FALLBACK_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -26,7 +50,10 @@ const ProductsPage = () => {
         setProducts(productsData);
         setCategories(categoriesData.categories);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to fetch products');
+        // Use fallback data instead of showing error
+        console.log('Using fallback products data:', err instanceof Error ? err.message : 'Failed to fetch');
+        setProducts(FALLBACK_PRODUCTS);
+        setCategories(FALLBACK_CATEGORIES);
       } finally {
         setLoading(false);
       }
@@ -61,17 +88,6 @@ const ProductsPage = () => {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-red-500 mb-2">Error</h2>
-          <p className="text-muted-foreground">{error}</p>
-        </div>
       </div>
     );
   }

@@ -253,3 +253,6 @@ export const changePassword = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+// Alias for backward compatibility
+export const getCurrentUser = getMe;

@@ -98,9 +98,9 @@ const AutoSlipOnboardingForm: React.FC<AutoSlipOnboardingFormProps> = ({
 
     try {
       // Connect to backend API server
-      // Production: VPS at 46.224.40.5:3001
-      // Development: localhost:3001
-      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'http://46.224.40.5:3001' : 'http://localhost:3001');
+      // Production: HTTPS API at api.isutech.co.za
+      // Development: localhost:4000
+      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'https://api.isutech.co.za' : 'http://localhost:4000');
       const response = await fetch(`${API_URL}/api/autoslip/onboarding`, {
         method: 'POST',
         headers: {

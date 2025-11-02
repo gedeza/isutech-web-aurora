@@ -105,9 +105,8 @@ const ContactPage = () => {
     setErrorMessage('');
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'http://46.224.40.5:3001' : 'http://localhost:3001');
-
-      const response = await fetch(`${API_URL}/api/contact`, {
+      // Use Vercel serverless function (same domain, works with HTTPS)
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

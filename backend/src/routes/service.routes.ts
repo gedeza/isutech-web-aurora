@@ -1,10 +1,9 @@
 import express from 'express';
 import { body } from 'express-validator';
 import multer from 'multer';
-import * as serviceController from '../controllers/service.controller';
+import * as serviceController from '../controllers/service.controller.prisma';
 import { validateRequest } from '../middleware/validate-request';
-import { auth, adminAuth } from '../middleware/auth.middleware';
-import { protect, adminOnly } from '../middleware/auth';
+import { protect, adminOnly } from '../middleware/auth.prisma';
 
 const router = express.Router();
 
