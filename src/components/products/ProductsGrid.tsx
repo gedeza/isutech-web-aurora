@@ -7,15 +7,15 @@ interface ProductsGridProps {
 }
 
 const ProductsGrid: React.FC<ProductsGridProps> = ({ products }) => {
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {products.map((product) => (
         <ProductCard
-          key={product._id}
+          key={product.id}
           product={product}
-          isHovered={hoveredId === product._id}
+          isHovered={hoveredId === product.id}
           onHover={setHoveredId}
         />
       ))}

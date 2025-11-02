@@ -1,17 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Product } from '@/types/products';
-import { formatPrice } from '@/utils/format';
 
 interface FeaturedProductsProps {
   products: Product[];
 }
 
 const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ products }) => {
-  // Get the latest 3 products
+  // Get the latest 3 products with completed status
   const featuredProducts = products
-    .filter(product => product.status === 'Active')
-    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .filter(product => product.status === 'completed')
     .slice(0, 3);
 
   return (
@@ -27,14 +25,14 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ products }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {featuredProducts.map((product) => (
             <Link
-              key={product._id}
+              key={product.id}
               to={`/products/${product.slug}`}
               className="group block"
             >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4">
-                {product.images[0] && (
+              <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4 bg-muted">
+                {product.image && (
                   <img
-                    src={product.images[0]}
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
                   />
@@ -44,10 +42,10 @@ const FeaturedProducts: React.FC<FeaturedProductsProps> = ({ products }) => {
               <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
                 {product.name}
               </h3>
-              <p className="text-muted-foreground mb-3">{product.shortDescription}</p>
+              <p className="text-muted-foreground mb-3">{product.shortDesc}</p>
               <div className="flex items-center justify-between">
-                <span className="text-lg font-semibold text-primary">
-                  {formatPrice(product.price)}
+                <span className="text-sm text-muted-foreground">
+                  {product.client} • {product.year}
                 </span>
                 {product.technologies && product.technologies.length > 0 && (
                   <div className="flex gap-2">
