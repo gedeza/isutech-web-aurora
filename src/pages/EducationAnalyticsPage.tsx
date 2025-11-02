@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { BarChart3, TrendingUp, Users, Map, FileText, AlertCircle, GraduationCap, Target, Brain, Clock } from 'lucide-react';
+import EducationAnalyticsInquiryForm from '@/components/EducationAnalyticsInquiryForm';
 
 const EducationAnalyticsPage = () => {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -219,6 +220,13 @@ const EducationAnalyticsPage = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Inquiry Form Section */}
+      <section id="inquiry-form" className="py-24 bg-background">
+        <div className="container mx-auto">
+          <EducationAnalyticsInquiryForm />
         </div>
       </section>
 

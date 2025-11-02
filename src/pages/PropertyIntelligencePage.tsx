@@ -20,6 +20,7 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import PropertyIntelligenceInquiryForm from '@/components/PropertyIntelligenceInquiryForm';
 
 const PropertyIntelligencePage = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
@@ -457,6 +458,13 @@ const PropertyIntelligencePage = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Inquiry Form Section */}
+      <section id="inquiry-form" className="py-24 bg-background">
+        <div className="container mx-auto">
+          <PropertyIntelligenceInquiryForm />
         </div>
       </section>
 
