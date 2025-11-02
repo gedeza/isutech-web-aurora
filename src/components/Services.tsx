@@ -114,13 +114,13 @@ const Services = () => {
   }
 
   return (
-    <section className="section relative overflow-hidden" id="services">
+    <section className="py-12 relative overflow-hidden" id="services">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-accent/5 to-background" />
       
       <div className="container relative">
         {/* Section header */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
+        <div className="max-w-2xl mx-auto text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4 scroll-animation">
             <span className="gradient-text">Comprehensive Solutions</span>
           </h2>

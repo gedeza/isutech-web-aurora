@@ -35,7 +35,7 @@ const Hero = () => {
   ];
 
   return (
-    <section className="relative pt-32 pb-24 overflow-hidden">
+    <section className="relative pt-16 pb-12 overflow-hidden">
       {/* Background patterns */}
       <div className="absolute inset-0 bg-background" />
       
@@ -95,7 +95,7 @@ const Hero = () => {
         </div>
 
         {/* Feature cards */}
-        <div className="grid md:grid-cols-3 gap-8 mt-16">
+        <div className="grid md:grid-cols-3 gap-8 mt-12">
           {[
             {
               title: "Government Solutions",
@@ -125,7 +125,7 @@ const Hero = () => {
         </div>
 
         {/* Trust indicators with carousel */}
-        <div className="mt-20 text-center">
+        <div className="mt-12 text-center">
           <p className="text-sm text-muted-foreground mb-6 scroll-animation">
             Trusted by leading companies worldwide
           </p>

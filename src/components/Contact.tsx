@@ -61,13 +61,13 @@ const Contact = () => {
   };
 
   return (
-    <section className="section relative overflow-hidden" id="contact">
+    <section className="py-12 relative overflow-hidden" id="contact">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-accent/5 to-background" />
       
       <div className="container relative">
         {/* Section header */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
+        <div className="max-w-2xl mx-auto text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             <span className="gradient-text">Get in Touch</span>
           </h2>
