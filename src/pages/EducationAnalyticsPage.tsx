@@ -241,10 +241,14 @@ const EducationAnalyticsPage = () => {
               Discover how our analytics platform can help your institution make data-driven decisions and improve student outcomes.
             </p>
             <a
-              href="/contact"
+              href="#inquiry-form"
               className="inline-flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors duration-300 font-semibold text-lg"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+              }}
             >
-              Get in Touch
+              Request a Demo
               <Users className="w-5 h-5" />
             </a>
           </div>
