@@ -153,6 +153,21 @@ const DashboardPage = () => {
               <p className="text-muted-foreground text-sm mt-1">Access frequently used features</p>
               <div className="mt-6 grid grid-cols-2 gap-4">
                 <button 
+                  onClick={() => navigate('/admin/content')}
+                  className="flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors group"
+                >
+                  <div className="p-2 bg-primary/10 text-primary rounded-lg group-hover:bg-primary/20">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l6 6v10a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <div className="text-left">
+                    <h3 className="font-medium">Content</h3>
+                    <p className="text-sm text-muted-foreground">Manage website data</p>
+                  </div>
+                </button>
+
+                <button 
                   onClick={() => navigate('/admin/crm')}
                   className="flex items-center gap-3 p-4 bg-primary/5 hover:bg-primary/10 rounded-lg transition-colors group"
                 >

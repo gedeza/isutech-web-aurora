@@ -58,4 +58,10 @@ router.use('/products', productRoutes);
 router.use('/services', serviceRoutes);
 router.use('/autoslip', onboardingRoutes);
 
+// CMS Routes
+import contentRoutes from './content.routes';
+import uploadRoutes from './upload.routes';
+router.use('/content', contentRoutes);
+router.use('/upload', uploadRoutes);
+
 export default router; 

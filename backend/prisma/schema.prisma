@@ -317,3 +317,16 @@ enum LeadStatus {
   CONVERTED
   REJECTED
 }
+
+// Site Content Model (CMS) for Dynamic Frontend
+model SiteContent {
+  id          Int      @id @default(autoincrement())
+  key         String   @unique
+  value       Json
+  description String?
+  type        String   @default("text") // "text", "image", "html", "json"
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_content")
+}

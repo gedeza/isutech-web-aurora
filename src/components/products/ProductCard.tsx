@@ -1,6 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Product } from '@/types/products';
+import { ThreeDCard } from '../ui/3d-card';
 
 interface ProductCardProps {
   product: Product;
@@ -8,120 +9,99 @@ interface ProductCardProps {
   onHover: (id: number | null) => void;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, isHovered, onHover }) => {
-  // Determine link based on product ID
-  const getLinkTo = () => {
-    if (product.id === 0) return '/autoslip';
-    if (product.id === 16) return '/education-analytics';
-    if (product.id === 18) return '/property-intelligence';
-    // Add more routes as pages are created
-    // if (product.id === 19) return '/b2b2g-platform';
-    return '#';
-  };
+const ProductCard: React.FC<ProductCardProps> = ({ product, onHover }) => {
+  const navigate = useNavigate();
 
-  const linkTo = getLinkTo();
-  const isClickable = linkTo !== '#';
+  const linkTo = `/products/${product.slug || product.name.toLowerCase().replace(/\s+/g, '-')}`;
 
   return (
-    <Link
-      to={linkTo}
-      className="group relative aspect-[5/6] overflow-hidden rounded-lg bg-gray-100 animate-fade-in"
-      onMouseEnter={() => onHover(product.id)}
-      onMouseLeave={() => onHover(null)}
-    >
-      <div className="absolute inset-0">
-        {/* Top Header */}
-        <div className="absolute top-0 left-0 right-0 text-sm p-4 flex justify-between items-center z-10">
-          <span className="text-gray-700 font-medium">{product.category}</span>
-          <span className="flex items-center gap-2">
-            {product.id === 0 && (
-              <span className="text-xs px-3 py-1 bg-primary text-white rounded-full font-bold animate-pulse">
-                FEATURED
-              </span>
-            )}
-            {product.status === 'ongoing' && (
-              <span className="inline-block w-2 h-2 rounded-full bg-primary animate-pulse" />
-            )}
-            <span className="text-gray-700 font-medium">{product.year}</span>
-          </span>
-        </div>
+    <Link to={linkTo} className="block group w-full h-[450px]">
+      <ThreeDCard className="w-full h-full bg-black relative border-transparent border dark:border-white/[0.1] rounded-2xl overflow-hidden hover:shadow-2xl hover:shadow-white/[0.05] transition-all duration-300">
+        <div className="absolute inset-0">
+          {/* Header Info */}
+          <div className="absolute top-0 left-0 right-0 p-5 flex justify-between items-center z-20">
+            <span className="text-muted-foreground text-xs tracking-wider uppercase font-medium drop-shadow-md">{product.category}</span>
+            <div className="flex items-center gap-2">
+              {product.status === 'completed' && (
+                <span className="text-[10px] px-2.5 py-1 bg-green-500/20 text-green-400 rounded-full font-bold shadow-sm">
+                  LIVE
+                </span>
+              )}
+              {product.status === 'ongoing' && (
+                <span className="text-[10px] px-2.5 py-1 bg-amber-500/20 text-amber-400 rounded-full font-bold shadow-sm">
+                  PLANNING
+                </span>
+              )}
+              {product.year && <span className="text-muted-foreground text-xs drop-shadow-md">{product.year}</span>}
+            </div>
+          </div>
 
-        {/* Gradient Overlay */}
-        <div
-          className={`absolute inset-0 bg-gradient-to-t transition-all duration-500 ${
-            isHovered
-              ? 'from-black/90 via-black/60 to-transparent'
-              : 'from-black/60 via-black/30 to-transparent'
-          }`}
-        >
-          {/* Content Container - Flexbox layout for consistent alignment */}
-          <div className="absolute inset-0 p-6 flex flex-col justify-end">
-            <div className={`transform transition-all duration-500 ${
-              isHovered ? 'translate-y-0' : 'translate-y-2'
-            }`}>
-              {/* Product Name - Line clamp for consistent height */}
-              <h3 className={`text-xl font-bold text-white mb-2 transition-opacity duration-500 line-clamp-2 ${
-                isHovered ? 'opacity-100' : 'opacity-90'
-              }`} style={{
-                textShadow: '0 2px 4px rgba(0,0,0,0.8)',
-                height: '3.5rem',
-                display: 'flex',
-                alignItems: 'flex-end'
-              }}>
+          {/* Image Layer (Fallback if not provided) */}
+          <div className="absolute inset-0 z-0">
+            {product.images && product.images.length > 0 ? (
+              <img src={product.images[0]} alt={product.name} className="w-full h-full object-cover opacity-40 group-hover:opacity-30 transition-opacity duration-300" />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-neutral-900 to-black" />
+            )}
+          </div>
+
+          {/* Deep Gradient Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-transparent z-10" />
+
+          {/* Content Block */}
+          <div className="absolute inset-0 p-6 flex flex-col justify-end z-20 text-white">
+            <div className="transform transition-transform duration-500 group-hover:translate-y-[-8px]">
+              <h3 className="text-2xl font-bold mb-2 leading-tight">
                 {product.name}
               </h3>
-
-              {/* Short Description - Line clamp for consistent height */}
-              <p className={`text-base text-white mb-3 transition-opacity duration-500 line-clamp-2 ${
-                isHovered ? 'opacity-100' : 'opacity-85'
-              }`} style={{
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
-                height: '3rem'
-              }}>
-                {product.shortDesc}
+              <p className="text-sm text-neutral-300 mb-4 line-clamp-2 leading-relaxed max-w-[90%]">
+                {product.shortDescription}
               </p>
 
-              {/* Client Text - Single line with fixed height */}
-              <p className={`text-sm text-white mb-4 transition-opacity duration-500 truncate ${
-                isHovered ? 'opacity-90' : 'opacity-75'
-              }`} style={{
-                textShadow: '0 1px 3px rgba(0,0,0,0.8)',
-                height: '1.25rem'
-              }}>
-                {product.client}
-              </p>
+              {/* Features as Bullets on Hover */}
+              {product.features && (
+                <ul className="mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 space-y-1.5 h-0 group-hover:h-auto overflow-hidden">
+                  {product.features.slice(0, 3).map((feature, i) => (
+                    <li key={i} className="text-xs text-white/80 flex items-start gap-2">
+                      <span className="text-white/40 mt-[2px]">•</span> 
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              )}
 
-              {/* Technology Badges - Fixed container height, limit to 2 rows */}
-              <div className={`mb-4 transition-opacity duration-500 ${
-                isHovered ? 'opacity-100' : 'opacity-80'
-              }`} style={{ height: '3.5rem', overflow: 'hidden' }}>
-                {product.technologies && (
-                  <div className="flex flex-wrap gap-2">
-                    {product.technologies.slice(0, 5).map((tech, i) => (
-                      <span
-                        key={i}
-                        className="text-xs px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-white font-medium"
-                        style={{ textShadow: '0 1px 2px rgba(0,0,0,0.8)' }}
-                      >
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
+              {/* Technologies Tags */}
+              {product.technologies && (
+                <div className="flex flex-wrap gap-2 mb-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {product.technologies.slice(0, 3).map((tech, i) => (
+                    <span
+                      key={i}
+                      className="text-[10px] px-2.5 py-1 bg-white/10 border border-white/20 backdrop-blur-md rounded-full text-white shadow-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                  {product.technologies.length > 3 && (
+                    <span className="text-[10px] px-2 py-1 text-white/70">+{product.technologies.length - 3}</span>
+                  )}
+                </div>
+              )}
+              
+              {/* Call to action arrow */}
+              <div className="flex items-center gap-2 mt-4 text-white/70 group-hover:text-white transition-colors">
+                <span className="text-xs font-medium uppercase tracking-widest">
+                  View Project
+                </span>
+                <svg className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </div>
-
-              {/* CTA Button - Fixed position at bottom */}
-              <button className={`text-sm font-semibold hover:underline transition-all duration-300 ${
-                isHovered ? 'opacity-100' : 'opacity-85'
-              } ${isClickable ? 'text-primary' : 'text-white'}`} style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>
-                {isClickable ? 'View Project →' : 'Details Coming Soon'}
-              </button>
             </div>
           </div>
         </div>
-      </div>
+      </ThreeDCard>
     </Link>
   );
 };
 
-export default ProductCard; 
+export default ProductCard;
