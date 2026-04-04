@@ -30,7 +30,7 @@ const CustomerDetails = () => {
     // Check authentication
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/login');
+      navigate('/admin/login');
       return;
     }
 

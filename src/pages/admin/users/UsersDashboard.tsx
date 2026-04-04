@@ -21,7 +21,7 @@ const UsersDashboard = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
-      navigate('/login');
+      navigate('/admin/login');
       return;
     }
 

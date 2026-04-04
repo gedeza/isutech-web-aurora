@@ -26,7 +26,7 @@ const DashboardPage = () => {
 
     if (!storedUser || !token) {
       console.log('No user data or token found, redirecting to login...');
-      navigate('/login');
+      navigate('/admin/login');
       return;
     }
 
@@ -44,7 +44,7 @@ const DashboardPage = () => {
       setUser(userData);
     } catch (error) {
       console.error('Error parsing user data:', error);
-      navigate('/login');
+      navigate('/admin/login');
     }
   }, [navigate]);
 
@@ -66,7 +66,7 @@ const DashboardPage = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    navigate('/login');
+    navigate('/admin/login');
   };
 
   if (!user) {

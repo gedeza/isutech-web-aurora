@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Index';
@@ -50,6 +50,9 @@ function App() {
           <Route path="/documentation" element={<DocumentationPage/>}/>
           <Route path="/products/:slug" element={<ProductDetailPage/>}/>
         </Route>
+
+        {/* Redirect /login to /admin/login */}
+        <Route path="/login" element={<Navigate to="/admin/login" replace />} />
 
         {/* Admin login (no navbar/footer) */}
         <Route path="/admin/login" element={<LoginPage />} />
