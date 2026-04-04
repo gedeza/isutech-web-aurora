@@ -1,6 +1,6 @@
 import express from 'express';
 import { body } from 'express-validator';
-import * as authController from '../controllers/auth.controller';
+import * as authController from '../controllers/auth.controller.prisma';
 import { validateRequest } from '../middleware/validate-request';
 
 const router = express.Router();

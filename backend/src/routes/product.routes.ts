@@ -1,8 +1,8 @@
 import express from "express"
 import { body } from "express-validator"
-import * as productController from "../controllers/product.controller"
+import * as productController from "../controllers/product.controller.prisma"
 import { validateRequest } from "../middleware/validate-request"
-import { protect, adminOnly } from "../middleware/auth"
+import { protect, adminOnly } from "../middleware/auth.prisma"
 
 const router = express.Router()
 
@@ -28,7 +28,7 @@ router.post(
     body("price").isNumeric().withMessage("Price must be a number"),
     body("technologies").isArray().withMessage("Technologies must be an array"),
     body("images").isArray().withMessage("Images must be an array"),
-    body("status").isIn(["Active", "Draft", "Archived"]).withMessage("Invalid status"),
+    body("status").isIn(["ACTIVE", "DRAFT", "ARCHIVED", "Active", "Draft", "Archived"]).withMessage("Invalid status"),
   ],
   validateRequest,
   productController.createProduct,
@@ -61,29 +61,29 @@ router.patch(
 
 router.delete("/:id", productController.deleteProduct)
 
-// Variant routes
-router.post(
-  "/:id/variants",
-  [
-    body("sku").notEmpty().withMessage("SKU is required"),
-    body("price").isNumeric().withMessage("Price must be a number"),
-    body("inventory").isNumeric().withMessage("Inventory must be a number"),
-  ],
-  validateRequest,
-  productController.addProductVariant,
-)
+// Variant routes - TODO: Implement variant methods in Prisma controller
+// router.post(
+//   "/:id/variants",
+//   [
+//     body("sku").notEmpty().withMessage("SKU is required"),
+//     body("price").isNumeric().withMessage("Price must be a number"),
+//     body("inventory").isNumeric().withMessage("Inventory must be a number"),
+//   ],
+//   validateRequest,
+//   productController.addProductVariant,
+// )
 
-router.put(
-  "/:id/variants/:variantId",
-  [
-    body("sku").optional().notEmpty().withMessage("SKU cannot be empty"),
-    body("price").optional().isNumeric().withMessage("Price must be a number"),
-    body("inventory").optional().isNumeric().withMessage("Inventory must be a number"),
-  ],
-  validateRequest,
-  productController.updateProductVariant,
-)
+// router.put(
+//   "/:id/variants/:variantId",
+//   [
+//     body("sku").optional().notEmpty().withMessage("SKU cannot be empty"),
+//     body("price").optional().isNumeric().withMessage("Price must be a number"),
+//     body("inventory").optional().isNumeric().withMessage("Inventory must be a number"),
+//   ],
+//   validateRequest,
+//   productController.updateProductVariant,
+// )
 
-router.delete("/:id/variants/:variantId", productController.deleteProductVariant)
+// router.delete("/:id/variants/:variantId", productController.deleteProductVariant)
 
 export default router

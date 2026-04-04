@@ -2,8 +2,8 @@
 
 **Project:** ISU Technologies Portfolio Website Enhancement
 **Started:** October 30, 2025
-**Last Updated:** October 30, 2025 (Evening - Post Contact Form Deployment)
-**Status:** Phase 1 Complete ✅ | Contact Form System Deployed ✅ | 7 Issues Tracked
+**Last Updated:** November 2, 2025 (AutoSlip Onboarding System Deployed)
+**Status:** Phase 1 Complete ✅ | Contact Form ✅ | AutoSlip Onboarding ✅ | Backend Migrated to Prisma ✅
 
 ---
 
@@ -39,6 +39,99 @@
 ---
 
 ## ✅ Completed Tasks
+
+### Session 3: Backend Migration & AutoSlip Onboarding (November 2, 2025)
+
+#### 1. Backend Migration from MongoDB/Mongoose to PostgreSQL/Prisma ✅
+**Date Completed:** November 2, 2025
+**Task:** Complete backend infrastructure migration from MongoDB to PostgreSQL with Prisma ORM
+
+**Changes Made:**
+- Migrated all controllers from Mongoose to Prisma (auth, user, product, service, contact)
+- Created comprehensive Prisma schema with all models (User, Product, Service, Contact, Customer, Lead, etc.)
+- Fixed TypeScript type mismatches (IUser interfaces, processSteps field names, UPPERCASE enums)
+- Deployed to Hetzner VPS (46.224.40.5) running Ubuntu with PostgreSQL
+- Configured PM2 process manager for backend reliability
+- Set up nginx reverse proxy with Let's Encrypt SSL
+- Configured DNS: api.isutech.co.za → backend server
+- All API endpoints now accessible via HTTPS: https://api.isutech.co.za/api
+
+**Technical Details:**
+- Database: PostgreSQL (isutech_web)
+- ORM: Prisma v5.18.0
+- Runtime: Node.js + Express + TypeScript
+- Process Manager: PM2
+- Reverse Proxy: nginx with SSL
+- SSL Certificate: Let's Encrypt (auto-renewal configured)
+
+**Verification:**
+- ✅ Products endpoint: https://api.isutech.co.za/api/products (returns empty array - intentional)
+- ✅ Services endpoint: https://api.isutech.co.za/api/services (returns empty array - intentional)
+- ✅ Auth endpoints working with JWT
+- ✅ Frontend fallback data working as designed
+
+#### 2. AutoSlip Onboarding System Implementation ✅
+**Date Completed:** November 2, 2025
+**Task:** Implement customer inquiry collection system for AutoSlip landing page
+
+**Changes Made:**
+- Created Lead model in Prisma schema with full customer information fields
+- Built onboarding controller (onboarding.controller.prisma.ts) with:
+  - POST /api/autoslip/onboarding (public endpoint)
+  - GET /api/autoslip/leads (admin endpoint)
+  - GET /api/autoslip/leads/:leadId (admin endpoint)
+  - PUT /api/autoslip/leads/:leadId (admin endpoint for status updates)
+- Integrated SendGrid for admin email notifications
+- Rich HTML email template with lead details and WhatsApp contact links
+- Graceful fallback when SendGrid API key not configured (logs email)
+- Configured routes in api.routes.ts
+
+**Database Schema:**
+```prisma
+model Lead {
+  businessName, contactPerson, whatsapp, email
+  businessType, plan (STARTER/BUSINESS/PROFESSIONAL)
+  preferredStartDate, billingDay, paymentMethod
+  specialRequests, status (PENDING/CONTACTED/QUALIFIED/CONVERTED/REJECTED)
+  source, notes, timestamps
+}
+```
+
+**Verification:**
+- ✅ Test submission successful: Lead ID `LEAD-1762077354624-I48AXTAOE`
+- ✅ Data saved to PostgreSQL autoslip_leads table
+- ✅ Email notification logged (ready for SendGrid API key)
+- ✅ Frontend form at https://www.isutech.co.za/autoslip working
+
+**Files Modified/Created:**
+- backend/prisma/schema.prisma (added Lead model)
+- backend/src/controllers/onboarding.controller.prisma.ts (new)
+- backend/src/routes/onboarding.routes.ts (new)
+- backend/src/routes/api.routes.ts (updated)
+- backend/package.json (added @sendgrid/mail)
+
+#### 3. Frontend Deployment & Routing Fix ✅
+**Date Completed:** November 2, 2025
+**Task:** Deploy frontend to Vercel with proper SPA routing
+
+**Changes Made:**
+- Created vercel.json for client-side routing support
+- Deployed to Vercel production
+- Configured custom domain: https://www.isutech.co.za
+- Verified AutoSlip page accessible at /autoslip
+
+**Deployment Details:**
+- Platform: Vercel
+- Primary Domain: https://www.isutech.co.za
+- Backend API: https://api.isutech.co.za
+- AutoSlip Page: https://www.isutech.co.za/autoslip
+- Form endpoint connected and functional
+
+**Git Commits:**
+- feat: Implement AutoSlip onboarding endpoint with Prisma (0692b21)
+- fix: Add Vercel SPA routing configuration (5ce0937)
+
+### Session 2: Contact Form System (October 30, 2025)
 
 ### Session 1: Portfolio Expansion (October 30, 2025)
 

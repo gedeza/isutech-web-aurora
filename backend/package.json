@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Backend for iSuTech website",
   "main": "src/server.ts",
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon src/server.ts",
@@ -17,6 +20,7 @@
   },
   "dependencies": {
     "@prisma/client": "^5.18.0",
+    "@sendgrid/mail": "^8.1.6",
     "@types/morgan": "^1.9.9",
     "axios": "^1.7.9",
     "bcryptjs": "^2.4.3",
@@ -32,10 +36,10 @@
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
     "@types/cors": "^2.8.17",
-    "@types/express": "^4.17.21",
+    "@types/express": "^4.17.25",
     "@types/jest": "^29.5.12",
     "@types/jsonwebtoken": "^9.0.6",
-    "@types/multer": "^1.4.11",
+    "@types/multer": "^1.4.13",
     "@types/node": "^20.11.24",
     "@types/nodemailer": "^6.4.14",
     "jest": "^29.7.0",

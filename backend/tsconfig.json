@@ -17,5 +17,20 @@
     }
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/models/**/*.ts",
+    "src/controllers/auth.controller.ts",
+    "src/controllers/authController.ts",
+    "src/controllers/product.controller.ts",
+    "src/controllers/service.controller.ts",
+    "src/controllers/user.controller.ts",
+    "src/controllers/customer.controller.ts",
+    "src/middleware/auth.ts",
+    "src/routes/contactRoutes.ts",
+    "src/routes/documentationRoutes.ts",
+    "src/routes/jobRoutes.ts",
+    "src/scripts/**/*.ts"
+  ]
 }

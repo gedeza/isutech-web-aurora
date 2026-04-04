@@ -3,14 +3,14 @@ import { CheckCircle } from "lucide-react";
 
 const About = () => {
   return (
-    <section id="about" className="py-20 bg-background/50">
+    <section id="about" className="py-12 bg-background/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
               Driving Innovation Through Technology Excellence
             </h2>
-            <p className="text-lg text-foreground/70 mb-8">
+            <p className="text-base md:text-lg text-foreground/70 mb-8">
               At iSuTech, we combine cutting-edge technology with deep industry expertise to deliver transformative solutions that drive business growth and innovation.
             </p>
             
@@ -29,22 +29,22 @@ const About = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-2 gap-6">
-            <Card className="p-6 animate-float">
-              <div className="text-4xl font-bold text-primary mb-2">150+</div>
-              <div className="text-sm text-foreground/70">Projects Completed</div>
+          <div className="grid grid-cols-2 gap-4 sm:gap-6">
+            <Card className="p-4 sm:p-5 md:p-6 animate-float">
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">150+</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Projects Completed</div>
             </Card>
-            <Card className="p-6 animate-float [animation-delay:200ms]">
-              <div className="text-4xl font-bold text-primary mb-2">98%</div>
-              <div className="text-sm text-foreground/70">Client Satisfaction</div>
+            <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:200ms]">
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">98%</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Client Satisfaction</div>
             </Card>
-            <Card className="p-6 animate-float [animation-delay:400ms]">
-              <div className="text-4xl font-bold text-primary mb-2">10+</div>
-              <div className="text-sm text-foreground/70">Years Experience</div>
+            <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:400ms]">
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">10+</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Years Experience</div>
             </Card>
-            <Card className="p-6 animate-float [animation-delay:600ms]">
-              <div className="text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-sm text-foreground/70">Support Available</div>
+            <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:600ms]">
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">24/7</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Support Available</div>
             </Card>
           </div>
         </div>

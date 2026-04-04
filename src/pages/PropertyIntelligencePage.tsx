@@ -20,6 +20,7 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react';
+import PropertyIntelligenceInquiryForm from '@/components/PropertyIntelligenceInquiryForm';
 
 const PropertyIntelligencePage = () => {
   const [showStickyCTA, setShowStickyCTA] = useState(false);
@@ -125,13 +126,17 @@ const PropertyIntelligencePage = () => {
       {/* Sticky CTA Button */}
       {showStickyCTA && (
         <div className="fixed bottom-8 right-8 z-50 animate-fade-in">
-          <Link
-            to="/contact"
+          <a
+            href="#inquiry-form"
             className="flex items-center gap-2 px-6 py-4 bg-primary text-white rounded-full shadow-2xl hover:scale-105 transition-all duration-300 animate-pulse-glow"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+            }}
           >
             <Zap className="w-5 h-5" />
             <span className="font-bold">Request Demo</span>
-          </Link>
+          </a>
         </div>
       )}
 
@@ -160,9 +165,16 @@ const PropertyIntelligencePage = () => {
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fade-in">
-              <Link to="/contact" className="btn-primary">
+              <a
+                href="#inquiry-form"
+                className="btn-primary inline-flex items-center justify-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Request Demo <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+              </a>
               <Link to="/products" className="btn-secondary">
                 View All Products
               </Link>
@@ -460,6 +472,13 @@ const PropertyIntelligencePage = () => {
         </div>
       </section>
 
+      {/* Inquiry Form Section */}
+      <section id="inquiry-form" className="py-24 bg-background">
+        <div className="container mx-auto">
+          <PropertyIntelligenceInquiryForm />
+        </div>
+      </section>
+
       {/* Final CTA Section */}
       <section className="py-24 bg-gradient-to-br from-primary/10 via-background to-background">
         <div className="container mx-auto">
@@ -472,9 +491,16 @@ const PropertyIntelligencePage = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-              <Link to="/contact" className="btn-primary text-lg px-10 py-4">
+              <a
+                href="#inquiry-form"
+                className="btn-primary text-lg px-10 py-4 inline-flex items-center justify-center"
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.getElementById('inquiry-form')?.scrollIntoView({ behavior: 'smooth' });
+                }}
+              >
                 Request a Demo <ArrowRight className="w-5 h-5 ml-2" />
-              </Link>
+              </a>
               <Link to="/products" className="btn-secondary text-lg px-10 py-4">
                 View All Products
               </Link>

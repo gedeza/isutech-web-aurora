@@ -18,9 +18,8 @@ const Contact = () => {
     setErrorMessage('');
 
     try {
-      const API_URL = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? 'http://46.224.40.5:3001' : 'http://localhost:3001');
-
-      const response = await fetch(`${API_URL}/api/contact`, {
+      // Use Vercel serverless function (same domain, works with HTTPS)
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,13 +61,13 @@ const Contact = () => {
   };
 
   return (
-    <section className="section relative overflow-hidden" id="contact">
+    <section className="py-12 relative overflow-hidden" id="contact">
       {/* Background decoration */}
       <div className="absolute inset-0 bg-gradient-to-t from-background via-accent/5 to-background" />
       
       <div className="container relative">
         {/* Section header */}
-        <div className="max-w-2xl mx-auto text-center mb-16">
+        <div className="max-w-2xl mx-auto text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
             <span className="gradient-text">Get in Touch</span>
           </h2>
@@ -79,7 +78,7 @@ const Contact = () => {
 
         <div className="grid lg:grid-cols-2 gap-12 items-start">
           {/* Contact Form */}
-          <div className="glass-card p-8 rounded-lg animate-fade-in">
+          <div className="glass-card p-4 sm:p-6 md:p-8 rounded-lg animate-fade-in">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-sm font-medium mb-2">
@@ -165,26 +164,26 @@ const Contact = () => {
           </div>
 
           {/* Contact Information */}
-          <div className="space-y-8">
-            <div className="floating-card p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Visit Our Office</h3>
-              <p className="text-muted-foreground">
+          <div className="space-y-6 sm:space-y-8">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">Visit Our Office</h3>
+              <p className="text-sm sm:text-base text-muted-foreground">
                 18 The Boulevard <br />
                 Westway Office Park<br />
                 Westville, 3630
               </p>
             </div>
 
-            <div className="floating-card p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Contact Information</h3>
-              <div className="space-y-3 text-muted-foreground">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
+              <h3 className="text-base sm:text-lg font-semibold mb-4">Contact Information</h3>
+              <div className="space-y-3 text-sm sm:text-base text-muted-foreground">
                 <p>Email: info@isutech.co.za</p>
                 <p>Phone: +27 68 127 6710</p>
                 <p>Hours: Mon-Fri 9:00 AM - 6:00 PM </p>
               </div>
             </div>
 
-            <div className="floating-card p-6 rounded-lg">
+            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
               <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex space-x-4">
                 {/* Add social media icons/links here */}

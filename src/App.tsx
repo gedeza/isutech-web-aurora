@@ -12,14 +12,14 @@ import ScrollToTop from './components/ScrollToTop';
 import SupportPage from './pages/SupportPage';
 import TermsPage from './pages/TermsPage';
 import DocumentationPage from './pages/DocumentationPage';
-import AutoSlipPage from './pages/AutoSlipPage';
-import PropertyIntelligencePage from './pages/PropertyIntelligencePage';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 // Admin pages
 import AdminLayout from './layouts/AdminLayout';
 import PublicLayout from './layouts/PublicLayout';
 import LoginPage from './pages/admin/LoginPage';
 import DashboardPage from './pages/admin/DashboardPage';
+import ContentManager from './pages/admin/content/ContentManager';
 import ContactsDashboard from './pages/admin/contacts/ContactsDashboard';
 import ProductsDashboard from './pages/admin/products/ProductsDashboard';
 import ProductForm from './pages/admin/products/ProductForm';
@@ -48,8 +48,7 @@ function App() {
           <Route path="/support" element={<SupportPage/>}/>
           <Route path="/terms" element={<TermsPage/>}/>
           <Route path="/documentation" element={<DocumentationPage/>}/>
-          <Route path="/autoslip" element={<AutoSlipPage/>}/>
-          <Route path="/property-intelligence" element={<PropertyIntelligencePage/>}/>
+          <Route path="/products/:slug" element={<ProductDetailPage/>}/>
         </Route>
 
         {/* Admin login (no navbar/footer) */}
@@ -59,6 +58,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<DashboardPage />} />
           <Route path="dashboard" element={<DashboardPage />} />
+          <Route path="content" element={<ContentManager />} />
           <Route path="contacts" element={<ContactsDashboard />} />
           <Route path="products" element={<ProductsDashboard />} />
           <Route path="products/new" element={<ProductForm />} />

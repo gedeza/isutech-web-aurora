@@ -30,7 +30,8 @@ const AddCustomer = () => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/customers', {
+      const API_URL = import.meta.env.VITE_API_URL || 'https://api.isutech.co.za/api';
+      const response = await fetch(`${API_URL}/customers`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
