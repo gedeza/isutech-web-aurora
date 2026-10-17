@@ -49,10 +49,10 @@ const ServicesPage = () => {
   }, []);
 
   const stats = [
-    { value: "100+", label: "Successful Projects" },
-    { value: "98%", label: "Client Satisfaction" },
-    { value: "24/7", label: "Support Available" },
-    { value: "50+", label: "Expert Team Members" }
+    { value: "SA", label: "Built in South Africa" },
+    { value: "Local", label: "Data Hosted in South Africa" },
+    { value: "POPIA", label: "Privacy by Design" },
+    { value: "Direct", label: "Work With the People Who Build It" }
   ];
 
   return (

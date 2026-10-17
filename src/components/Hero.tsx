@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ThreeDCard } from './ui/3d-card';
-import { ThreeDMarquee } from './ui/3d-marquee';
+import { API_URL } from '@/utils/api';
 
 const HERO_VARIANTS = {
   hidden: { opacity: 0, y: 30 },
@@ -33,7 +33,7 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/content/hero_content')
+    fetch(`${API_URL}/content/hero_content`)
       .then(res => res.json())
       .then(data => {
         if (data && data.value) {
@@ -46,15 +46,6 @@ const Hero = () => {
       })
       .catch(() => console.log('Using default hero content (API unavailable)'));
   }, []);
-
-  const companyLogos = [
-    { src: '/images/IBMLOGO.jpg', alt: 'IBM' },
-    { src: '/images/Ethekwini Municipality Logo.jpeg', alt: 'Ethekwini Municipality' },
-    { src: '/images/KZN Legislature Logo.png', alt: 'KZN Legislature' },
-    { src: '/images/Microsoft Logo.png', alt: 'Microsoft' },
-    { src: '/images/Moses Kotane Institute Logo.jpeg', alt: 'Moses Kotane Institute' },
-    { src: '/images/MTN Logo.png', alt: 'MTN' }
-  ];
 
   const features = [
     {
@@ -131,19 +122,6 @@ const Hero = () => {
               </div>
             </ThreeDCard>
           ))}
-        </motion.div>
-
-        {/* 3D Trust Marquee */}
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.8 }}
-          className="mt-24 lg:mt-32 text-center overflow-hidden"
-        >
-          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
-            Trusted by organizations worldwide
-          </p>
-          <ThreeDMarquee items={companyLogos} speed={15} />
         </motion.div>
       </div>
     </section>
