@@ -14,6 +14,8 @@ The frontend has fallback data for products/services.
 
 ## One-time setup (steps marked SUDO need a sudoer; production auth-file edits are done by Nhlanhla)
 
+0. **Check Node (use an LTS, 20 or 22)**: `node --version` as `isutech-admin`. The API's `jsonwebtoken` dependency crashes on
+   Node 25+ (`SlowBuffer` was removed), so do not run it on a current/non-LTS release.
 1. **Check the port is free** (`ss -tlnp | grep 4010`). If not, change it in `nginx-isutech-web.conf`, `backend/.env`, and `API_PORT` for the health check.
 2. **Database (SUDO)**
    ```
@@ -27,8 +29,17 @@ The frontend has fallback data for products/services.
    ```
 4. **Create `/data/www/isutech-web/backend/.env`** by hand (never commit; all values fresh, nothing reused from the old box):
    `PORT=4010`, `NODE_ENV=production`, `DATABASE_URL=postgresql://isutech_web:<pw>@localhost:5432/isutech_web?schema=public`,
-   `JWT_SECRET=<openssl rand -hex 48>`, `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `SENDGRID_API_KEY`/SMTP_*, `UPLOAD_DIR=uploads`,
-   `CORS_ORIGINS=https://www.isutech.co.za,https://isutech.co.za`. `chmod 600` it.
+   `JWT_SECRET=<openssl rand -hex 48>`, `ADMIN_NAME`, `ADMIN_EMAIL`, `ADMIN_PASSWORD`, `UPLOAD_DIR=uploads`,
+   `CORS_ORIGINS=https://www.isutech.co.za,https://isutech.co.za` (documentation only: the code does not read it yet). `chmod 600` it.
+
+   Email (contact form and AutoSlip onboarding notifications; needs PR #11, the contact-form port, merged):
+   - `SENDGRID_API_KEY`: a **new** key, scoped to "Mail Send" only. Without it, submissions are still stored in the database
+     but no email is sent (the log says so).
+   - `ADMIN_EMAIL`: serves two purposes: the seeded admin login (`seed:admin`) **and** the inbox that receives contact and
+     AutoSlip notifications (default `info@isutech.co.za`). Use a monitored mailbox.
+   - `CONTACT_FROM_EMAIL` (optional, default `nhlanhla@isutech.co.za`): the sender address. It must be a verified sender in
+     SendGrid, otherwise SendGrid rejects the mail and nothing arrives.
+   - The `SMTP_*` variables in `.env.example` belong to old code and are not used by the live API.
 5. **Create the schema (manual, once)**: `cd /data/www/isutech-web/backend && npm ci && npx prisma db push` against the new, empty
    `isutech_web` database. Then **first build and start**: `bash /data/www/isutech-web/scripts/deploy-remote.sh`, then
    `npm run seed:admin` and change the seeded admin password after first login.
@@ -46,7 +57,8 @@ The frontend has fallback data for products/services.
 
 ## Verify
 `curl https://api.isutech.co.za/health`, `curl https://api.isutech.co.za/api/products`, open `https://www.isutech.co.za`,
-`/autoslip`, and log in at the admin portal.
+`/autoslip`, and log in at the admin portal. Submit the contact form once and confirm both that the row appears in the admin
+contacts dashboard and that the email arrives (the form is limited to 5 submissions per hour per IP).
 
 ## Notes
 - `server/` (legacy onboarding API) and `server/deploy.sh` (old Hetzner script) are NOT used; the Prisma backend serves `/api/autoslip`.
