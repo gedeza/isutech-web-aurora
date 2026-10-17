@@ -38,8 +38,11 @@ The frontend has fallback data for products/services.
    Optionally lower the TTL beforehand.
 8. **TLS (SUDO)**, after DNS has propagated:
    `certbot --nginx -d isutech.co.za -d www.isutech.co.za` and `certbot --nginx -d api.isutech.co.za`.
-9. **CI**: set repo secrets `SERVER_HOST`, `SERVER_USER`, `SSH_PRIVATE_KEY` (a dedicated key, installed in `authorized_keys` by Nhlanhla;
-   set multi-line keys with `gh secret set NAME < keyfile`). Run the workflow manually, then enable the `push` trigger.
+9. **CI**: create a GitHub Environment `production` (Settings > Environments), restrict deployment branches to `main` and add
+   required reviewers. Store these as **environment secrets**: `SERVER_HOST`, `SERVER_USER`, `SSH_PRIVATE_KEY` (a dedicated key, installed in `authorized_keys` by Nhlanhla;
+   set multi-line keys with `gh secret set NAME --env production < keyfile`), and `SERVER_HOST_KEY`: the known_hosts line for Dube,
+   from `ssh-keyscan -p 33822 -t ed25519 <host>`, **verified against the fingerprint printed on the box** by
+   `ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub` before you store it (the workflow uses `StrictHostKeyChecking=yes`). Run the workflow manually from `main`, then enable the `push` trigger.
 
 ## Verify
 `curl https://api.isutech.co.za/health`, `curl https://api.isutech.co.za/api/products`, open `https://www.isutech.co.za`,
@@ -66,5 +69,9 @@ backup and sign-off). Follow-up: baseline Prisma Migrate so schema changes becom
   exists in the shared instance. Verify with the first run after setup. Uploaded files in `backend/uploads` are NOT covered by it.
 - Registration follow-ups, each needing approval: add the site to the Central Hub Dashboard app catalog, update `dube-box-map.md`,
   and log the change in `isutech-ai` (`tasks.md`/`timeline.md`).
+- Resumes (`backend/uploads/resumes`) are applicant personal data: nginx denies `/uploads/resumes/` on both hosts. The backend
+  names files with the applicant's original filename; follow-up is a crypto-random name and an authenticated admin download endpoint.
+- The deploy workflow only runs from `main` through the `production` Environment, because it pipes `scripts/deploy-remote.sh`
+  from the checkout to the server.
 - Known weaknesses carried over from the old code, not fixed here: `cors()` is open to all origins, and the API has no rate
   limiting (CrowdSec on the box helps but is not a substitute).
