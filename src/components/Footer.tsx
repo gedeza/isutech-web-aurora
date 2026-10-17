@@ -76,7 +76,7 @@ const Footer = () => {
         <div className="border-t border-border/40 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
           <div className="flex items-center space-x-4">
             <span className="text-sm text-muted-foreground">
-              © {currentYear} iSu Technologies (Pty) Ltd. All rights reserved.
+              © {currentYear} iSu Technologies. All rights reserved.
             </span>
           </div>
 

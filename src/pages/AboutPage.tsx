@@ -10,8 +10,8 @@ const AboutPage = () => {
     window.scrollTo(0, 0);
     // Ideally fetch from /api/content/about_mission etc, but fallback to static immediately
     setContent({
-      mission: "To empower organizations with intelligent technology that transforms compliance from a burden into a strategic advantage.\n\nWe believe that compliance, training, and professional development should be seamless, data-driven, and predictive. Our mission is to build systems that don't just track what happened, but predict what will happen and recommend what should happen next.",
-      vision: "To become Africa's leading provider of AI-powered compliance and training intelligence platforms.\n\nWe envision a future where:\n- Every educator, trainer, and learner has access to intelligent systems that predict their success\n- Compliance is proactive, not reactive\n- Training providers can optimize outcomes using real-time analytics\n- Government departments can track and improve program effectiveness at scale\n- Data-driven decisions replace guesswork in the training sector"
+      mission: "To give South African institutions practical, trustworthy software, so that records, property, compliance and public services work the way the people who depend on them expect.\n\nWe build for the realities we know: municipal budgets and legacy systems, NARSSA and POPIA obligations, unreliable connectivity, and small teams who need tools that work without a large IT department.",
+      vision: "A South Africa where public bodies and regulated businesses run on modern, interoperable systems that keep personal information safe, and where those systems are built, hosted and supported locally.\n\nWe want to see:\n- Records that are governed, searchable and defensible\n- Compliance evidence that is ready before the audit, not assembled after it\n- Existing government systems connected without being replaced\n- AI that assists officials and professionals while people stay accountable for decisions"
     });
   }, []);
 
@@ -23,12 +23,12 @@ const AboutPage = () => {
   ];
 
   const values = [
-    { title: "Innovation First", desc: "We embrace cutting-edge technologies (AI, ML, predictive analytics) to solve real problems. We're not interested in replicating existing systems—we build the future.", icon: <Lightbulb className="w-5 h-5" /> },
-    { title: "Evidence-Based Solutions", desc: "We measure outcomes together with our clients and only publish figures we can stand behind.", icon: <LineChart className="w-5 h-5" /> },
-    { title: "Client Success", desc: "We don't just deliver software; we deliver measurable business outcomes. Our success is measured by our clients' success: improved completion rates, reduced compliance risk, increased ROI.", icon: <Target className="w-5 h-5" /> },
-    { title: "Transparency & Trust", desc: "We document everything, share our knowledge, and operate with complete transparency. This documentation hub is proof of our commitment to open collaboration.", icon: <ShieldCheck className="w-5 h-5" /> },
-    { title: "African Impact", desc: "We're proud to be a South African company solving African problems at African scale. Our solutions are designed for the complexity and diversity of the African market.", icon: <Globe className="w-5 h-5" /> },
-    { title: "Continuous Learning", desc: "We practice what we preach. Our team constantly learns, adapts, and improves. Every project teaches us something that makes the next one better.", icon: <Users className="w-5 h-5" /> }
+    { title: "Built for South Africa", desc: "NARSSA, POPIA, MPRA, municipal procurement and load-shedding are design inputs, not afterthoughts. Our products are hosted in South Africa.", icon: <Globe className="w-5 h-5" /> },
+    { title: "Privacy by Design", desc: "We collect only what a purpose needs, honour opt-outs, and keep a record of who accessed what and why.", icon: <ShieldCheck className="w-5 h-5" /> },
+    { title: "People Decide", desc: "We design AI to assist officials and professionals, never to decide for them. Automation verifies and routes; a person approves.", icon: <Users className="w-5 h-5" /> },
+    { title: "Integrate, Don't Replace", desc: "Institutions already run systems they depend on. We connect to them as they are rather than asking anyone to rip and replace.", icon: <Lightbulb className="w-5 h-5" /> },
+    { title: "Honest by Default", desc: "A demonstrator is described as a demonstrator. We publish only figures we can stand behind, and we say plainly what a product does not do yet.", icon: <Target className="w-5 h-5" /> },
+    { title: "We Run What We Build", desc: "The team that builds a product also operates and supports it, and documents it, so our clients deal with the people who know it.", icon: <LineChart className="w-5 h-5" /> }
   ];
 
   if (!content) return <div className="min-h-screen bg-background text-foreground" />;
@@ -50,14 +50,14 @@ const AboutPage = () => {
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.2 }}
             className="text-5xl md:text-7xl font-bold tracking-tight leading-[1.1] mb-6"
           >
-            Building the <span className="text-transparent bg-clip-text bg-gradient-to-r from-foreground to-muted-foreground">future</span><br />
-            of compliance intelligence.
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-foreground to-muted-foreground">South African</span><br />
+            institutions that must get it right.
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-muted-foreground font-light max-w-2xl mx-auto"
           >
-            iSu Technologies (Pty) Ltd is a South African technology company specializing in AI-powered solutions for training, compliance, and professional development sectors.
+            iSu Technologies is a South African software company. We build records management, property valuation, ISO compliance and government integration products for municipalities, public bodies and regulated industries.
           </motion.p>
         </div>
       </section>
@@ -145,7 +145,7 @@ const AboutPage = () => {
         <div className="container mx-auto px-6">
            <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-center">
               <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }}>
-                <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight text-foreground">A South African company,<br/>solving African problems.</h2>
+                <h2 className="text-3xl md:text-5xl font-bold mb-8 tracking-tight text-foreground">A South African company,<br/>built for South African institutions.</h2>
                 <p className="text-lg text-muted-foreground mb-6 font-light">
                   Our team combines deep technical expertise with a profound understanding of the South African regulatory and operational landscape.
                 </p>
@@ -173,10 +173,10 @@ const AboutPage = () => {
                     <div className="text-center">
                       <h4 className="text-foreground font-bold tracking-widest uppercase mb-4">Industries Served</h4>
                       <p className="text-muted-foreground font-light text-sm leading-loose">
-                        Education & Training<br/>
-                        Government & Public Sector<br/>
-                        Professional Bodies & Regulators<br/>
-                        NGOs & Development
+                        Municipalities & Local Government<br/>
+                        Construction, Mining & Infrastructure<br/>
+                        Property & Valuation<br/>
+                        Professional Bodies & Regulators
                       </p>
                     </div>
                  </div>
