@@ -9,8 +9,8 @@ const FALLBACK_SERVICES: any[] = [
     name: "AI-Powered Compliance Systems",
     category: "Compliance",
     shortDescription: "Predictive algorithms for compliance tracking",
-    description: "Build intelligent platforms that track, predict, and optimize compliance for professional development, training, and certification programs. Used by SACE to manage 445,000+ educators.",
-    features: ["Predictive ML Models", "Real-time Tracking", "Automated Reporting", "Scale to 400k+ Users"],
+    description: "Build intelligent platforms that track, predict, and optimize compliance for professional development, training, and certification programs, designed for national scale.",
+    features: ["Predictive ML Models", "Real-time Tracking", "Automated Reporting", "Built for National Scale"],
     status: "Published" as const
   },
   {
@@ -18,8 +18,8 @@ const FALLBACK_SERVICES: any[] = [
     name: "Predictive Analytics Platforms",
     category: "AI & ML",
     shortDescription: "Machine learning for intelligent foresight",
-    description: "Develop machine learning models that predict learner success, identify at-risk individuals, and recommend interventions before problems occur. Achieving 78% prediction accuracy.",
-    features: ["Risk Identification", "Intervention Logic", "78% Prediction Accuracy", "Success Modeling"],
+    description: "Develop machine learning models that predict learner success, identify at-risk individuals, and recommend interventions before problems occur.",
+    features: ["Risk Identification", "Intervention Logic", "Model Evaluation", "Success Modeling"],
     status: "Published" as const
   },
   {
@@ -46,7 +46,7 @@ const FALLBACK_SERVICES: any[] = [
     category: "Automation",
     shortDescription: "WhatsApp-based SMB optimization",
     description: "Develop WhatsApp-based automation tools that save time and money for small businesses across construction, hospitality, and retail sectors.",
-    features: ["WhatsApp Integration", "98% OCR Accuracy", "95% Time Savings"],
+    features: ["WhatsApp Integration", "Receipt Capture (OCR)", "Automated Bookkeeping"],
     status: "Published" as const
   }
 ];
@@ -75,10 +75,10 @@ const Services = () => {
   }, []);
 
   const stats = [
-    { title: "24/7 Support", value: "Always available" },
-    { title: "Clients Worldwide", value: "100+" },
-    { title: "Team Members", value: "50+" },
-    { title: "Success Rate", value: "99.9%" }
+    { title: "Built in", value: "South Africa" },
+    { title: "Data residency", value: "South Africa" },
+    { title: "Privacy", value: "POPIA by design" },
+    { title: "Focus", value: "Public sector & compliance" }
   ];
 
   return (
