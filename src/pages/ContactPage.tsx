@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { useTheme } from '@/contexts/ThemeContext';
 import { GoogleMap, useLoadScript } from '@react-google-maps/api';
+import { API_URL } from '@/utils/api';
 
 // Define libraries array outside component to prevent reloading
 const libraries: ("marker")[] = ["marker"];
@@ -105,8 +106,7 @@ const ContactPage = () => {
     setErrorMessage('');
 
     try {
-      // Use Vercel serverless function (same domain, works with HTTPS)
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

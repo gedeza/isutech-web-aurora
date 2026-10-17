@@ -9,6 +9,9 @@ dotenv.config();
 
 const app = express();
 
+// Behind nginx: trust the first proxy so req.ip (used for rate limiting) is the real client address
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(cors());
 app.use(express.json());
