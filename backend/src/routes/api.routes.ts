@@ -8,6 +8,7 @@ import userRoutes from './user.routes';
 import productRoutes from './product.routes';
 import serviceRoutes from './service.routes';
 import onboardingRoutes from './onboarding.routes';
+import contactRoutes from './contact.routes';
 
 const router = express.Router();
 
@@ -57,6 +58,7 @@ router.use('/users', userRoutes);
 router.use('/products', productRoutes);
 router.use('/services', serviceRoutes);
 router.use('/autoslip', onboardingRoutes);
+router.use('/contact', contactRoutes);
 
 // CMS Routes
 import contentRoutes from './content.routes';

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { API_URL } from '@/utils/api';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,8 +19,7 @@ const Contact = () => {
     setErrorMessage('');
 
     try {
-      // Use Vercel serverless function (same domain, works with HTTPS)
-      const response = await fetch('/api/contact', {
+      const response = await fetch(`${API_URL}/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
