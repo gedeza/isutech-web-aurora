@@ -1,0 +1,52 @@
+name: Deploy to Dube TradePort
+
+# Manual only until the one-time server setup in deploy/README.md is done and verified.
+# After that, add `push: { branches: [main] }` to deploy on every merge to main.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false   # never cancel a live deploy mid-flight; it would orphan the remote process
+
+jobs:
+  deploy:
+    # Only main may deploy, and only through the `production` Environment (restrict it to main and
+    # require reviewers in repo settings; store the three secrets + SERVER_HOST_KEY there).
+    if: github.ref == 'refs/heads/main'
+    environment: production
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4   # first-party (actions/*) only; no third-party action ever sees the SSH key
+
+      - name: Deploy via SSH (retries transient handshake resets)
+        env:
+          SERVER_HOST: ${{ secrets.SERVER_HOST }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          # known_hosts line for Dube, e.g. "[host]:33822 ssh-ed25519 AAAA..." (see deploy/README.md)
+          SERVER_HOST_KEY: ${{ secrets.SERVER_HOST_KEY }}
+        run: |
+          KEY_FILE="$(mktemp)"
+          trap 'rm -f "$KEY_FILE" "$KNOWN_HOSTS"' EXIT
+          printf '%s\n' "$SSH_PRIVATE_KEY" > "$KEY_FILE"
+          chmod 600 "$KEY_FILE"
+          KNOWN_HOSTS="$(mktemp)"
+          printf '%s\n' "$SERVER_HOST_KEY" > "$KNOWN_HOSTS"
+          # Dube's SSH is NAT'd to port 33822 (not 22, unlike the old Hetzner box).
+          for attempt in 1 2 3; do
+            if ssh -i "$KEY_FILE" \
+                 -o StrictHostKeyChecking=yes \
+                 -o UserKnownHostsFile="$KNOWN_HOSTS" \
+                 -o ConnectTimeout=30 \
+                 -p 33822 \
+                 "$SERVER_USER@$SERVER_HOST" 'bash -s' < scripts/deploy-remote.sh; then
+              exit 0
+            fi
+            echo "Attempt $attempt failed"; sleep 30
+          done
+          exit 1
