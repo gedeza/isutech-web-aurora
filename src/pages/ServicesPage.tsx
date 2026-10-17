@@ -4,6 +4,7 @@ import { servicesApi, Service } from '../utils/api';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ThreeDCard } from '../components/ui/3d-card';
+import { FALLBACK_SERVICES } from '@/data/services';
 
 const HERO_VARIANTS = {
   hidden: { opacity: 0, y: 30 },
@@ -29,17 +30,13 @@ const ServicesPage = () => {
     const fetchServices = async () => {
       try {
         const data = await servicesApi.getAll();
-        setServices(data.filter(service => service.status === 'Published'));
+        const published = data.filter(service => service.status === 'Published');
+        // An empty CMS must not blank the page
+        setServices(published.length > 0 ? published : (FALLBACK_SERVICES as any));
       } catch (err: any) {
         setError(err.message || 'Failed to fetch services');
         // Fallback for UI testing if DB is down
-        setServices([
-          { _id: '1', name: 'AI-Powered Compliance Systems', category: 'Compliance', description: 'Predictive algorithms for compliance tracking', features: ['Predictive ML Models', 'Real-time Tracking'], status: 'Published' },
-          { _id: '2', name: 'Predictive Analytics Platforms', category: 'AI & ML', description: 'Machine learning for intelligent foresight', features: ['Risk Identification', 'Success Modeling'], status: 'Published' },
-          { _id: '3', name: 'Training Management Systems', category: 'EdTech', description: 'End-to-end training and skills management', features: ['Enrollment Tracking', 'Course Management'], status: 'Published' },
-          { _id: '4', name: 'B2B2G SaaS Products', category: 'GovTech', description: 'Connecting business to government ecosystems', features: ['POPIA Compliance', 'Government Grade Security'], status: 'Published' },
-          { _id: '5', name: 'Small Business Automation', category: 'Automation', description: 'WhatsApp-based SMB optimization', features: ['WhatsApp Integration', '95% Time Savings'], status: 'Published' }
-        ] as any);
+        setServices(FALLBACK_SERVICES as any);
       } finally {
         setLoading(false);
       }

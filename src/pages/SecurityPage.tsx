@@ -19,8 +19,8 @@ const SecurityPage = () => {
 
   const securityFeatures = [
     {
-      title: "Data Encryption",
-      description: "All data is encrypted in transit and at rest using industry-standard encryption protocols.",
+      title: "Encrypted in Transit",
+      description: "Our websites and product interfaces are served over HTTPS.",
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
@@ -29,7 +29,7 @@ const SecurityPage = () => {
     },
     {
       title: "Access Control",
-      description: "Role-based access control ensures users can only access authorized resources.",
+      description: "Role-based access control so people see only what their role requires, with sign-in protection on our products.",
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -37,8 +37,8 @@ const SecurityPage = () => {
       )
     },
     {
-      title: "Regular Audits",
-      description: "We conduct regular security audits and penetration testing to identify vulnerabilities.",
+      title: "Monitoring & Patching",
+      description: "Intrusion prevention on our servers and automated tracking of newly disclosed vulnerabilities in the frameworks our products use.",
       icon: (
         <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
@@ -50,18 +50,18 @@ const SecurityPage = () => {
   const complianceStandards = [
     {
       name: "POPIA",
-      description: "South African Protection of Personal Information Act",
-      status: "Compliant"
+      description: "We build to support POPIA obligations: collect only what a purpose needs, honour opt-outs, and keep people in the loop for decisions.",
+      status: "By design"
     },
     {
-      name: "Government Standards",
-      description: "Compliance with South African government security requirements",
-      status: "Compliant"
+      name: "NARSSA",
+      description: "Polelo DMS uses a NARSSA-aligned file plan with retention schedules for municipal records.",
+      status: "Polelo DMS"
     },
     {
-      name: "POPIA",
-      description: "South African Protection of Personal Information Act",
-      status: "Compliant"
+      name: "Data Residency",
+      description: "Our products are hosted in South Africa.",
+      status: "South Africa"
     }
   ];
 
@@ -81,7 +81,7 @@ const SecurityPage = () => {
               Security & Compliance
             </h1>
             <p className="text-xl text-muted-foreground mb-8 animate-fade-in delay-100">
-              Your security is our top priority. Learn about our comprehensive security measures and compliance standards.
+              How we protect the systems and data entrusted to us, and how we approach compliance. We describe what we do, not what we would like to be true.
             </p>
             <div className="flex gap-4 animate-fade-in delay-200">
               <Link 
@@ -94,7 +94,7 @@ const SecurityPage = () => {
                 to="/contact" 
                 className="btn-secondary"
               >
-                Contact Security Team
+                Report to Our Team
               </Link>
             </div>
           </div>
@@ -159,11 +159,10 @@ const SecurityPage = () => {
                 <h3 className="text-xl font-semibold">Infrastructure Security</h3>
                 <ul className="space-y-3">
                   {[
-                    "24/7 infrastructure monitoring",
+                    "Data hosted in South Africa",
                     "Regular security patches and updates",
-                    "Multi-region data backups",
-                    "DDoS protection",
-                    "Network segmentation"
+                    "Intrusion detection and prevention",
+                    "Automated vulnerability tracking for dependencies"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -179,11 +178,10 @@ const SecurityPage = () => {
                 <h3 className="text-xl font-semibold">Application Security</h3>
                 <ul className="space-y-3">
                   {[
-                    "Secure development lifecycle",
-                    "Regular code reviews",
-                    "Automated security testing",
-                    "Vulnerability management",
-                    "Third-party security assessments"
+                    "Code review before release",
+                    "Automated tests and dependency checks in our delivery pipelines",
+                    "Secrets kept out of source code",
+                    "AI features that suggest, with people confirming"
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3">
                       <svg className="w-5 h-5 text-primary flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -205,13 +203,13 @@ const SecurityPage = () => {
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-4">Report a Security Issue</h2>
             <p className="text-muted-foreground mb-8">
-              If you believe you've found a security vulnerability, please report it to our security team immediately.
+              If you believe you've found a security vulnerability, please email info@isutech.co.za or call +27 82 060 0404 and mark it as a security issue.
             </p>
             <Link 
               to="/contact"
               className="btn-primary inline-flex items-center gap-2"
             >
-              Contact Security Team
+              Report to Our Team
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
               </svg>

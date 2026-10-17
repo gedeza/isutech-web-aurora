@@ -28,8 +28,8 @@ const ITEM_VARIANTS = {
 
 const Hero = () => {
   const [heroData, setHeroData] = useState({
-    title: "Transform Your Business\nwith iSu Technologies",
-    subtitle: "We engineer cutting-edge technology solutions designed for the future of work."
+    title: "Software for South Africa's public sector\nand regulated industries",
+    subtitle: "Records management, property valuation, ISO compliance and government integration. Built in South Africa, with privacy by design."
   });
 
   useEffect(() => {
@@ -49,16 +49,16 @@ const Hero = () => {
 
   const features = [
     {
-      title: "Government Solutions",
-      description: "Trusted partner for government projects, tenders, and service delivery.",
+      title: "Municipal & Public Sector",
+      description: "Records management and government integration for institutions that run on legacy systems.",
     },
     {
-      title: "AI & Automation",
-      description: "Cutting-edge solutions for business process automation.",
+      title: "Compliance & SHEQ",
+      description: "ISO management-system evidence, gap analysis and audit packs for consultants and industry.",
     },
     {
-      title: "Custom Development",
-      description: "Tailored software solutions for your specific needs.",
+      title: "Property Intelligence",
+      description: "Property data, offline field inspections and analytics for valuers and municipalities.",
     }
   ];
 

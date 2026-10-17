@@ -8,18 +8,18 @@ const About = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6">
-              Driving Innovation Through Technology Excellence
+              Software built for how South Africa works
             </h2>
             <p className="text-base md:text-lg text-foreground/70 mb-8">
-              At iSuTech, we combine cutting-edge technology with deep industry expertise to deliver transformative solutions that drive business growth and innovation.
+              iSu Technologies builds and runs software for municipalities, public bodies and regulated industries, with the regulatory realities of South Africa designed in from the start.
             </p>
             
             <div className="space-y-4">
               {[
-                "Industry-leading AI and machine learning solutions",
+                "AI that assists people and leaves decisions to them",
                 "Products in production with South African organisations",
-                "Dedicated team of technology experts",
-                "Customized solutions for your unique needs",
+                "The people who build it are the people who support it",
+                "Integrates with the systems you already run",
               ].map((point, index) => (
                 <div key={index} className="flex items-center gap-3">
                   <CheckCircle className="h-5 w-5 text-primary flex-shrink-0" />
