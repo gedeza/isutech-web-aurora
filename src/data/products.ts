@@ -64,7 +64,7 @@ export const products: Product[] = [
     images: [],
     client: "Corporate Enterprises",
     technologies: ['MkDocs Material', 'SA Data Residency', 'POPIA Compliance'],
-    features: ['Beautiful MkDocs interface', 'SA data residency (Hetzner CPT)', 'White-glove setup', 'Fixed monthly pricing'],
+    features: ['Beautiful MkDocs interface', 'South African data residency', 'White-glove setup', 'Fixed monthly pricing'],
     status: 'ongoing'
   }
 ];

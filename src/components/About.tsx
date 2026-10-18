@@ -17,7 +17,7 @@ const About = () => {
             <div className="space-y-4">
               {[
                 "Industry-leading AI and machine learning solutions",
-                "Proven track record of successful implementations",
+                "Products in production with South African organisations",
                 "Dedicated team of technology experts",
                 "Customized solutions for your unique needs",
               ].map((point, index) => (
@@ -31,20 +31,20 @@ const About = () => {
           
           <div className="grid grid-cols-2 gap-4 sm:gap-6">
             <Card className="p-4 sm:p-5 md:p-6 animate-float">
-              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">150+</div>
-              <div className="text-xs sm:text-sm text-foreground/70">Projects Completed</div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">SA</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Built in South Africa</div>
             </Card>
             <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:200ms]">
-              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">98%</div>
-              <div className="text-xs sm:text-sm text-foreground/70">Client Satisfaction</div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">POPIA</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Privacy by Design</div>
             </Card>
             <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:400ms]">
-              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">10+</div>
-              <div className="text-xs sm:text-sm text-foreground/70">Years Experience</div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">Local</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Data Hosted in South Africa</div>
             </Card>
             <Card className="p-4 sm:p-5 md:p-6 animate-float [animation-delay:600ms]">
-              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">24/7</div>
-              <div className="text-xs sm:text-sm text-foreground/70">Support Available</div>
+              <div className="text-3xl sm:text-4xl font-bold text-primary mb-2">Direct</div>
+              <div className="text-xs sm:text-sm text-foreground/70">Work With the People Who Build It</div>
             </Card>
           </div>
         </div>
