@@ -9,7 +9,7 @@ const supportChannels = [
     icon: Phone,
     content: {
       hours: "Monday - Friday: 8:00 AM - 5:00 PM SAST",
-      contact: "+27 82 060 0404"
+      contact: "+27 78 373 6437"
     }
   },
   {
