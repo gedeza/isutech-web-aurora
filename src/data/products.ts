@@ -1,13 +1,6 @@
 import { Categories, Product } from '@/types/products';
 
 export const categories: Categories = {
-  marketing: {
-    name: "Marketing Technology",
-    description: "Enterprise marketing platforms",
-    items: [
-      { id: 'marketing-tech', name: 'Marketing Tech', count: 1 }
-    ]
-  },
   property: {
     name: "Property & Municipal",
     description: "Property valuation and analytical tools",
@@ -32,20 +25,6 @@ export const categories: Categories = {
 };
 
 export const products: Product[] = [
-  {
-    id: 1,
-    name: "ThriveSend B2B2G",
-    slug: "thrivesend",
-    shortDescription: "Marketing Campaign Platform for Business & Government Clients",
-    description: "A specialized content marketing platform designed for service providers who manage campaigns for both business and government clients.",
-    category: "marketing-tech",
-    year: "2025",
-    images: ["/products/b2b2g-platform.jpg"],
-    client: "Marketing Agencies & Govt Contractors",
-    technologies: ['POPIA Compliance', 'Multi-tenant', 'Security Clearance', 'Next.js'],
-    features: ['POPIA compliant data handling', 'Security clearance system', 'Government & business workflows', 'Multi-tenant architecture'],
-    status: 'completed'
-  },
   {
     id: 2,
     name: "AssessFlow",
