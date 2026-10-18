@@ -1,3 +1,4 @@
+import { API_URL } from '@/utils/api';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
@@ -33,7 +34,7 @@ const Hero = () => {
   });
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/content/hero_content')
+    fetch(`${API_URL}/content/hero_content`)
       .then(res => res.json())
       .then(data => {
         if (data && data.value) {
