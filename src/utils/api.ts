@@ -79,7 +79,13 @@ api.interceptors.response.use(
     if (error.response) {
       // The request was made and the server responded with a status code
       // that falls out of the range of 2xx
-      const message = error.response.data.message || 'An error occurred';
+      if (error.response.status === 401 && window.location.pathname.startsWith('/admin')) {
+        // Expired or revoked session: drop it and go back to the login page
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.assign('/admin/login');
+      }
+      const message = error.response.data?.message || 'An error occurred';
       return Promise.reject(new Error(message));
     } else if (error.request) {
       // The request was made but no response was received

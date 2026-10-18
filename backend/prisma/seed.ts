@@ -18,7 +18,7 @@ async function main() {
 
   const aboutValues = [
     { title: "Innovation First", desc: "We embrace cutting-edge technologies (AI, ML, predictive analytics) to solve real problems. We're not interested in replicating existing systems—we build the future." },
-    { title: "Evidence-Based Solutions", desc: "Every claim we make is backed by data. Our 78% prediction accuracy, 134% ROI, and 40% efficiency gains aren't marketing—they're measured outcomes from real deployments." },
+    { title: "Evidence-Based Solutions", desc: "We measure outcomes together with our clients and only publish figures we can stand behind." },
     { title: "Client Success", desc: "We don't just deliver software; we deliver measurable business outcomes. Our success is measured by our clients' success: improved completion rates, reduced compliance risk, increased ROI." },
     { title: "Transparency & Trust", desc: "We document everything, share our knowledge, and operate with complete transparency." },
     { title: "Continuous Learning", desc: "We practice what we preach. Our team constantly learns, adapts, and improves." },
@@ -43,31 +43,15 @@ async function main() {
     create: { key: 'about_values', value: aboutValues, description: 'Core Values', type: 'json' }
   });
 
-  // 2. Add an Admin User if it doesn't exist
-  const admin = await prisma.user.upsert({
-    where: { email: 'admin@isutech.co.za' },
-    update: {},
-    create: {
-      name: 'Admin User',
-      email: 'admin@isutech.co.za',
-      password: 'hashedpasswordplaceholder', // Should be hashed in prod
-      role: 'ADMIN'
-    }
-  });
+  // 2. Products are attributed to the first admin. Create one with `npm run seed:admin` first;
+  //    this seed never creates users or carries credentials.
+  const admin = await prisma.user.findFirst({ where: { role: 'ADMIN' }, orderBy: { id: 'asc' } });
+  if (!admin) {
+    throw new Error('No admin user found. Run `npm run seed:admin` first.');
+  }
 
   // 3. Seed Products
   const products = [
-    {
-      name: "ThriveSend B2B2G",
-      slug: "thrivesend",
-      category: "Marketing Technology",
-      shortDescription: "Marketing Campaign Platform for Business & Government Clients",
-      description: "A specialized content marketing platform designed for service providers who manage campaigns for both business and government clients.",
-      price: 12000,
-      status: "ACTIVE",
-      technologies: ["POPIA Compliance", "Multi-tenant", "Security Clearance System"],
-      images: []
-    },
     {
       name: "AssessFlow",
       slug: "assessflow",

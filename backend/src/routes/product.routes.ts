@@ -8,11 +8,13 @@ const router = express.Router()
 
 // Public routes
 router.get("/", optionalAuth, productController.getAllProducts)
-router.get("/categories", productController.getProductCategories)
+router.get("/categories", optionalAuth, productController.getProductCategories)
 router.get("/slug/:slug", productController.getProductBySlug)
 
 // Protected routes
 router.use(protect)
+// Must precede "/:id", which otherwise swallows it and answers 400 ("admin" is not a number)
+router.get("/admin", adminOnly, productController.getAllProducts)
 router.get("/:id", productController.getProductById)
 
 // Admin routes
@@ -33,8 +35,6 @@ router.post(
   validateRequest,
   productController.createProduct,
 )
-
-router.get("/admin", productController.getAllProducts)
 
 router.put(
   "/:id",
