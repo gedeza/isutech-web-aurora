@@ -35,7 +35,7 @@ mkdir -p uploads/services uploads/resumes
 if pm2 describe "$PM2_NAME" >/dev/null 2>&1; then
   pm2 restart "$PM2_NAME" --update-env
 else
-  pm2 start "$APP_DIR/deploy/ecosystem.config.js"
+  pm2 start "$APP_DIR/deploy/ecosystem.config.cjs"
 fi
 pm2 save
 
