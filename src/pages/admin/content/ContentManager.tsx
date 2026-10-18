@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { API_URL } from '@/utils/api';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -22,7 +21,7 @@ export default function ContentManager() {
       // We will mock this to demonstrate functionality, since standard fetch might need JWT token logic here
       const token = localStorage.getItem('token');
       
-      const res = await fetch(`${API_URL}/content/hero_content`, {
+      const res = await fetch('http://localhost:4000/api/content/hero_content', {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -40,7 +39,7 @@ export default function ContentManager() {
     setIsLoading(true);
     try {
       const token = localStorage.getItem('token');
-      const res = await fetch(`${API_URL}/content`, {
+      const res = await fetch('http://localhost:4000/api/content', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

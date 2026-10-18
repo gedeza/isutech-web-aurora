@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MessageSquare, Book } from 'lucide-react';
+import { Phone, Mail, MessageSquare, Book, Clock, Users } from 'lucide-react';
 
 const supportChannels = [
   {
     title: "Phone Support",
-    description: "Speak directly with our team during business hours.",
+    description: "Speak directly with our support team during business hours.",
     icon: Phone,
     content: {
       hours: "Monday - Friday: 8:00 AM - 5:00 PM SAST",
@@ -14,10 +14,20 @@ const supportChannels = [
   },
   {
     title: "Email Support",
-    description: "Send us an email and we will get back to you.",
+    description: "Send us an email and we'll respond within 24 hours.",
     icon: Mail,
     content: {
-      email: "support@isutech.co.za"
+      email: "support@isutech.co.za",
+      response: "24-hour response time"
+    }
+  },
+  {
+    title: "Live Chat",
+    description: "Get instant help from our support team through live chat.",
+    icon: MessageSquare,
+    content: {
+      availability: "Available during business hours",
+      response: "Instant response"
     }
   }
 ];
@@ -25,15 +35,21 @@ const supportChannels = [
 const supportResources = [
   {
     title: "Documentation",
-    description: "User guides and product documentation.",
+    description: "Access our comprehensive documentation and user guides.",
     icon: Book,
     link: "/documentation"
   },
   {
-    title: "Contact Us",
-    description: "Send a message through the contact form.",
-    icon: MessageSquare,
-    link: "/contact"
+    title: "Service Status",
+    description: "Check the current status of our services and systems.",
+    icon: Clock,
+    link: "/status"
+  },
+  {
+    title: "Community",
+    description: "Join our community forum for discussions and knowledge sharing.",
+    icon: Users,
+    link: "/community"
   }
 ];
 
@@ -69,7 +85,7 @@ export default function SupportPage() {
       </div>
 
       <h2 className="text-3xl font-bold text-center mb-8">Additional Resources</h2>
-      <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-3 gap-8">
         {supportResources.map((resource) => (
           <Link
             key={resource.title}

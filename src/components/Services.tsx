@@ -2,10 +2,57 @@ import React, { useEffect, useState } from 'react';
 import { Building2, Bot, Code2, Laptop2 } from 'lucide-react';
 import { servicesApi, Service } from '../utils/api';
 import { motion } from 'framer-motion';
-import { FALLBACK_SERVICES } from '@/data/services';
+
+const FALLBACK_SERVICES: any[] = [
+  {
+    _id: "srv-1",
+    name: "AI-Powered Compliance Systems",
+    category: "Compliance",
+    shortDescription: "Predictive algorithms for compliance tracking",
+    description: "Build intelligent platforms that track, predict, and optimize compliance for professional development, training, and certification programs. Used by SACE to manage 445,000+ educators.",
+    features: ["Predictive ML Models", "Real-time Tracking", "Automated Reporting", "Scale to 400k+ Users"],
+    status: "Published" as const
+  },
+  {
+    _id: "srv-2",
+    name: "Predictive Analytics Platforms",
+    category: "AI & ML",
+    shortDescription: "Machine learning for intelligent foresight",
+    description: "Develop machine learning models that predict learner success, identify at-risk individuals, and recommend interventions before problems occur. Achieving 78% prediction accuracy.",
+    features: ["Risk Identification", "Intervention Logic", "78% Prediction Accuracy", "Success Modeling"],
+    status: "Published" as const
+  },
+  {
+    _id: "srv-3",
+    name: "Training Management Systems",
+    category: "EdTech",
+    shortDescription: "End-to-end training and skills management",
+    description: "Create comprehensive platforms for training providers, educational institutions, and government departments to manage courses, track enrollments, and measure outcomes.",
+    features: ["Enrollment Tracking", "Outcome Measurement", "Course Management"],
+    status: "Published" as const
+  },
+  {
+    _id: "srv-4",
+    name: "B2B2G SaaS Products",
+    category: "GovTech",
+    shortDescription: "Connecting business to government ecosystems",
+    description: "Design and build Software-as-a-Service products that connect businesses with government programs and large-scale training initiatives using POPIA-compliant architectures.",
+    features: ["Security Clearances", "POPIA Compliance", "Multi-tenant", "Government Grade Security"],
+    status: "Published" as const
+  },
+  {
+    _id: "srv-5",
+    name: "Small Business Automation",
+    category: "Automation",
+    shortDescription: "WhatsApp-based SMB optimization",
+    description: "Develop WhatsApp-based automation tools that save time and money for small businesses across construction, hospitality, and retail sectors.",
+    features: ["WhatsApp Integration", "98% OCR Accuracy", "95% Time Savings"],
+    status: "Published" as const
+  }
+];
 
 const Services = () => {
-  const [services, setServices] = useState<any[]>(FALLBACK_SERVICES);
+  const [services, setServices] = useState<Service[]>(FALLBACK_SERVICES);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -16,11 +63,9 @@ const Services = () => {
         const timeoutId = setTimeout(() => controller.abort(), 3000);
         const data = await servicesApi.getAll();
         clearTimeout(timeoutId);
-        const published = data.filter(service => service.status === 'Published').slice(0, 3);
-        // An empty CMS must not blank the section
-        setServices(published.length > 0 ? published : FALLBACK_SERVICES.slice(0, 3));
+        setServices(data.filter(service => service.status === 'Published').slice(0, 3));
       } catch (err: any) {
-        setServices(FALLBACK_SERVICES.slice(0, 3));
+        setServices(FALLBACK_SERVICES);
       } finally {
         setLoading(false);
       }
@@ -30,10 +75,10 @@ const Services = () => {
   }, []);
 
   const stats = [
-    { title: "Built in", value: "South Africa" },
-    { title: "Data residency", value: "South Africa" },
-    { title: "Privacy", value: "POPIA by design" },
-    { title: "Focus", value: "Public sector & compliance" }
+    { title: "24/7 Support", value: "Always available" },
+    { title: "Clients Worldwide", value: "100+" },
+    { title: "Team Members", value: "50+" },
+    { title: "Success Rate", value: "99.9%" }
   ];
 
   return (
@@ -51,10 +96,10 @@ const Services = () => {
           className="max-w-2xl mx-auto text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight text-foreground">
-            What We Build
+            Comprehensive Solutions
           </h2>
           <p className="text-lg text-muted-foreground font-light">
-            Software for municipalities, regulated industries and the people who work with them.
+            Empowering your business with cutting-edge technology solutions designed for scale.
           </p>
         </motion.div>
 

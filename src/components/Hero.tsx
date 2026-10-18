@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ThreeDCard } from './ui/3d-card';
-import { API_URL } from '@/utils/api';
+import { ThreeDMarquee } from './ui/3d-marquee';
 
 const HERO_VARIANTS = {
   hidden: { opacity: 0, y: 30 },
@@ -28,12 +28,12 @@ const ITEM_VARIANTS = {
 
 const Hero = () => {
   const [heroData, setHeroData] = useState({
-    title: "Software for South Africa's public sector\nand regulated industries",
-    subtitle: "Records management, property valuation, ISO compliance and government integration. Built in South Africa, with privacy by design."
+    title: "Transform Your Business\nwith iSu Technologies",
+    subtitle: "We engineer cutting-edge technology solutions designed for the future of work."
   });
 
   useEffect(() => {
-    fetch(`${API_URL}/content/hero_content`)
+    fetch('http://localhost:4000/api/content/hero_content')
       .then(res => res.json())
       .then(data => {
         if (data && data.value) {
@@ -47,18 +47,27 @@ const Hero = () => {
       .catch(() => console.log('Using default hero content (API unavailable)'));
   }, []);
 
+  const companyLogos = [
+    { src: '/images/IBMLOGO.jpg', alt: 'IBM' },
+    { src: '/images/Ethekwini Municipality Logo.jpeg', alt: 'Ethekwini Municipality' },
+    { src: '/images/KZN Legislature Logo.png', alt: 'KZN Legislature' },
+    { src: '/images/Microsoft Logo.png', alt: 'Microsoft' },
+    { src: '/images/Moses Kotane Institute Logo.jpeg', alt: 'Moses Kotane Institute' },
+    { src: '/images/MTN Logo.png', alt: 'MTN' }
+  ];
+
   const features = [
     {
-      title: "Municipal & Public Sector",
-      description: "Records management and government integration for institutions that run on legacy systems.",
+      title: "Government Solutions",
+      description: "Trusted partner for government projects, tenders, and service delivery.",
     },
     {
-      title: "Compliance & SHEQ",
-      description: "ISO management-system evidence, gap analysis and audit packs for consultants and industry.",
+      title: "AI & Automation",
+      description: "Cutting-edge solutions for business process automation.",
     },
     {
-      title: "Property Intelligence",
-      description: "Property data, offline field inspections and analytics for valuers and municipalities.",
+      title: "Custom Development",
+      description: "Tailored software solutions for your specific needs.",
     }
   ];
 
@@ -122,6 +131,19 @@ const Hero = () => {
               </div>
             </ThreeDCard>
           ))}
+        </motion.div>
+
+        {/* 3D Trust Marquee */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 0.8 }}
+          className="mt-24 lg:mt-32 text-center overflow-hidden"
+        >
+          <p className="text-xs uppercase tracking-widest text-muted-foreground mb-8 font-medium">
+            Trusted by organizations worldwide
+          </p>
+          <ThreeDMarquee items={companyLogos} speed={15} />
         </motion.div>
       </div>
     </section>
