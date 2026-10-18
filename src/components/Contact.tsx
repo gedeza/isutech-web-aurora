@@ -178,7 +178,7 @@ const Contact = () => {
               <h3 className="text-base sm:text-lg font-semibold mb-4">Contact Information</h3>
               <div className="space-y-3 text-sm sm:text-base text-muted-foreground">
                 <p>Email: info@isutech.co.za</p>
-                <p>Phone: <a href="tel:+27783736437" className="hover:text-primary transition-colors">+27 78 373 6437</a></p>
+                <p>Phone: +27 78 373 6437</p>
                 <p>Hours: Mon-Fri 9:00 AM - 6:00 PM </p>
               </div>
             </div>
