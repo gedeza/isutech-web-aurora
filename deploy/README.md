@@ -41,7 +41,7 @@ The frontend has fallback data for products/services.
      SendGrid, otherwise SendGrid rejects the mail and nothing arrives.
    - The `SMTP_*` variables in `.env.example` belong to old code and are not used by the live API.
 5. **Create the schema (manual, once)**: `cd /data/www/isutech-web/backend && npm ci && npx prisma db push` against the new, empty
-   `isutech_web` database. Then **first build and start**: `bash /data/www/isutech-web/scripts/deploy-remote.sh`, then
+   `isutech_web` database. Then **first build and start**: `bash -s < /data/www/isutech-web/scripts/deploy-remote.sh`, then
    `npm run seed:admin` and change the seeded admin password after first login.
 6. **nginx (SUDO)**: copy `nginx-isutech-web.conf` to `/etc/nginx/sites-available/isutech-web`, symlink into `sites-enabled`, `nginx -t && systemctl reload nginx`.
 7. **DNS** (at the DNS host, nameservers ns.dns1.co.za / ns.dns2.co.za / ns.otherdns.*): change the A records for
@@ -87,3 +87,13 @@ backup and sign-off). Follow-up: baseline Prisma Migrate so schema changes becom
   from the checkout to the server.
 - Known weaknesses carried over from the old code, not fixed here: `cors()` is open to all origins, and the API has no rate
   limiting (CrowdSec on the box helps but is not a substitute).
+
+## Running the deploy script by hand
+Run it as `bash -s < /data/www/isutech-web/scripts/deploy-remote.sh`, not `bash scripts/deploy-remote.sh`. The script runs
+`git reset --hard`, which rewrites the script file itself while bash is still reading it, so a direct run can continue with a
+stale copy of the script (this happened on the first Dube deploy). CI already pipes it over SSH, which is safe.
+
+## TLS certificates
+`certbot --nginx` rewrites `/etc/nginx/sites-enabled/isutech-web` to add the 443 blocks, so the live file differs from
+`deploy/nginx-isutech-web.conf` after that. The repo copy is the pre-TLS template. Let's Encrypt validates from several resolvers,
+so after changing DNS wait out the old record's TTL before running certbot; failed attempts count against its rate limits.
