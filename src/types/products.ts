@@ -1,21 +1,20 @@
 export interface Product {
-  id: number;
+  _id: string;
   name: string;
-  slug?: string;
+  slug: string;
   description: string;
   shortDescription: string;
   category: string;
-  price?: number;
-  status: 'ACTIVE' | 'DRAFT' | 'ARCHIVED' | 'completed' | 'ongoing' | string;
-  images?: string[];
-  technologies?: string[];
-  features?: string[];
+  price: number;
+  status: 'Active' | 'Draft' | 'Archived';
+  images: string[];
+  technologies: string[];
   client?: string;
   year?: string;
-  createdBy?: number;
-  lastUpdated?: Date;
-  createdAt?: Date;
-  updatedAt?: Date;
+  createdBy: string;
+  lastUpdated: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface CategoryItem {
@@ -32,4 +31,4 @@ export interface Category {
 
 export interface Categories {
   [key: string]: Category;
-}
+} 
