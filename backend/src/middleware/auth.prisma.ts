@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma';
+import { JWT_SECRET } from '../config/env';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -20,7 +21,7 @@ export const protect = async (req: AuthRequest, res: Response, next: NextFunctio
   if (req.headers.authorization?.startsWith('Bearer')) {
     try {
       token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+      const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
 
       const user = await prisma.user.findUnique({
         where: { id: decoded.id },
@@ -55,3 +56,26 @@ export const adminOnly = (req: AuthRequest, res: Response, next: NextFunction): 
     res.status(403).json({ message: 'Not authorized as admin' });
   }
 };
+
+/**
+ * Attaches req.user when a valid Bearer token is present, but never rejects. Use on public
+ * routes that show more to admins (e.g. draft items) than to anonymous visitors.
+ */
+export const optionalAuth = async (req: AuthRequest, _res: Response, next: NextFunction): Promise<void> => {
+  const header = req.headers.authorization;
+  if (header?.startsWith('Bearer ')) {
+    try {
+      const decoded = jwt.verify(header.split(' ')[1], JWT_SECRET) as JwtPayload;
+      const user = await prisma.user.findUnique({
+        where: { id: decoded.id },
+        select: { id: true, email: true, role: true },
+      });
+      if (user) req.user = user;
+    } catch {
+      // Invalid or expired token: treat as anonymous
+    }
+  }
+  next();
+};
+
+export const isAdminRequest = (req: AuthRequest): boolean => req.user?.role === 'ADMIN';

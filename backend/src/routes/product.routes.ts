@@ -2,12 +2,12 @@ import express from "express"
 import { body } from "express-validator"
 import * as productController from "../controllers/product.controller.prisma"
 import { validateRequest } from "../middleware/validate-request"
-import { protect, adminOnly } from "../middleware/auth.prisma"
+import { protect, adminOnly, optionalAuth } from "../middleware/auth.prisma"
 
 const router = express.Router()
 
 // Public routes
-router.get("/", productController.getAllProducts)
+router.get("/", optionalAuth, productController.getAllProducts)
 router.get("/categories", productController.getProductCategories)
 router.get("/slug/:slug", productController.getProductBySlug)
 

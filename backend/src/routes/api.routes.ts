@@ -1,6 +1,5 @@
 import express from 'express';
 import { protect, adminOnly } from '../middleware/auth.prisma';
-import * as authController from '../controllers/auth.controller.prisma';
 // import * as productController from '../controllers/product.controller.prisma'; // Handled by product.routes.ts
 import * as userController from '../controllers/user.controller.prisma';
 import authRoutes from './auth.routes';
@@ -11,12 +10,6 @@ import onboardingRoutes from './onboarding.routes';
 import contactRoutes from './contact.routes';
 
 const router = express.Router();
-
-// Auth routes
-router.post('/auth/register', authController.register);
-router.post('/auth/login', authController.login);
-router.get('/auth/me', protect, authController.getMe);
-router.put('/auth/profile', protect, authController.updateProfile);
 
 // Customer routes - TODO: Convert to Prisma
 // router.route('/customers')

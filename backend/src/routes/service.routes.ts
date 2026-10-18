@@ -3,7 +3,7 @@ import { body } from 'express-validator';
 import multer from 'multer';
 import * as serviceController from '../controllers/service.controller.prisma';
 import { validateRequest } from '../middleware/validate-request';
-import { protect, adminOnly } from '../middleware/auth.prisma';
+import { protect, adminOnly, optionalAuth } from '../middleware/auth.prisma';
 
 const router = express.Router();
 
@@ -34,8 +34,8 @@ const upload = multer({
 });
 
 // Public routes
-router.get('/', serviceController.getAllServices);
-router.get('/:id', serviceController.getServiceById);
+router.get('/', optionalAuth, serviceController.getAllServices);
+router.get('/:id', optionalAuth, serviceController.getServiceById);
 
 // Protected routes (admin only)
 router.post('/', protect, adminOnly, upload.single('image'), serviceController.createService);
