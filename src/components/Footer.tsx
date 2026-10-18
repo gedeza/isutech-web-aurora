@@ -67,7 +67,7 @@ const Footer = () => {
             <p className="text-sm text-muted-foreground">
               <a href="mailto:info@isutech.co.za" className="hover:text-primary transition-colors">info@isutech.co.za</a>
               <span className="mx-2">·</span>
-              <a href="tel:+27820600404" className="hover:text-primary transition-colors">+27 82 060 0404</a>
+              <a href="tel:+27783736437" className="hover:text-primary transition-colors">+27 78 373 6437</a>
             </p>
           </div>
         </div>
