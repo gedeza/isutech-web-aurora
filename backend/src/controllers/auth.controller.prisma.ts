@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { prisma } from '../lib/prisma';
 import { hashPassword, comparePassword } from '../utils/password';
+import { JWT_SECRET, JWT_EXPIRES_IN } from '../config/env';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -15,58 +16,9 @@ export interface AuthRequest extends Request {
  * Generate JWT token
  */
 export const generateToken = (userId: number): string => {
-  return jwt.sign({ id: userId }, process.env.JWT_SECRET || 'fallback-secret', {
-    expiresIn: '30d',
+  return jwt.sign({ id: userId }, JWT_SECRET, {
+    expiresIn: JWT_EXPIRES_IN as jwt.SignOptions['expiresIn'],
   });
-};
-
-/**
- * Register new user
- */
-export const register = async (req: Request, res: Response) => {
-  try {
-    const { name, email, password } = req.body;
-
-    // Validate input
-    if (!name || !email || !password) {
-      return res.status(400).json({ message: 'Please provide all required fields' });
-    }
-
-    // Check if user exists
-    const userExists = await prisma.user.findUnique({
-      where: { email },
-    });
-
-    if (userExists) {
-      return res.status(400).json({ message: 'User already exists' });
-    }
-
-    // Hash password
-    const hashedPassword = await hashPassword(password);
-
-    // Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        role: 'USER',
-        status: 'ACTIVE',
-      },
-    });
-
-    res.status(201).json({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      status: user.status,
-      token: generateToken(user.id),
-    });
-  } catch (error: any) {
-    console.error('Register error:', error);
-    res.status(500).json({ message: 'Server error during registration' });
-  }
 };
 
 /**

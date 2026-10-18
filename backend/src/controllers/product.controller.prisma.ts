@@ -1,24 +1,25 @@
 import type { Request, Response } from 'express';
 import type { AuthRequest } from './auth.controller.prisma';
 import { prisma } from '../lib/prisma';
+import { isAdminRequest } from '../middleware/auth.prisma';
 
 // Get all products
-export const getAllProducts = async (req: Request, res: Response) => {
+export const getAllProducts = async (req: AuthRequest, res: Response) => {
   try {
     const { category, status } = req.query;
     const where: any = {};
+    const isAdmin = isAdminRequest(req);
 
     if (category) {
       where.category = category as string;
     }
 
-    if (status) {
+    // Anonymous visitors only ever see ACTIVE products, whatever they ask for.
+    // Admins (valid token) may filter by status or see everything.
+    if (!isAdmin) {
+      where.status = 'ACTIVE';
+    } else if (status) {
       where.status = (status as string).toUpperCase();
-    } else {
-      // If no status filter, only show ACTIVE products for public requests
-      if (!req.headers.authorization) {
-        where.status = 'ACTIVE';
-      }
     }
 
     const products = await prisma.product.findMany({
@@ -26,13 +27,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
       orderBy: { createdAt: 'desc' },
       include: {
         variants: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        ...(isAdmin ? { user: { select: { id: true, name: true, email: true } } } : {}),
       },
     });
 

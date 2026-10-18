@@ -4,7 +4,11 @@ import { Request, Response, NextFunction } from 'express';
  * Minimal in-memory, per-IP fixed-window rate limiter (single pm2 instance, so no shared store needed).
  * Relies on `app.set('trust proxy', 1)` so req.ip is the real client behind nginx.
  */
-export const rateLimit = (max: number, windowMs: number) => {
+export const rateLimit = (
+  max: number,
+  windowMs: number,
+  message = 'Too many submissions. Please try again later.'
+) => {
   const hits = new Map<string, { count: number; resetAt: number }>();
 
   // Drop expired entries so the map cannot grow without bound
@@ -29,7 +33,6 @@ export const rateLimit = (max: number, windowMs: number) => {
     entry.count += 1;
     if (entry.count > max) {
       res.setHeader('Retry-After', Math.ceil((entry.resetAt - now) / 1000).toString());
-      const message = 'Too many submissions. Please try again later.';
       res.status(429).json({ error: message, message });
       return;
     }

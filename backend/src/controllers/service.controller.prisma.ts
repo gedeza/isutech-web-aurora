@@ -1,24 +1,24 @@
 import type { Request, Response } from 'express';
 import type { AuthRequest } from './auth.controller.prisma';
 import { prisma } from '../lib/prisma';
+import { isAdminRequest } from '../middleware/auth.prisma';
 
 // Get all services
-export const getAllServices = async (req: Request, res: Response) => {
+export const getAllServices = async (req: AuthRequest, res: Response) => {
   try {
     const { category, status } = req.query;
     const where: any = {};
+    const isAdmin = isAdminRequest(req);
 
     if (category) {
       where.category = category as string;
     }
 
-    if (status) {
+    // Anonymous visitors only ever see PUBLISHED services, whatever they ask for.
+    if (!isAdmin) {
+      where.status = 'PUBLISHED';
+    } else if (status) {
       where.status = (status as string).toUpperCase();
-    } else {
-      // If no status filter, only show PUBLISHED services for public requests
-      if (!req.headers.authorization) {
-        where.status = 'PUBLISHED';
-      }
     }
 
     const services = await prisma.service.findMany({
@@ -26,13 +26,7 @@ export const getAllServices = async (req: Request, res: Response) => {
       orderBy: { createdAt: 'desc' },
       include: {
         processSteps: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        ...(isAdmin ? { user: { select: { id: true, name: true, email: true } } } : {}),
       },
     });
 
@@ -44,28 +38,24 @@ export const getAllServices = async (req: Request, res: Response) => {
 };
 
 // Get service by ID
-export const getServiceById = async (req: Request, res: Response) => {
+export const getServiceById = async (req: AuthRequest, res: Response) => {
   try {
     const id = parseInt(req.params.id);
     if (isNaN(id)) {
       return res.status(400).json({ message: 'Invalid service ID' });
     }
 
+    const isAdmin = isAdminRequest(req);
     const service = await prisma.service.findUnique({
       where: { id },
       include: {
         processSteps: true,
-        user: {
-          select: {
-            id: true,
-            name: true,
-            email: true,
-          },
-        },
+        ...(isAdmin ? { user: { select: { id: true, name: true, email: true } } } : {}),
       },
     });
 
-    if (!service) {
+    // Drafts and archived services are invisible to anonymous visitors
+    if (!service || (!isAdmin && service.status !== 'PUBLISHED')) {
       return res.status(404).json({ message: 'Service not found' });
     }
 
