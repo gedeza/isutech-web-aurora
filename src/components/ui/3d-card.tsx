@@ -45,7 +45,7 @@ export function ThreeDCard({ children, className, containerClassName }: ThreeDCa
 
   return (
     <div
-      className={cn("flex items-center justify-center [perspective:1000px]", containerClassName)}
+      className={cn("flex h-full w-full items-center justify-center [perspective:1000px]", containerClassName)}
     >
       <motion.div
         ref={ref}
