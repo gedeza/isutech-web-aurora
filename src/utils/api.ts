@@ -92,9 +92,16 @@ api.interceptors.response.use(
 );
 
 // API methods for services
+// The API returns Prisma rows (numeric `id`, upper-case status); the pages expect `_id` and 'Published'.
+const normaliseService = (s: any): Service => ({
+  ...s,
+  _id: String(s._id ?? s.id),
+  status: (s.status ? s.status.charAt(0).toUpperCase() + s.status.slice(1).toLowerCase() : 'Draft') as Service['status'],
+});
+
 export const servicesApi = {
-  getAll: () => api.get<any, Service[]>('/services'),
-  getById: (id: string) => api.get<any, Service>(`/services/${id}`),
+  getAll: async () => (await api.get<any, any[]>('/services')).map(normaliseService),
+  getById: async (id: string) => normaliseService(await api.get<any, any>(`/services/${id}`)),
   create: (data: Partial<Service>) => api.post<any, Service>('/services', data),
   update: (id: string, data: Partial<Service>) => api.put<any, Service>(`/services/${id}`, data),
   delete: (id: string) => api.delete<any, void>(`/services/${id}`),

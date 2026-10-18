@@ -16,6 +16,7 @@
     "prisma:studio": "prisma studio",
     "prisma:push": "prisma db push",
     "seed:admin": "ts-node src/scripts/seed-admin.ts",
+    "seed:services": "ts-node src/scripts/seed-services.ts",
     "db:seed": "ts-node src/scripts/seed-admin.ts"
   },
   "dependencies": {

@@ -16,15 +16,15 @@ const AboutPage = () => {
   }, []);
 
   const stats = [
-    { value: "134%", label: "ROI Within 18 Months", delay: "0s" },
-    { value: "78%", label: "ML Prediction Accuracy", delay: "0.1s" },
-    { value: "40%", label: "Admin Time Savings", delay: "0.2s" },
-    { value: "445K+", label: "Users At Scale", delay: "0.3s" }
+    { value: "SA", label: "South African Company", delay: "0s" },
+    { value: "POPIA", label: "Privacy by Design", delay: "0.1s" },
+    { value: "Local", label: "Data Hosted in South Africa", delay: "0.2s" },
+    { value: "Direct", label: "Work With the People Who Build It", delay: "0.3s" }
   ];
 
   const values = [
     { title: "Innovation First", desc: "We embrace cutting-edge technologies (AI, ML, predictive analytics) to solve real problems. We're not interested in replicating existing systems—we build the future.", icon: <Lightbulb className="w-5 h-5" /> },
-    { title: "Evidence-Based Solutions", desc: "Every claim we make is backed by data. Our 78% prediction accuracy, 134% ROI, and 40% efficiency gains aren't marketing—they're measured outcomes from real deployments.", icon: <LineChart className="w-5 h-5" /> },
+    { title: "Evidence-Based Solutions", desc: "We measure outcomes together with our clients and only publish figures we can stand behind.", icon: <LineChart className="w-5 h-5" /> },
     { title: "Client Success", desc: "We don't just deliver software; we deliver measurable business outcomes. Our success is measured by our clients' success: improved completion rates, reduced compliance risk, increased ROI.", icon: <Target className="w-5 h-5" /> },
     { title: "Transparency & Trust", desc: "We document everything, share our knowledge, and operate with complete transparency. This documentation hub is proof of our commitment to open collaboration.", icon: <ShieldCheck className="w-5 h-5" /> },
     { title: "African Impact", desc: "We're proud to be a South African company solving African problems at African scale. Our solutions are designed for the complexity and diversity of the African market.", icon: <Globe className="w-5 h-5" /> },
@@ -175,7 +175,7 @@ const AboutPage = () => {
                       <p className="text-muted-foreground font-light text-sm leading-loose">
                         Education & Training<br/>
                         Government & Public Sector<br/>
-                        Professional Bodies (SACE, SETA)<br/>
+                        Professional Bodies & Regulators<br/>
                         NGOs & Development
                       </p>
                     </div>
