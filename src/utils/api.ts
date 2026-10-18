@@ -100,7 +100,8 @@ const normaliseService = (s: any): Service => ({
 });
 
 export const servicesApi = {
-  getAll: async () => (await api.get<any, any[]>('/services')).map(normaliseService),
+  getAll: async () =>
+    (await api.get<any, any[]>('/services')).map(normaliseService).sort((a, b) => Number(a._id) - Number(b._id)),
   getById: async (id: string) => normaliseService(await api.get<any, any>(`/services/${id}`)),
   create: (data: Partial<Service>) => api.post<any, Service>('/services', data),
   update: (id: string, data: Partial<Service>) => api.put<any, Service>(`/services/${id}`, data),

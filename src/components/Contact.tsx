@@ -178,24 +178,8 @@ const Contact = () => {
               <h3 className="text-base sm:text-lg font-semibold mb-4">Contact Information</h3>
               <div className="space-y-3 text-sm sm:text-base text-muted-foreground">
                 <p>Email: info@isutech.co.za</p>
-                <p>Phone: +27 68 127 6710</p>
+                <p>Phone: <a href="tel:+27820600404" className="hover:text-primary transition-colors">+27 82 060 0404</a></p>
                 <p>Hours: Mon-Fri 9:00 AM - 6:00 PM </p>
-              </div>
-            </div>
-
-            <div className="floating-card p-4 sm:p-5 md:p-6 rounded-lg">
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
-              <div className="flex space-x-4">
-                {/* Add social media icons/links here */}
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  LinkedIn
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  Twitter
-                </a>
-                <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-                  GitHub
-                </a>
               </div>
             </div>
           </div>
