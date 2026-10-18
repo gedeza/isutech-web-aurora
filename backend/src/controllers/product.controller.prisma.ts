@@ -77,9 +77,11 @@ export const getProductById = async (req: Request, res: Response) => {
 };
 
 // Get product categories
-export const getProductCategories = async (req: Request, res: Response) => {
+export const getProductCategories = async (req: AuthRequest, res: Response) => {
   try {
     const products = await prisma.product.findMany({
+      // Anonymous visitors must not learn the categories of unpublished products
+      where: isAdminRequest(req) ? {} : { status: 'ACTIVE' },
       select: { category: true },
       distinct: ['category'],
     });
