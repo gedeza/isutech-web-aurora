@@ -1,5 +1,5 @@
 // pm2 process definition for the iSuTech website API on Dube TradePort.
-// Start once with: pm2 start deploy/ecosystem.config.js && pm2 save
+// Start once with: pm2 start deploy/ecosystem.config.cjs && pm2 save
 // Environment (DATABASE_URL, JWT_SECRET, PORT, ...) is read from backend/.env by dotenv (cwd = backend).
 module.exports = {
   apps: [
